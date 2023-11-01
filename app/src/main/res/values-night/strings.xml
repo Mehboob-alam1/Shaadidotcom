@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="already_have_an_account">Already have an account ?</string>
+    <string name="sign_up_with_google">Sign Up with Google</string>
+    <string name="sign_up_with_mobile">Sign Up with Mobile</string>
+</resources>

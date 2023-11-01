@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "778419051857",
+    "project_id": "shaadidotcom-63531",
+    "storage_bucket": "shaadidotcom-63531.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778419051857:android:04178534db726c036e4770",
+        "android_client_info": {
+          "package_name": "com.mehboob.myshadi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmk1soBvme5XiFZXLr91AGm6ToFJtHIqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

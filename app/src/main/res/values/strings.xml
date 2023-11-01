@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Shaadi.com</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="already_have_an_account">Already have an account ?</string>
+    <string name="sign_up_with_google">Sign Up with Google</string>
+    <string name="sign_up_with_mobile">Sign Up with Mobile</string>
+    <string name="new_to_shaadi_com">New to Shaadi.com ?</string>
+    <string name="welcome_back">Welcome back</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="password">Password</string>
+    <string name="mobile_no_email_id">Mobile No / Email ID</string>
+    <string name="login_with_otp">Login with OTP</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up_free"><![CDATA[Sign Up Free >]]></string>
+    <string name="default_web_client_id">778419051857-fef5nn7qpbjljjhc4ji79aub3cn5gd5t.apps.googleusercontent.com</string>
+</resources>
