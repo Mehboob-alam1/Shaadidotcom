@@ -9,14 +9,16 @@ public class UserAuth {
     private boolean isNew;
     private boolean isCreated;
 
+    private String userId;
 
-    public UserAuth(String userName, String name, String email, boolean isAuthenticated, boolean isNew, boolean isCreated) {
+    public UserAuth(String userName, String name, String email, boolean isAuthenticated, boolean isNew, boolean isCreated,String userId) {
         this.userName = userName;
         this.name = name;
         this.email = email;
         this.isAuthenticated = isAuthenticated;
         this.isNew = isNew;
         this.isCreated = isCreated;
+        this.userId=userId;
     }
 
 

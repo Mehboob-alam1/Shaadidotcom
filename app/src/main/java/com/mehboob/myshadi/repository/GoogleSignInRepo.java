@@ -75,8 +75,9 @@ private  MutableLiveData<UserAuth> authenticatedUserMutableLiveData;
                     String uid = firebaseUser.getUid();
                     String name = firebaseUser.getDisplayName();
                     String email = firebaseUser.getEmail();
+                     String userId= firebaseUser.getUid();
 
-                    UserAuth user = new UserAuth(uid, name, email,true,isNewUser,true);
+                    UserAuth user = new UserAuth(uid, name, email,true,isNewUser,true,userId);
                     user.setNew(isNewUser);
                     authenticatedUserMutableLiveData.postValue(user);
                     authenticatedUserMutableLiveData.setValue(user);
