@@ -11,30 +11,27 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.GoogleAuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.Utils;
-import com.mehboob.myshadi.databinding.FragmentSignInBinding;
 import com.mehboob.myshadi.databinding.FragmentSignUpBinding;
 import com.mehboob.myshadi.model.UserAuth;
+import com.mehboob.myshadi.room.models.User;
 import com.mehboob.myshadi.viewmodel.AuthViewModel;
+import com.mehboob.myshadi.viewmodel.UserViewModel;
 
 
 public class SignUpFragment extends Fragment {
@@ -48,9 +45,13 @@ public class SignUpFragment extends Fragment {
 
     private final int RC_SIGN_IN = 100;
 
+    private UserViewModel userViewModel;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         authViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(AuthViewModel.class);
 
@@ -71,14 +72,23 @@ public class SignUpFragment extends Fragment {
         googleSignInClient = GoogleSignIn.getClient(getActivity().getApplication(), googleSignInOptions);
 
 
-
-
-
         binding.btnLogin.setOnClickListener(view -> {
-          //  navController.navigate(R.id.action_signUpFragment_to_signInFragment);
+            //  navController.navigate(R.id.action_signUpFragment_to_signInFragment);
 
+            navigate(savedInstanceState);
 
-            Utils.safelyNavigate(navController,R.id.action_signUpFragment_to_signInFragment,savedInstanceState);
+        });
+
+        userViewModel.getLiveData().observe(getViewLifecycleOwner(), user -> {
+            if (user != null && user.isAuthenticated()) {
+                // User is added to the Room database and authenticated, proceed with your app logic
+                // For example, navigate to the main activity
+                navigate(savedInstanceState);
+            } else {
+                // User not added or not authenticated, show the signup page
+                // For example, display a fragment with the signup form
+                Log.d("room", "onCreateView: nothings");
+            }
         });
         return binding.getRoot();
     }
@@ -100,7 +110,10 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onChanged(UserAuth userAuth) {
                 if (userAuth.isAuthenticated()) {
-                    Utils.safelyNavigate(navController,R.id.action_signUpFragment_to_signInFragment,savedInstanceState);
+
+
+                    insertUserToLocal(userAuth, savedInstanceState);
+
                 }
             }
         });
@@ -135,4 +148,25 @@ public class SignUpFragment extends Fragment {
 
     }
 
+    private void insertUserToLocal(UserAuth userAuth, Bundle savedInstanceState) {
+        userAuth.setCreated(true);
+        userViewModel.insertUser(new User(userAuth.getUserName(), userAuth.getName(), userAuth.getEmail(), userAuth.isAuthenticated()
+                , userAuth.getUserId(), true));
+
+
+        userViewModel.getLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+
+                Log.d("room", "Inserted to local");
+                navigate(savedInstanceState);
+
+            }
+        });
+
+    }
+
+    public void navigate(Bundle savedInstanceState) {
+        Utils.safelyNavigate(navController, R.id.action_signUpFragment_to_signInFragment, savedInstanceState);
+    }
 }

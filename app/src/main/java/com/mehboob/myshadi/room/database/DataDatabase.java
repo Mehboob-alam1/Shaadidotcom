@@ -13,29 +13,29 @@ import com.mehboob.myshadi.room.Dao.UserDao;
 import com.mehboob.myshadi.room.models.User;
 
 @Database(entities = {User.class}, version = 1)
-public abstract class AppDatabase extends RoomDatabase {
+public abstract class DataDatabase extends RoomDatabase {
+
     private static final String DATABASE_NAME = "UserData";
 
     public abstract UserDao userDao();
 
-    public static volatile AppDatabase instance = null;
 
+    private static volatile DataDatabase instance = null;
 
-    public static AppDatabase getInstance(Context context) {
-
+    public static DataDatabase getInstance(Context context) {
         if (instance == null) {
-
-
-            synchronized (AppDatabase.class) {
+            synchronized (DataDatabase.class) {
                 if (instance == null) {
-                    instance = Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME)
+                    instance = Room.databaseBuilder(context, DataDatabase.class, DATABASE_NAME)
                             .addCallback(callback)
                             .build();
                 }
             }
         }
+
         return instance;
     }
+
 
     static Callback callback = new Callback() {
         @Override
@@ -45,15 +45,19 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
+
     static class PopulateAsyncTask extends AsyncTask<Void, Void, Void> {
         private UserDao userDao;
 
-        PopulateAsyncTask(AppDatabase database) {
-            userDao = database.userDao();
+        private UserDao dao;
+        public PopulateAsyncTask(DataDatabase dataDatabase) {
+            userDao = dataDatabase.userDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
+
+            userDao.deleteUserData();
             return null;
         }
     }

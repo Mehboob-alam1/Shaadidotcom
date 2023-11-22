@@ -29,15 +29,15 @@ import com.mehboob.myshadi.model.UserAuth;
 
 import java.util.concurrent.Executor;
 
-public class GoogleSignInRepo  {
+public class GoogleSignInRepo {
 
     private Application application;
     private MutableLiveData<Boolean> isLoggedIn;
     private FirebaseAuth auth;
-private  MutableLiveData<UserAuth> authenticatedUserMutableLiveData;
+    private MutableLiveData<UserAuth> authenticatedUserMutableLiveData;
 
 
-//    private FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+    //    private FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
 //    private CollectionReference usersRef = rootRef.collection(USERS);
     public GoogleSignInRepo(Application application) {
         this.application = application;
@@ -47,7 +47,6 @@ private  MutableLiveData<UserAuth> authenticatedUserMutableLiveData;
         authenticatedUserMutableLiveData = new MutableLiveData<>();
 
 
-
     }
 
     public MutableLiveData<Boolean> getIsLoggedIn() {
@@ -55,11 +54,9 @@ private  MutableLiveData<UserAuth> authenticatedUserMutableLiveData;
     }
 
 
-
     public MutableLiveData<UserAuth> getAuthenticatedUserMutableLiveData() {
         return authenticatedUserMutableLiveData;
     }
-
 
 
     // Sign in using Google
@@ -75,18 +72,18 @@ private  MutableLiveData<UserAuth> authenticatedUserMutableLiveData;
                     String uid = firebaseUser.getUid();
                     String name = firebaseUser.getDisplayName();
                     String email = firebaseUser.getEmail();
-                     String userId= firebaseUser.getUid();
+                    String userId = firebaseUser.getUid();
 
-                    UserAuth user = new UserAuth(uid, name, email,true,isNewUser,true,userId);
+                    UserAuth user = new UserAuth(uid, name, email, true, isNewUser, true, userId);
                     user.setNew(isNewUser);
                     authenticatedUserMutableLiveData.postValue(user);
-                    authenticatedUserMutableLiveData.setValue(user);
+                    //  authenticatedUserMutableLiveData.setValue(user);
                     isLoggedIn.postValue(true);
                     Toast.makeText(application, "User posted successfully", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 isLoggedIn.postValue(false);
-                Toast.makeText(application, ""+authTask.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(application, "" + authTask.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

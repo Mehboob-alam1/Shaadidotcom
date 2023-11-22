@@ -4,41 +4,55 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.mehboob.myshadi.room.Dao.UserDao;
-import com.mehboob.myshadi.room.database.AppDatabase;
+import com.mehboob.myshadi.room.database.DataDatabase;
 import com.mehboob.myshadi.room.models.User;
 
 public class DataRepository {
-    private AppDatabase database;
-    private LiveData<User> userData;
-    private Application application;
 
+    private Application application;
+    private LiveData<User> userLiveData;
+
+    private DataDatabase dataDatabase;
 
     public DataRepository(Application application) {
         this.application = application;
-        database = AppDatabase.getInstance(application);
+        dataDatabase = DataDatabase.getInstance(application);
+        userLiveData = dataDatabase.userDao().getUserData();
+
+
     }
 
-    public void insertUser(LiveData<User> userLiveData) {
-new InsertAsyncTask(database).execute(userLiveData);
+
+    public long checkIfInserted(){
+        if (getUserMutableLiveData().getValue() !=null &&getUserMutableLiveData().getValue().isCreated() ){
+            return 1;
+        }else {
+            return 0;
+        }
+    }
+    public void insertData(User userMutableLiveData) {
+new InsertAsyncTask(dataDatabase).execute(userMutableLiveData);
     }
 
-    public LiveData<User> getUserData() {
-        return userData;
+    public LiveData<User> getUserMutableLiveData() {
+        return userLiveData;
     }
 
-    static class InsertAsyncTask extends AsyncTask<LiveData<User>, Void, Void> {
+    static class InsertAsyncTask extends AsyncTask<User, Void, Void> {
         private UserDao userDao;
 
-        InsertAsyncTask(AppDatabase appDatabase) {
-            userDao = appDatabase.userDao();
+        InsertAsyncTask(DataDatabase dataDatabase) {
+            userDao = dataDatabase.userDao();
         }
 
-        @Override
-        protected Void doInBackground(LiveData<User>... liveData) {
 
-            userDao.insert(liveData[0].getValue());
+
+        @Override
+        protected Void doInBackground(User... users) {
+            userDao.insert(users[0]);
             return null;
         }
     }

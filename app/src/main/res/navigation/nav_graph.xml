@@ -24,5 +24,13 @@
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_profileForActivity"
+            app:destination="@id/profileForActivity" />
     </fragment>
+    <activity
+        android:id="@+id/profileForActivity"
+        android:name="com.mehboob.myshadi.views.activities.ProfileForActivity"
+        android:label="activity_profile_for"
+        tools:layout="@layout/activity_profile_for" />
 </navigation>

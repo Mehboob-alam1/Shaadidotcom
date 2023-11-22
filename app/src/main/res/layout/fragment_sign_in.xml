@@ -162,33 +162,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:id="@+id/txtLoginOtp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="@string/login_with_otp"
-                    android:textColor="@color/color_main" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/txtForgotPass"
-                    android:fontFamily="@font/roboto_medium"
-                    android:gravity="end"
-                    android:text="@string/forgot_password"
-                    android:textColor="@color/color_main" />
-
-            </LinearLayout>
 
             <Button
                 android:layout_width="180dp"
