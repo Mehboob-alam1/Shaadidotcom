@@ -1,6 +1,5 @@
 package com.mehboob.myshadi.views.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -27,7 +26,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.mehboob.myshadi.R;
-import com.mehboob.myshadi.Utils;
+import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.databinding.FragmentSignInBinding;
 import com.mehboob.myshadi.viewmodel.AuthViewModel;
 

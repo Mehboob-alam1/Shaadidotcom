@@ -1,4 +1,4 @@
-package com.mehboob.myshadi;
+package com.mehboob.myshadi.utils;
 
 import android.os.Bundle;
 import android.util.Log;

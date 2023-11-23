@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -26,7 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.mehboob.myshadi.R;
-import com.mehboob.myshadi.Utils;
+import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.databinding.FragmentSignUpBinding;
 import com.mehboob.myshadi.model.UserAuth;
 import com.mehboob.myshadi.room.models.User;
