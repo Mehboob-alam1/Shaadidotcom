@@ -3,6 +3,7 @@ package com.mehboob.myshadi.views.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,17 +13,19 @@ import android.widget.Toast;
 
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityProfileForBinding;
+import com.mehboob.myshadi.utils.SessionManager;
 
 public class ProfileForActivity extends AppCompatActivity {
     private ActivityProfileForBinding binding;
     private boolean enableButton = false;
 
+    private SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileForBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+sessionManager= new SessionManager(this);
         checkBoxesValidation();
         setButtonClickListeners();
     }
@@ -41,6 +44,8 @@ public class ProfileForActivity extends AppCompatActivity {
                 }
                 if (isGenderKnowChecked()) {
                     enableButton = true;
+                    uncheckGenderBoxes(R.id.chkFemale);
+                    uncheckGenderBoxes(R.id.chkMale);
 
                 } else {
                     enableButton = isAnyCheckboxChecked() && isAnyGenderCheckboxChecked();
@@ -185,7 +190,10 @@ public class ProfileForActivity extends AppCompatActivity {
                     String resultText = "Profile: " + profileText + "\nGender: " + genderKnown;
                     Log.d("ProfileActivity", "onClick: "+resultText);
                 }
-
+          sessionManager.saveProfileFor(profileText);
+          sessionManager.saveGender(genderKnown);
+                String resultText = "Shared Pref Profile: " + profileText + "\nGender: " + genderKnown;
+                Log.d("ProfileActivity", "onClick: "+resultText);
 
 
 

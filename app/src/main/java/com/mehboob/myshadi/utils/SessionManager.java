@@ -31,4 +31,18 @@ public class SessionManager {
 
         return sharedPreferences.getString(PROFILE_FOR,null);
     }
+
+
+    public void saveGender(String gender){
+
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(GENDER,gender);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String fetchGender(){
+
+        return sharedPreferences.getString(GENDER,null);
+    }
 }
