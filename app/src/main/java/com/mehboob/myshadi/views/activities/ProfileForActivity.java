@@ -3,6 +3,7 @@ package com.mehboob.myshadi.views.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,12 +21,13 @@ public class ProfileForActivity extends AppCompatActivity {
     private boolean enableButton = false;
 
     private SessionManager sessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileForBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-sessionManager= new SessionManager(this);
+        sessionManager = new SessionManager(this);
         checkBoxesValidation();
         setButtonClickListeners();
     }
@@ -183,19 +185,19 @@ sessionManager= new SessionManager(this);
                     }
                     String resultText = "Profile: " + profileText + "\nGender: " + genderKnown;
 
-                    Log.d("ProfileActivity", "onClick: "+resultText);
-                }else{
+                    Log.d("ProfileActivity", "onClick: " + resultText);
+                } else {
 
-                    genderKnown=getCheckedGenderText();
+                    genderKnown = getCheckedGenderText();
                     String resultText = "Profile: " + profileText + "\nGender: " + genderKnown;
-                    Log.d("ProfileActivity", "onClick: "+resultText);
+                    Log.d("ProfileActivity", "onClick: " + resultText);
                 }
-          sessionManager.saveProfileFor(profileText);
-          sessionManager.saveGender(genderKnown);
+                sessionManager.saveProfileFor(profileText);
+                sessionManager.saveGender(genderKnown);
                 String resultText = "Shared Pref Profile: " + profileText + "\nGender: " + genderKnown;
-                Log.d("ProfileActivity", "onClick: "+resultText);
+                Log.d("ProfileActivity", "onClick: " + resultText);
 
-
+                startActivity(new Intent(ProfileForActivity.this, NameDateBirthActivity.class));
 
             }
         });
