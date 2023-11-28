@@ -2,16 +2,20 @@ package com.mehboob.myshadi.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityRelgionBinding;
+import com.mehboob.myshadi.utils.SessionManager;
 
 public class ReligionCastActivity extends AppCompatActivity {
     private ActivityRelgionBinding binding;
+    private SessionManager sessionManager;
 
     private String[] religion = {"Hindu", "Muslim", "Christian", "Jain", "Sikh", "Buddhist", "Parsi", "Jewish", "Other", "No religion", "Spiritual - not religious"};
     private String[] community = {"Hindi", "Marathi", "Punjabi", "Bengali", "Urdu", "Gujrati", "Telugu", "Kannada", "English", "Tamil", "Odia", "Marwari", "Aka", "Arabic", "Arunachali", "Assamese", "Awadhi"
@@ -48,6 +52,7 @@ public class ReligionCastActivity extends AppCompatActivity {
 
         binding = ActivityRelgionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sessionManager= new SessionManager(this);
 
         binding.imgBack.setOnClickListener(view -> {
             finish();
@@ -61,6 +66,24 @@ public class ReligionCastActivity extends AppCompatActivity {
         binding.spinnerComunity.setOnItemSelectedListener(new CustomOnItemSelectedListener());
         binding.spinnerLivingIn.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 
+
+        binding.btnContinue.setOnClickListener(view -> {
+
+            String religion=binding.spinnerReligion.getSelectedItem().toString();
+            String community=binding.spinnerComunity.getSelectedItem().toString();
+            String livingIn=binding.spinnerLivingIn.getSelectedItem().toString();
+            sessionManager.saveReligion(religion);
+            sessionManager.saveCommunity(community);
+            sessionManager.saveLivingIn(livingIn);
+
+            startActivity(new Intent(ReligionCastActivity.this, EmailPhoneNumberActivity.class));
+
+
+
+
+
+        });
+
     }
     private class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
@@ -71,6 +94,7 @@ public class ReligionCastActivity extends AppCompatActivity {
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
+
             // Do nothing
         }
     }
