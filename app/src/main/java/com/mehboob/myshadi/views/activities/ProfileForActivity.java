@@ -224,4 +224,6 @@ public class ProfileForActivity extends AppCompatActivity {
         }
         return ""; // Return an empty string if none are checked
     }
+
+
 }
