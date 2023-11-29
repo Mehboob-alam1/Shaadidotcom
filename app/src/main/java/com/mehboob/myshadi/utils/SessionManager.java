@@ -18,6 +18,10 @@ public class SessionManager {
     private final String COMMUNITY = "community";
     private final String LIVING_IN = "living_in";
 
+    private final String EMAIL = "email";
+
+    private final String PHONE_NUMBER = "phone";
+
 
     public SessionManager(Context context) {
 
@@ -28,6 +32,8 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(RELIGION, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(COMMUNITY, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(LIVING_IN, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(EMAIL, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(PHONE_NUMBER, Context.MODE_PRIVATE);
 
 
     }
@@ -37,6 +43,32 @@ public class SessionManager {
         editor.putString(RELIGION, religion);
         editor.apply();
         editor.commit();
+    }
+
+
+    public void saveEmail(String email) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(EMAIL, email);
+        editor.apply();
+        editor.commit();
+
+    }
+
+
+    public String fetchEmail() {
+        return sharedPreferences.getString(EMAIL, null);
+    }
+
+    public void savePhoneNumber(String phoneNumber) {
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PHONE_NUMBER, phoneNumber);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String fetchPhoneNumber() {
+        return sharedPreferences.getString(PHONE_NUMBER, null);
     }
 
     public String fetchReligion() {

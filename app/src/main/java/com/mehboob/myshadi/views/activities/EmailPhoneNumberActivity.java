@@ -9,12 +9,15 @@ import android.util.Patterns;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityEmailPhoneNumberBinding;
+import com.mehboob.myshadi.utils.SessionManager;
 
 public class EmailPhoneNumberActivity extends AppCompatActivity {
     private ActivityEmailPhoneNumberBinding binding;
+    private SessionManager sessionManager;
     String[] phoneCountryCodes = {"+92",
             "+93", "+355", "+213", "+376", "+244", "+1-268", "+54", "+374", "+61", "+43",
             "+994", "+1-242", "+973", "+880", "+1-246", "+375", "+32", "+501", "+229", "+975",
@@ -43,12 +46,27 @@ public class EmailPhoneNumberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityEmailPhoneNumberBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        sessionManager = new SessionManager(this);
         setPhoneCodes();
 
 
         binding.etEmail.addTextChangedListener(textWatcher);
         binding.etPhoneNumber.addTextChangedListener(textWatcher);
+
+
+        binding.btnContinue.setOnClickListener(view -> {
+
+            if (binding.etPhoneNumber.getText().toString().length() < 9) {
+                Toast.makeText(this, "Phone number invalid", Toast.LENGTH_SHORT).show();
+            } else {
+
+                String email = binding.etEmail.getText().toString();
+                String phoneNumber = binding.spinnerCountryCode.getSelectedItem().toString() + binding.etPhoneNumber.getText().toString();
+                sessionManager.saveEmail(email);
+                sessionManager.savePhoneNumber(phoneNumber);
+
+            }
+        });
 
 
     }
@@ -72,7 +90,7 @@ public class EmailPhoneNumberActivity extends AppCompatActivity {
             boolean isValid = isValidEmail(binding.etEmail.getText()
                     .toString());
 
-            if (!isValid){
+            if (!isValid) {
                 binding.etEmail.setError("Invalid email");
             }
 
