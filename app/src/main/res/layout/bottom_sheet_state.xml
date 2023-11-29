@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="16dp"
-    android:layout_marginTop="16dp"
+
     app:cardElevation="5dp"
     android:layout_height="match_parent">
 
@@ -37,33 +37,45 @@
 
 
         <LinearLayout
+            android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:gravity="center_vertical"
             android:background="@drawable/edit_text_back"
+            android:backgroundTint="#D9D6D6"
+            android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:backgroundTint="#D9D6D6"
             app:layout_constraintTop_toBottomOf="@+id/txtTitle">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/baseline_search_24"
-                android:layout_marginStart="8dp"/>
+                android:layout_marginStart="8dp"
+                android:src="@drawable/baseline_search_24" />
 
             <EditText
+                android:id="@+id/etSearch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"
-                android:hint="Search"
                 android:layout_marginStart="8dp"
-                android:id="@+id/etSearch"/>
+                android:background="@null"
+                android:hint="Search" />
 
         </LinearLayout>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
         
     </androidx.constraintlayout.widget.ConstraintLayout>
 

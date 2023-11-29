@@ -2,6 +2,7 @@ package com.mehboob.myshadi.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -48,7 +49,7 @@ public class EmailPhoneNumberActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         sessionManager = new SessionManager(this);
         setPhoneCodes();
-
+binding.imgBack.setOnClickListener(view -> finish());
 
         binding.etEmail.addTextChangedListener(textWatcher);
         binding.etPhoneNumber.addTextChangedListener(textWatcher);
@@ -64,6 +65,8 @@ public class EmailPhoneNumberActivity extends AppCompatActivity {
                 String phoneNumber = binding.spinnerCountryCode.getSelectedItem().toString() + binding.etPhoneNumber.getText().toString();
                 sessionManager.saveEmail(email);
                 sessionManager.savePhoneNumber(phoneNumber);
+
+                startActivity(new Intent(EmailPhoneNumberActivity.this, StateCityActivity.class));
 
             }
         });
