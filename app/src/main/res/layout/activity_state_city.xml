@@ -7,6 +7,10 @@
     tools:context=".views.activities.StateCityActivity">
 
 
+
+
+
+
     <ImageView
         android:id="@+id/imgBack"
         android:layout_width="wrap_content"

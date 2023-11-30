@@ -18,7 +18,17 @@ import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityStateCityBinding;
 import com.mehboob.myshadi.databinding.BottomSheetStateBinding;
 
-public class StateCityActivity extends AppCompatActivity {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+public class StateCityActivity extends AppCompatActivity  {
 private ActivityStateCityBinding binding;
 
 private String[] states={"Gilgit-Baltistan","Punjab","Sindh","Khyber Pakhtunkhwa","Balochistan","Azad Kashmir"};
@@ -36,6 +46,8 @@ binding.txtState.setOnTouchListener(new View.OnTouchListener() {
         return false;
     }
 });
+
+
 
     }
 
@@ -63,5 +75,34 @@ binding.txtState.setOnTouchListener(new View.OnTouchListener() {
 
 
         bottomSheetDialog.show();
+    }
+
+    private List<String> loadCountries() {
+        List<String> countryList = new ArrayList<>();
+
+        try {
+            // Load JSON file from assets
+            InputStream is = getAssets().open("countries.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            String json = new String(buffer, StandardCharsets.UTF_8);
+
+            // Parse JSON array
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray dataArray = jsonObject.getJSONArray("Data");
+
+            for (int i = 0; i < dataArray.length(); i++) {
+                JSONObject country = dataArray.getJSONObject(i);
+                String countryName = country.getString("name");
+                countryList.add(countryName);
+            }
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        return countryList;
     }
 }

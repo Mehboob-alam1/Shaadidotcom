@@ -17,6 +17,7 @@ public class SessionManager {
     private final String RELIGION = "religion";
     private final String COMMUNITY = "community";
     private final String LIVING_IN = "living_in";
+    private final String COUNTRY_CODE = "country_code";
 
     private final String EMAIL = "email";
 
@@ -34,8 +35,22 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(LIVING_IN, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(EMAIL, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(PHONE_NUMBER, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(COUNTRY_CODE, Context.MODE_PRIVATE);
 
 
+    }
+
+    public void saveCountryCode(String code){
+
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(COUNTRY_CODE,code);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String fetchCountryCode(){
+
+        return sharedPreferences.getString(COUNTRY_CODE,null);
     }
 
     public void saveReligion(String religion) {
