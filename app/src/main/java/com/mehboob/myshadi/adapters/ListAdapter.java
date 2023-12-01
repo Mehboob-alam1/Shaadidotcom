@@ -101,9 +101,15 @@ public class ListAdapter extends BaseAdapter implements Filterable {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            // Update the filtered list and notify the adapter
-            filteredList = (List<Country>) results.values;
+            // Clear the current filtered list
+            filteredList.clear();
+
+            // Add the filtered results to the filtered list
+            filteredList.addAll((List<Country>) results.values);
+
+            // Notify the adapter
             notifyDataSetChanged();
         }
     }
+
 }

@@ -19,9 +19,14 @@ public class SessionManager {
     private final String LIVING_IN = "living_in";
     private final String COUNTRY_CODE = "country_code";
 
+    private final String STATE_NAME="state_name";
+    private final String STATE_CODE="state_code";
+
     private final String EMAIL = "email";
 
     private final String PHONE_NUMBER = "phone";
+
+    private final String CITY_NAME ="city_name";
 
 
     public SessionManager(Context context) {
@@ -36,9 +41,45 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(EMAIL, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(PHONE_NUMBER, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(COUNTRY_CODE, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(STATE_NAME, Context.MODE_PRIVATE);
+
+        sharedPreferences = context.getSharedPreferences(STATE_CODE, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(CITY_NAME, Context.MODE_PRIVATE);
 
 
     }
+
+public void saveCityName(String cityName){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(CITY_NAME,cityName);
+    editor.apply();
+    editor.commit();
+}
+
+public String fetchCityName(){
+        return sharedPreferences.getString(CITY_NAME,null);
+}
+    public void saveStateName(String stateName){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(STATE_NAME,stateName);
+        editor.apply();
+        editor.commit();
+
+    }
+
+    public String fetchStateName(){
+        return sharedPreferences.getString(STATE_NAME,null);
+    }
+    public void saveStateCode(String stateCode){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(STATE_CODE,stateCode);
+        editor.apply();
+        editor.commit();
+    }
+    public String fetchStateCode(){
+        return sharedPreferences.getString(STATE_CODE,null);
+    }
+
 
     public void saveCountryCode(String code){
 

@@ -8,11 +8,11 @@
 
 
     <ImageView
+        android:id="@+id/imgBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:id="@+id/imgBack"
         android:src="@drawable/baseline_arrow_back_ios_new_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,9 +40,9 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
         <LinearLayout
+            android:id="@+id/lineRelegion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lineRelegion"
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
@@ -52,22 +52,28 @@
                 android:fontFamily="@font/roboto_bold"
                 android:text="Religion"
                 android:textColor="@color/black"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
-
-
-            <Spinner
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-android:id="@+id/spinnerReligion"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/edit_text_back"/>
+                android:background="@drawable/edit_text_back">
+
+                <Spinner
+                    android:id="@+id/spinnerReligion"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/lineCommunity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lineCommunity"
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
@@ -77,22 +83,31 @@ android:id="@+id/spinnerReligion"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Community"
                 android:textColor="@color/black"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
 
-
-            <Spinner
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-android:id="@+id/spinnerComunity"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/edit_text_back"/>
+                android:background="@drawable/edit_text_back">
+
+                <Spinner
+                    android:id="@+id/spinnerComunity"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+
+                    />
+
+            </LinearLayout>
+
 
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/lineLiving"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lineLiving"
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
@@ -102,24 +117,27 @@ android:id="@+id/spinnerComunity"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Living Area"
                 android:textColor="@color/black"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
-
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-android:id="@+id/spinnerLivingIn"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/edit_text_back"/>
+                android:background="@drawable/edit_text_back"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerLivingIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+
+                    />
+
+
+            </LinearLayout>
+
 
         </LinearLayout>
-
-
-
-
-
-
 
 
     </LinearLayout>
