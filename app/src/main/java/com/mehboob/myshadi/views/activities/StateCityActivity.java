@@ -22,6 +22,7 @@ import com.mehboob.myshadi.databinding.ActivityStateCityBinding;
 import com.mehboob.myshadi.databinding.BottomSheetStateBinding;
 import com.mehboob.myshadi.json.State;
 import com.mehboob.myshadi.utils.SessionManager;
+import com.mehboob.myshadi.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -96,7 +97,7 @@ public class StateCityActivity extends AppCompatActivity {
     private SessionManager sessionManager;
 
     private String TAG = "StateActivity";
-    private List<String> cities;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,16 +112,20 @@ public class StateCityActivity extends AppCompatActivity {
         setSubCommunities();
 
         binding.btnContinue.setOnClickListener(view -> {
-            if (binding.txtState.getSelectedItem()==null){
+            if (binding.txtState.getSelectedItem() == null) {
 
-                Toast.makeText(this, "Add your state", Toast.LENGTH_SHORT).show();
+                Utils.showSnackBar(this, "Add your state");
 
-            }else if (binding.txtCommunity.getSelectedItem()==null){
-                Toast.makeText(this, "Add your community", Toast.LENGTH_SHORT).show();
-            }else{
-                // start activty
+            } else if (binding.txtCommunity.getSelectedItem() == null) {
+                Utils.showSnackBar(this, "Add your community");
+            } else if (binding.etCity.getText().toString().isEmpty()) {
+                Utils.showSnackBar(this, "Add your city");
+            } else {
+                // start activity
 
-                startActivity(new Intent(StateCityActivity.this,MartialStatusActivity.class));
+                sessionManager.saveCityName(sessionManager.fetchCityName());
+
+                startActivity(new Intent(StateCityActivity.this, MartialStatusActivity.class));
             }
         });
 
@@ -205,27 +210,5 @@ public class StateCityActivity extends AppCompatActivity {
         }
     }
 
-//    cities = loadCities(sessionManager.fetchStateCode());
-//
-//    ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cities);
-//
-//    // Specify the layout to use when the list of choices appears
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//    // Apply the adapter to the spinner
-//            binding.txtCity.setAdapter(adapter);
-//
-//            binding.txtCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//        @Override
-//        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//            sessionManager.saveCityName(binding.txtCity.getSelectedItem().toString());
-//
-//        }
-//
-//        @Override
-//        public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//        }
-//    });
-//
+
 }

@@ -3,7 +3,9 @@ package com.mehboob.myshadi.views.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +21,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +78,7 @@ public class MartialStatusActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
 
-        setCitiesSpinner();
+
         setMaritalStatus();
         setChildrenSpinner();
         setHeightSpinner();
@@ -182,10 +185,10 @@ public class MartialStatusActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 if (!adapterView.getSelectedItem().equals("Never Married")) {
-                    binding.lineChildren.setVisibility(View.GONE);
+                    binding.lineChildren.setVisibility(View.VISIBLE);
 
                 } else {
-                    binding.lineChildren.setVisibility(View.VISIBLE);
+                    binding.lineChildren.setVisibility(View.GONE);
 
                 }
                 sessionManager.saveMaritalStatus(adapterView.getSelectedItem().toString());
@@ -199,60 +202,5 @@ public class MartialStatusActivity extends AppCompatActivity {
 
     }
 
-    private void setCitiesSpinner() {
-        cities = loadCities(sessionManager.fetchStateCode());
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cities);
 
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        binding.txtCity.setAdapter(adapter);
-
-
-        binding.txtCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                sessionManager.saveCityName(adapterView.getSelectedItem().toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
-
-
-    private List<String> loadCities(String selectedStateCode) {
-        List<String> stateList = new ArrayList<>();
-
-        try {
-            // Load JSON file from assets
-            InputStream is = getAssets().open("cities.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            String json = new String(buffer, StandardCharsets.UTF_8);
-
-            // Parse JSON array
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray dataArray = jsonObject.getJSONArray("Data");
-
-            for (int i = 0; i < dataArray.length(); i++) {
-                JSONObject state = dataArray.getJSONObject(i);
-                String stateCode = state.getString("code");
-                if (selectedStateCode.equals(stateCode)) {
-                    String cityname = state.getString("name");
-                    stateList.add(cityname);
-                }
-            }
-
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-
-        return stateList;
-    }
 }
