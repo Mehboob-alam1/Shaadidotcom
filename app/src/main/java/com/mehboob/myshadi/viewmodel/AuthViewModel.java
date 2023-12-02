@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.AuthCredential;
-import com.mehboob.myshadi.model.UserAuth;
+import com.mehboob.myshadi.model.profilemodel.UserAuth;
 import com.mehboob.myshadi.repository.GoogleSignInRepo;
 
 public class AuthViewModel extends AndroidViewModel {

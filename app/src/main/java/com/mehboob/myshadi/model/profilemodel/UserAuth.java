@@ -1,4 +1,4 @@
-package com.mehboob.myshadi.model;
+package com.mehboob.myshadi.model.profilemodel;
 
 public class UserAuth {
 

@@ -27,6 +27,11 @@ public class SessionManager {
     private final String PHONE_NUMBER = "phone";
 
     private final String CITY_NAME ="city_name";
+    private final String SUB_COMMUNITY ="subCommunity";
+    private final String MARITAL_STATUS ="marital_status";
+    private final String CHILDREN ="children";
+    private final String HEIGHT ="height";
+    private final String DIET ="diet";
 
 
     public SessionManager(Context context) {
@@ -42,13 +47,64 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(PHONE_NUMBER, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(COUNTRY_CODE, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(STATE_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(MARITAL_STATUS, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(CHILDREN, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(HEIGHT, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(DIET, Context.MODE_PRIVATE);
 
         sharedPreferences = context.getSharedPreferences(STATE_CODE, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(CITY_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(SUB_COMMUNITY, Context.MODE_PRIVATE);
 
 
     }
 
+    public void saveMaritalStatus(String maritalStatus){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(MARITAL_STATUS,maritalStatus);
+        editor.apply();
+        editor.commit();
+    }
+    public String fetchMaritalStatus(){
+        return sharedPreferences.getString(MARITAL_STATUS,null);
+    }
+    public void saveChildren(String children){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(CHILDREN,children);
+        editor.apply();
+        editor.commit();
+    }
+    public String fetchChildren(){
+        return sharedPreferences.getString(CHILDREN,null);
+    }
+    public void saveHeight(String height){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(HEIGHT,height);
+        editor.apply();
+        editor.commit();
+    }
+    public String fetchHeight(){
+        return sharedPreferences.getString(HEIGHT,null);
+    }
+    public void saveDiet(String diet){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(DIET,diet);
+        editor.apply();
+        editor.commit();
+    }
+    public String fetchDiet(){
+        return sharedPreferences.getString(DIET,null);
+    }
+    public void saveSubCommunity(String subCommunity){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(SUB_COMMUNITY,subCommunity);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String fetchSubCommunity(){
+        return sharedPreferences.getString(SUB_COMMUNITY,null);
+    }
 public void saveCityName(String cityName){
         SharedPreferences.Editor editor= sharedPreferences.edit();
         editor.putString(CITY_NAME,cityName);

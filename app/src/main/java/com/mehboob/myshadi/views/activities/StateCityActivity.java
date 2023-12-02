@@ -2,6 +2,7 @@ package com.mehboob.myshadi.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -35,11 +36,67 @@ import java.util.List;
 public class StateCityActivity extends AppCompatActivity {
     private ActivityStateCityBinding binding;
 
-    private String[] states = {"Gilgit-Baltistan", "Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan", "Azad Kashmir"};
+    String[] religiousDenominations = {
+            // Christianity
+            "Catholicism",
+            "Anglicanism",
+            "Lutheranism",
+            "Presbyterianism",
+            "Baptist",
+            "Methodist",
+            "Pentecostalism",
+            "Eastern Orthodoxy",
+            "Oriental Orthodoxy",
+            "Mormonism",
+            "Jehovah's Witnesses",
+            // Islam
+            "Sunni Islam",
+            "Hanafi",
+            "Maliki",
+            "Shafi'i",
+            "Hanbali",
+            "Brelvi",
+            "Deobandi",
+            "Shia Islam",
+            "Twelver (Ithna Ashari)",
+            "Ismaili",
+            "Zaidi",
+
+            "Sufism",
+            // Judaism
+            "Orthodox Judaism",
+            "Hasidic Judaism",
+            "Modern Orthodox",
+            "Conservative Judaism",
+            "Reform Judaism",
+            "Reconstructionist Judaism",
+            // Hinduism
+            "Vaishnavism",
+            "Shaivism",
+            "Shaktism",
+            "Smartism",
+            "Advaita Vedanta",
+            "Dvaita Vedanta",
+            "Vishishtadvaita",
+            // Buddhism
+            "Theravada Buddhism",
+            "Mahayana Buddhism",
+            "Zen Buddhism",
+            "Pure Land Buddhism",
+            "Tibetan Buddhism",
+            "Vajrayana Buddhism",
+            // Sikhism
+            "Sikhism",
+            // Jainism
+            "Digambara",
+            "Svetambara"
+            // Add more denominations as needed
+    };
+
     private SessionManager sessionManager;
 
     private String TAG = "StateActivity";
-  private   List<String> cities;
+    private List<String> cities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +108,46 @@ public class StateCityActivity extends AppCompatActivity {
 
         loadStates(sessionManager.fetchCountryCode());
 
+        setSubCommunities();
+
+        binding.btnContinue.setOnClickListener(view -> {
+            if (binding.txtState.getSelectedItem()==null){
+
+                Toast.makeText(this, "Add your state", Toast.LENGTH_SHORT).show();
+
+            }else if (binding.txtCommunity.getSelectedItem()==null){
+                Toast.makeText(this, "Add your community", Toast.LENGTH_SHORT).show();
+            }else{
+                // start activty
+
+                startActivity(new Intent(StateCityActivity.this,MartialStatusActivity.class));
+            }
+        });
+
 
     }
 
+    private void setSubCommunities() {
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, religiousDenominations);
+//
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.txtCommunity.setAdapter(adapter);
+        binding.txtCommunity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                sessionManager.saveSubCommunity(adapterView.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+    }
 
 
     private void loadStates(String selectedCountryCode) {
@@ -98,7 +191,6 @@ public class StateCityActivity extends AppCompatActivity {
                     sessionManager.saveStateCode(stateList.get(i).getCode());
 
 
-
                 }
 
                 @Override
@@ -106,8 +198,6 @@ public class StateCityActivity extends AppCompatActivity {
 
                 }
             });
-
-
 
 
         } catch (IOException | JSONException e) {
@@ -137,35 +227,5 @@ public class StateCityActivity extends AppCompatActivity {
 //
 //        }
 //    });
-//    private List<String> loadCities(String selectedStateCode) {
-//        List<String> stateList = new ArrayList<>();
 //
-//        try {
-//            // Load JSON file from assets
-//            InputStream is = getAssets().open("cities.json");
-//            int size = is.available();
-//            byte[] buffer = new byte[size];
-//            is.read(buffer);
-//            is.close();
-//            String json = new String(buffer, StandardCharsets.UTF_8);
-//
-//            // Parse JSON array
-//            JSONObject jsonObject = new JSONObject(json);
-//            JSONArray dataArray = jsonObject.getJSONArray("Data");
-//
-//            for (int i = 0; i < dataArray.length(); i++) {
-//                JSONObject state = dataArray.getJSONObject(i);
-//                String stateCode = state.getString("code");
-//                if (selectedStateCode.equals(stateCode)) {
-//                    String cityname = state.getString("name");
-//                    stateList.add(cityname);
-//                }
-//            }
-//
-//        } catch (IOException | JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return stateList;
-//    }
 }

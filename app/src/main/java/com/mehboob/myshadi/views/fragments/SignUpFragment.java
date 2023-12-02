@@ -27,7 +27,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.databinding.FragmentSignUpBinding;
-import com.mehboob.myshadi.model.UserAuth;
+import com.mehboob.myshadi.model.profilemodel.UserAuth;
 import com.mehboob.myshadi.room.models.User;
 import com.mehboob.myshadi.viewmodel.AuthViewModel;
 import com.mehboob.myshadi.viewmodel.UserViewModel;

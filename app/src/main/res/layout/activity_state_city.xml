@@ -169,7 +169,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/btn_back_unclicked"
+        android:background="@drawable/btn_back_clicked"
         android:enabled="true"
         android:fontFamily="@font/roboto_medium"
         android:text="Continue"
