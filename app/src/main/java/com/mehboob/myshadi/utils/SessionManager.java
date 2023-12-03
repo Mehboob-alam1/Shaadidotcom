@@ -32,6 +32,12 @@ public class SessionManager {
     private final String CHILDREN ="children";
     private final String HEIGHT ="height";
     private final String DIET ="diet";
+    private final String QUALIFICATION="qualification";
+    private final String COLLEGE="college";
+
+    private final String INCOME="income";
+    private String WORKS_WITH="work_with";
+    private String WORKS_AS="works_as";
 
 
     public SessionManager(Context context) {
@@ -51,6 +57,11 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(CHILDREN, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(HEIGHT, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(DIET, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(QUALIFICATION, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(COLLEGE, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(INCOME, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(WORKS_WITH, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(WORKS_AS, Context.MODE_PRIVATE);
 
         sharedPreferences = context.getSharedPreferences(STATE_CODE, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(CITY_NAME, Context.MODE_PRIVATE);
@@ -58,7 +69,58 @@ public class SessionManager {
 
 
     }
+    public void saveIncome(String income){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(INCOME,income);
+        editor.apply();
+        editor.commit();
+    }
 
+    public String fetchIncome(){
+        return sharedPreferences.getString(INCOME,"null");
+    }
+    public void saveWorkWith(String workWith){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(WORKS_WITH,workWith);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String fetchWorkWith(){
+        return sharedPreferences.getString(WORKS_WITH,"null");
+    }
+
+    public void saveWorkAs(String workAs){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(WORKS_AS,workAs);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String fetchWorkAs(){
+        return sharedPreferences.getString(WORKS_AS,"null");
+    }
+    public void saveCollege(String college){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(COLLEGE,college);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String fetchCollege(){
+        return sharedPreferences.getString(COLLEGE,"null");
+    }
+    public void saveQualifications(String qualifications){
+
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(QUALIFICATION,qualifications);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String fetchQualifications(){
+        return sharedPreferences.getString(QUALIFICATION,"null");
+    }
     public void saveMaritalStatus(String maritalStatus){
         SharedPreferences.Editor editor= sharedPreferences.edit();
         editor.putString(MARITAL_STATUS,maritalStatus);
@@ -66,7 +128,7 @@ public class SessionManager {
         editor.commit();
     }
     public String fetchMaritalStatus(){
-        return sharedPreferences.getString(MARITAL_STATUS,null);
+        return sharedPreferences.getString(MARITAL_STATUS,"null");
     }
     public void saveChildren(String children){
         SharedPreferences.Editor editor= sharedPreferences.edit();
@@ -75,7 +137,7 @@ public class SessionManager {
         editor.commit();
     }
     public String fetchChildren(){
-        return sharedPreferences.getString(CHILDREN,null);
+        return sharedPreferences.getString(CHILDREN,"null");
     }
     public void saveHeight(String height){
         SharedPreferences.Editor editor= sharedPreferences.edit();
@@ -84,7 +146,7 @@ public class SessionManager {
         editor.commit();
     }
     public String fetchHeight(){
-        return sharedPreferences.getString(HEIGHT,null);
+        return sharedPreferences.getString(HEIGHT,"null");
     }
     public void saveDiet(String diet){
         SharedPreferences.Editor editor= sharedPreferences.edit();
@@ -93,7 +155,7 @@ public class SessionManager {
         editor.commit();
     }
     public String fetchDiet(){
-        return sharedPreferences.getString(DIET,null);
+        return sharedPreferences.getString(DIET,"null");
     }
     public void saveSubCommunity(String subCommunity){
         SharedPreferences.Editor editor= sharedPreferences.edit();
@@ -103,7 +165,7 @@ public class SessionManager {
     }
 
     public String fetchSubCommunity(){
-        return sharedPreferences.getString(SUB_COMMUNITY,null);
+        return sharedPreferences.getString(SUB_COMMUNITY,"null");
     }
 public void saveCityName(String cityName){
         SharedPreferences.Editor editor= sharedPreferences.edit();
@@ -113,7 +175,7 @@ public void saveCityName(String cityName){
 }
 
 public String fetchCityName(){
-        return sharedPreferences.getString(CITY_NAME,null);
+        return sharedPreferences.getString(CITY_NAME,"null");
 }
     public void saveStateName(String stateName){
         SharedPreferences.Editor editor= sharedPreferences.edit();
@@ -124,7 +186,7 @@ public String fetchCityName(){
     }
 
     public String fetchStateName(){
-        return sharedPreferences.getString(STATE_NAME,null);
+        return sharedPreferences.getString(STATE_NAME,"null");
     }
     public void saveStateCode(String stateCode){
         SharedPreferences.Editor editor= sharedPreferences.edit();
@@ -133,7 +195,7 @@ public String fetchCityName(){
         editor.commit();
     }
     public String fetchStateCode(){
-        return sharedPreferences.getString(STATE_CODE,null);
+        return sharedPreferences.getString(STATE_CODE,"null");
     }
 
 
@@ -147,7 +209,7 @@ public String fetchCityName(){
 
     public String fetchCountryCode(){
 
-        return sharedPreferences.getString(COUNTRY_CODE,null);
+        return sharedPreferences.getString(COUNTRY_CODE,"null");
     }
 
     public void saveReligion(String religion) {
@@ -168,7 +230,7 @@ public String fetchCityName(){
 
 
     public String fetchEmail() {
-        return sharedPreferences.getString(EMAIL, null);
+        return sharedPreferences.getString(EMAIL, "null");
     }
 
     public void savePhoneNumber(String phoneNumber) {
@@ -180,12 +242,12 @@ public String fetchCityName(){
     }
 
     public String fetchPhoneNumber() {
-        return sharedPreferences.getString(PHONE_NUMBER, null);
+        return sharedPreferences.getString(PHONE_NUMBER, "null");
     }
 
     public String fetchReligion() {
 
-        return sharedPreferences.getString(RELIGION, null);
+        return sharedPreferences.getString(RELIGION, "null");
     }
 
     public void saveCommunity(String community) {
@@ -197,7 +259,7 @@ public String fetchCityName(){
 
     public String fetchCommunity() {
 
-        return sharedPreferences.getString(COMMUNITY, null);
+        return sharedPreferences.getString(COMMUNITY, "null");
     }
 
     public void saveLivingIn(String livingIn) {
@@ -209,7 +271,7 @@ public String fetchCityName(){
 
     public String fetchLivingIn() {
 
-        return sharedPreferences.getString(LIVING_IN, null);
+        return sharedPreferences.getString(LIVING_IN, "null");
     }
 
     public void saveProfileFor(String profileFor) {
@@ -222,7 +284,7 @@ public String fetchCityName(){
 
     public String fetchProfileFor() {
 
-        return sharedPreferences.getString(PROFILE_FOR, null);
+        return sharedPreferences.getString(PROFILE_FOR, "null");
     }
 
     public void saveFullName(String fullName) {
@@ -235,7 +297,7 @@ public String fetchCityName(){
 
     public String fetchFullName() {
 
-        return sharedPreferences.getString(FULL_NAME, null);
+        return sharedPreferences.getString(FULL_NAME, "null");
     }
 
 
@@ -249,7 +311,7 @@ public String fetchCityName(){
 
     public String fetchGender() {
 
-        return sharedPreferences.getString(GENDER, null);
+        return sharedPreferences.getString(GENDER, "null");
     }
 
     public void saveDOb(String dob) {
@@ -262,6 +324,6 @@ public String fetchCityName(){
 
     public String fetchDob() {
 
-        return sharedPreferences.getString(DATE_OF_BIRTH, null);
+        return sharedPreferences.getString(DATE_OF_BIRTH, "null");
     }
 }
