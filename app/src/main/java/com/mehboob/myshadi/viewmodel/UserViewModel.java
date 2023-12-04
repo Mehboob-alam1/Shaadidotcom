@@ -24,6 +24,7 @@ public class UserViewModel extends AndroidViewModel {
         dataRepository=new DataRepository(application);
         liveData=dataRepository.getUserMutableLiveData();
         ifInserted= dataRepository.checkIfInserted();
+
     }
    public void insertUser(User userMutableLiveData){
         dataRepository.insertData(userMutableLiveData);

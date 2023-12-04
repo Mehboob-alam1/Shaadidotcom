@@ -18,13 +18,31 @@ public class UserProfile {
     private String cityName;
     private String subCommunity;
 
+    private String maritalStatus;
+
+    private String children;
+
+    private String height;
+
+    private String diet;
+    private String qualifications;
+
+    private String college;
+
+    private String income;
+
+    private String worksWith;
+
+    private String workAs;
+
+    private String imageUrl;
     private String userId;
 
 
     public UserProfile() {
     }
 
-    public UserProfile(String profileFor, String gender, String fullName, String dob, String religion, String community, String livingIn, String email, String phoneNumber, String countryCode, String stateName, String stateCode, String cityName, String subCommunity, String userId) {
+    public UserProfile(String profileFor, String gender, String fullName, String dob, String religion, String community, String livingIn, String email, String phoneNumber, String countryCode, String stateName, String stateCode, String cityName, String subCommunity, String maritalStatus, String children, String height, String diet, String qualifications, String college, String income, String worksWith, String workAs, String imageUrl, String userId) {
         this.profileFor = profileFor;
         this.gender = gender;
         this.fullName = fullName;
@@ -39,7 +57,97 @@ public class UserProfile {
         this.stateCode = stateCode;
         this.cityName = cityName;
         this.subCommunity = subCommunity;
+        this.maritalStatus = maritalStatus;
+        this.children = children;
+        this.height = height;
+        this.diet = diet;
+        this.qualifications = qualifications;
+        this.college = college;
+        this.income = income;
+        this.worksWith = worksWith;
+        this.workAs = workAs;
+        this.imageUrl = imageUrl;
         this.userId = userId;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(String maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+
+    public String getChildren() {
+        return children;
+    }
+
+    public void setChildren(String children) {
+        this.children = children;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getDiet() {
+        return diet;
+    }
+
+    public void setDiet(String diet) {
+        this.diet = diet;
+    }
+
+    public String getQualifications() {
+        return qualifications;
+    }
+
+    public void setQualifications(String qualifications) {
+        this.qualifications = qualifications;
+    }
+
+    public String getCollege() {
+        return college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String getIncome() {
+        return income;
+    }
+
+    public void setIncome(String income) {
+        this.income = income;
+    }
+
+    public String getWorksWith() {
+        return worksWith;
+    }
+
+    public void setWorksWith(String worksWith) {
+        this.worksWith = worksWith;
+    }
+
+    public String getWorkAs() {
+        return workAs;
+    }
+
+    public void setWorkAs(String workAs) {
+        this.workAs = workAs;
     }
 
     public String getProfileFor() {

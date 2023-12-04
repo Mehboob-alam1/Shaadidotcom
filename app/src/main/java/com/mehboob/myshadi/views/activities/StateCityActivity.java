@@ -123,7 +123,7 @@ public class StateCityActivity extends AppCompatActivity {
             } else {
                 // start activity
 
-                sessionManager.saveCityName(sessionManager.fetchCityName());
+                sessionManager.saveCityName(binding.etCity.getText().toString());
 
                 startActivity(new Intent(StateCityActivity.this, MartialStatusActivity.class));
             }

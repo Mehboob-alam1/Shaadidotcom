@@ -85,10 +85,10 @@ public class ReligionCastActivity extends AppCompatActivity {
 
                 String religion = binding.spinnerReligion.getSelectedItem().toString();
                 String community = binding.spinnerComunity.getSelectedItem().toString();
-                String livingIn = binding.spinnerLivingIn.getSelectedItem().toString();
+
                 sessionManager.saveReligion(religion);
                 sessionManager.saveCommunity(community);
-                sessionManager.saveLivingIn(livingIn);
+
 
 
                 startActivity(new Intent(ReligionCastActivity.this, EmailPhoneNumberActivity.class));
@@ -153,7 +153,9 @@ public class ReligionCastActivity extends AppCompatActivity {
         binding.spinnerLivingIn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
                 Log.d("ItemCode",countryList.get(i).getCode());
+                sessionManager.saveLivingIn(countryList.get(i).getName());
                 sessionManager.saveCountryCode(countryList.get(i).getCode());
             }
 
