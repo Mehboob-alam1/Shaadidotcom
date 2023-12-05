@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,42 +23,42 @@ import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.UserViewModel;
 
 public class IncomeDetailsActivity extends AppCompatActivity {
-private ActivityIncomeDetailsBinding binding;
-private String[] workWith={"Select","Private Company","Government / Public Sector","Defense / Civil Services","Business / Self Employed","Not Working"};
+    private ActivityIncomeDetailsBinding binding;
+    private String[] workWith = {"Select", "Private Company", "Government / Public Sector", "Defense / Civil Services", "Business / Self Employed", "Not Working"};
 
-private FUPViewModel fupViewModel;
-private UserViewModel userViewModel;
+    private FUPViewModel fupViewModel;
+    private UserViewModel userViewModel;
 
-private SessionManager sessionManager;
+    private SessionManager sessionManager;
 
-private User userData;
+    private User userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityIncomeDetailsBinding.inflate(getLayoutInflater());
+        binding = ActivityIncomeDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        sessionManager= new SessionManager(this);
-        
-        
+        sessionManager = new SessionManager(this);
+
+
         setWorkWithSpinner();
 
 
         userViewModel.getLiveData().observe(this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                userData=user;
+                userData = user;
             }
         });
         binding.btnContinue.setOnClickListener(view -> {
 
-            if (binding.spinnerWorkWith.getSelectedItem().equals("Select")){
-                Utils.showSnackBar(this,"Select a valid job");
-            }else if (binding.etIncome.getText().toString().isEmpty() || binding.etWorksAs.getText().toString().isEmpty()){
-                Utils.showSnackBar(this,"Must fill all fields");
-            }else {
+            if (binding.spinnerWorkWith.getSelectedItem().equals("Select")) {
+                Utils.showSnackBar(this, "Select a valid job");
+            } else if (binding.etIncome.getText().toString().isEmpty() || binding.etWorksAs.getText().toString().isEmpty()) {
+                Utils.showSnackBar(this, "Must fill all fields");
+            } else {
                 sessionManager.saveIncome(binding.etIncome.getText().toString());
                 sessionManager.saveWorkAs(binding.etWorksAs.getText().toString());
 
@@ -97,15 +98,15 @@ private User userData;
                 userData.getUserId());
         fupViewModel.uploadUserProfile(profile);
 
-       fupViewModel.getResponse().observe(this, profileResponse -> {
+        fupViewModel.getResponse().observe(this, profileResponse -> {
 
-           Utils.showSnackBar(this,profileResponse.getMessage() + profileResponse.isUpload());
+            Utils.showSnackBar(this, profileResponse.getMessage() + profileResponse.isUpload());
 
-           if (profileResponse.isUpload()){
+            if (profileResponse.isUpload()) {
+                startActivity(new Intent(IncomeDetailsActivity.this, SetPreferencesActivity.class));
+            }
 
-           }
-
-       });
+        });
     }
 
     private void setWorkWithSpinner() {
@@ -121,9 +122,9 @@ private User userData;
         binding.spinnerWorkWith.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (!adapterView.getSelectedItem().equals("Not Working")){
+                if (!adapterView.getSelectedItem().equals("Not Working")) {
                     binding.lineWorkAs.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     binding.lineWorkAs.setVisibility(View.GONE);
                 }
 
@@ -144,9 +145,9 @@ private User userData;
     protected void onResume() {
         super.onResume();
 
-      fupViewModel.getUserProfileMutableLiveData().observe(this, userProfile -> {
-          Utils.showSnackBar(this,userProfile.toString());
-      });
+        fupViewModel.getUserProfileMutableLiveData().observe(this, userProfile -> {
+            Utils.showSnackBar(this, userProfile.toString());
+        });
 
 
     }

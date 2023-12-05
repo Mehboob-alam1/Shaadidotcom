@@ -60,4 +60,11 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="email_phone_text">An active email ID and phone number\nare required to secure your profile</string>
+    <string name="age_should_be_in_between"><b>Age</b> should be in between</string>
+    <string name="height_should_be_between"><b>Height</b> should be between</string>
+    <string name="city_should_be"><b>City</b> should be</string>
+    <string name="religion_should_be"><b>Religion</b> should be</string>
+    <string name="community_should_be"><b>Community</b> Should be</string>
+    <string name="sub_community_should_be"><b>Sub-Community</b> should be</string>
+    <string name="marital_status_should_be"><b>Marital</b> status should be</string>
 </resources>

@@ -1,0 +1,230 @@
+<!-- res/values/arrays.xml -->
+<resources>
+    <string-array name="ages">
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+        <item>60</item>
+        <item>61</item>
+        <item>62</item>
+        <item>63</item>
+    </string-array>
+
+    <string-array name="heights">
+        <item>Select</item>
+        <item>4ft 5in - 134cm</item>
+        <item>4ft 6in - 137cm</item>
+        <item>4ft 7in - 140cm</item>
+        <item>4ft 8in - 142cm</item>
+        <item>4ft 9in - 145cm</item>
+        <item>4ft 10in - 147cm</item>
+        <item>4ft 11in - 150cm</item>
+        <item>5ft - 152cm</item>
+        <item>5ft 1in - 155cm</item>
+        <item>5ft 2in - 157cm</item>
+        <item>5ft 3in - 160cm</item>
+        <item>5ft 4in - 163cm</item>
+        <item>5ft 5in - 165cm</item>
+        <item>5ft 6in - 168cm</item>
+        <item>5ft 7in - 170cm</item>
+        <item>5ft 8in - 173cm</item>
+        <item>5ft 9in - 175cm</item>
+        <item>5ft 10in - 178cm</item>
+        <item>5ft 11in - 180cm</item>
+        <item>6ft - 183cm</item>
+        <item>6ft 1in - 185cm</item>
+        <item>6ft 2in - 188cm</item>
+        <item>6ft 3in - 191cm</item>
+        <item>6ft 4in - 193cm</item>
+        <item>6ft 5in - 196cm</item>
+        <item>6ft 6in - 198cm</item>
+        <item>6ft 7in - 201cm</item>
+        <item>6ft 8in - 203cm</item>
+        <item>6ft 9in - 206cm</item>
+        <item>6ft 10in - 208cm</item>
+        <item>6ft 11in - 211cm</item>
+        <item>7ft - 213cm</item>
+    </string-array>
+
+    <string-array name="marital_status">
+        <item>Select</item>
+        <item>Never Married</item>
+        <item>Divorced</item>
+        <item>Widowed</item>
+        <item>Awaiting Divorce</item>
+        <item>Annulled</item>
+    </string-array>
+
+
+    <string-array name="religions">
+        <item>Select Religion</item>
+        <item>Hindu</item>
+        <item>Muslim</item>
+        <item>Christian</item>
+        <item>Jain</item>
+        <item>Sikh</item>
+        <item>Buddhist</item>
+        <item>Parsi</item>
+        <item>Jewish</item>
+        <item>Other</item>
+        <item>No religion</item>
+        <item>Spiritual - not religious</item>
+    </string-array>
+
+
+    <string-array name="communities">
+        <item>Select Community</item>
+        <item>Hindi</item>
+        <item>Marathi</item>
+        <item>Punjabi</item>
+        <item>Bengali</item>
+        <item>Urdu</item>
+        <item>Gujrati</item>
+        <item>Telugu</item>
+        <item>Kannada</item>
+        <item>English</item>
+        <item>Tamil</item>
+        <item>Odia</item>
+        <item>Marwari</item>
+        <item>Aka</item>
+        <item>Arabic</item>
+        <item>Arunachali</item>
+        <item>Assamese</item>
+        <item>Awadhi</item>
+        <item>Baluchi</item>
+        <item>Bhojpuri</item>
+        <item>Bhutia</item>
+        <item>Brahui</item>
+        <item>Brij</item>
+        <item>Burmese</item>
+        <item>Chattisgarhi</item>
+        <item>Chinese</item>
+        <item>Coorgi</item>
+        <item>Dogri</item>
+        <item>French</item>
+        <item>Gharwali</item>
+        <item>Garo</item>
+        <item>Haryanavi</item>
+        <item>Himachli/Pahari</item>
+        <item>Hindko</item>
+        <item>Kakbarak</item>
+        <item>Kanauji</item>
+        <item>Kashmiri</item>
+        <item>Khandesi</item>
+        <item>Khasi</item>
+        <item>Konkani</item>
+        <item>Koshali</item>
+        <item>Pashto</item>
+        <item>Sindhi</item>
+        <item>Balochi</item>
+        <item>Shina</item>
+        <item>Brushuski</item>
+        <item>Khawar</item>
+        <item>Wakhi</item>
+        <item>Seraiki</item>
+        <item>Other</item>
+    </string-array>
+
+
+    <string-array name="religious_denominations">
+        <!-- Christianity -->
+        <item>Catholicism</item>
+        <item>Anglicanism</item>
+        <item>Lutheranism</item>
+        <item>Presbyterianism</item>
+        <item>Baptist</item>
+        <item>Methodist</item>
+        <item>Pentecostalism</item>
+        <item>Eastern Orthodoxy</item>
+        <item>Oriental Orthodoxy</item>
+        <item>Mormonism</item>
+        <item>Jehovah Witnesses</item>
+        <!-- Islam -->
+        <item>Sunni Islam</item>
+        <item>Hanafi</item>
+        <item>Maliki</item>
+        <item>Shafii</item>
+        <item>Hanbali</item>
+        <item>Brelvi</item>
+        <item>Deobandi</item>
+        <item>Shia Islam</item>
+        <item>Twelver (Ithna Ashari)</item>
+        <item>Ismaili</item>
+        <item>Zaidi</item>
+        <item>Sufism</item>
+        <!-- Judaism -->
+        <item>Orthodox Judaism</item>
+        <item>Hasidic Judaism</item>
+        <item>Modern Orthodox</item>
+        <item>Conservative Judaism</item>
+        <item>Reform Judaism</item>
+        <item>Reconstructionist Judaism</item>
+        <!-- Hinduism -->
+        <item>Vaishnavism</item>
+        <item>Shaivism</item>
+        <item>Shaktism</item>
+        <item>Smartism</item>
+        <item>Advaita Vedanta</item>
+        <item>Dvaita Vedanta</item>
+        <item>Vishishtadvaita</item>
+        <!-- Buddhism -->
+        <item>Theravada Buddhism</item>
+        <item>Mahayana Buddhism</item>
+        <item>Zen Buddhism</item>
+        <item>Pure Land Buddhism</item>
+        <item>Tibetan Buddhism</item>
+        <item>Vajrayana Buddhism</item>
+        <!-- Sikhism -->
+        <item>Sikhism</item>
+        <!-- Jainism -->
+        <item>Digambara</item>
+        <item>Svetambara</item>
+        <!-- Add more denominations as needed -->
+    </string-array>
+
+
+    <string-array name="marital_statuses">
+        <item>Select</item>
+        <item>Never Married</item>
+        <item>Divorced</item>
+        <item>Widowed</item>
+        <item>Awaiting Divorce</item>
+        <item>Annulled</item>
+    </string-array>
+</resources>

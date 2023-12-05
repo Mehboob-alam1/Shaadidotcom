@@ -126,8 +126,11 @@ public class MartialStatusActivity extends AppCompatActivity {
     private void setHeightSpinner() {
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, heights);
-
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.heights,
+                android.R.layout.simple_spinner_item
+        );
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
