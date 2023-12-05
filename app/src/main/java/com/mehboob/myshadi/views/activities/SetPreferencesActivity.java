@@ -10,13 +10,16 @@ import android.widget.Spinner;
 
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivitySetPreferencesBinding;
+import com.mehboob.myshadi.model.match.Match;
+import com.mehboob.myshadi.utils.MatchPref;
+import com.mehboob.myshadi.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SetPreferencesActivity extends AppCompatActivity {
     private ActivitySetPreferencesBinding binding;
-
+private MatchPref matchPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,17 +27,55 @@ public class SetPreferencesActivity extends AppCompatActivity {
         binding = ActivitySetPreferencesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        matchPref= new MatchPref(this);
+
         setSpinnerAges();
 
         setSpinnerHeights();
-        
+
         setReligionsAdapter();
-        
+
         setCommunityAdapter();
 
         setSubCommunity();
-        
+
         setMaritalStatus();
+
+
+        binding.btnContinue.setOnClickListener(view -> {
+
+            if (binding.spinnerAgeMin.getSelectedItemPosition() == 0 ||
+                    binding.spinnerAgeMax.getSelectedItemPosition() == 0
+                    || binding.spinnerHeightMin.getSelectedItemPosition() == 0 ||
+                    binding.spinnerHeightMax.getSelectedItemPosition() == 0 ||
+                    binding.spinnerReligion.getSelectedItemPosition() == 0 ||
+                    binding.spinnerComunity.getSelectedItemPosition() == 0 ||
+                    binding.spinnerSubCommunity.getSelectedItemPosition() == 0 ||
+                    binding.spinnerMaritalStatus.getSelectedItemPosition() == 0){
+                Utils.showSnackBar(this,"Select valid option");
+            }else{
+
+                Match match= new Match(binding.spinnerAgeMin.getSelectedItem().toString(),
+                        binding.spinnerAgeMax.getSelectedItem().toString(),
+                        binding.spinnerHeightMin.getSelectedItem().toString(),
+                        binding.spinnerHeightMax.getSelectedItem().toString(),
+                        binding.spinnerCity.getText().toString(),
+                        binding.spinnerReligion.getSelectedItem().toString(),
+                        binding.spinnerComunity.getSelectedItem().toString(),
+                        binding.spinnerSubCommunity.getSelectedItem().toString(),
+                        binding.spinnerMaritalStatus.getSelectedItem().toString());
+                matchPref.savePref(match);
+
+                Utils.showSnackBar(this,matchPref.fetchPref().toString());
+
+
+
+            }
+
+
+
+
+        });
     }
 
     private void setMaritalStatus() {

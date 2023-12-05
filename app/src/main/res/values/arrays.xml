@@ -1,6 +1,7 @@
 <!-- res/values/arrays.xml -->
 <resources>
     <string-array name="ages">
+        <item>Select age</item>
         <item>21</item>
         <item>22</item>
         <item>23</item>
@@ -47,7 +48,7 @@
     </string-array>
 
     <string-array name="heights">
-        <item>Select</item>
+        <item>Select height</item>
         <item>4ft 5in - 134cm</item>
         <item>4ft 6in - 137cm</item>
         <item>4ft 7in - 140cm</item>
@@ -83,7 +84,7 @@
     </string-array>
 
     <string-array name="marital_status">
-        <item>Select</item>
+        <item>Select marital status</item>
         <item>Never Married</item>
         <item>Divorced</item>
         <item>Widowed</item>
@@ -164,6 +165,7 @@
 
     <string-array name="religious_denominations">
         <!-- Christianity -->
+        <item>Select sub community</item>
         <item>Catholicism</item>
         <item>Anglicanism</item>
         <item>Lutheranism</item>
@@ -220,7 +222,7 @@
 
 
     <string-array name="marital_statuses">
-        <item>Select</item>
+        <item>Select marital status</item>
         <item>Never Married</item>
         <item>Divorced</item>
         <item>Widowed</item>
