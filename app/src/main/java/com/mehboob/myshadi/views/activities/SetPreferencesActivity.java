@@ -19,7 +19,8 @@ import java.util.List;
 
 public class SetPreferencesActivity extends AppCompatActivity {
     private ActivitySetPreferencesBinding binding;
-private MatchPref matchPref;
+    private MatchPref matchPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +28,12 @@ private MatchPref matchPref;
         binding = ActivitySetPreferencesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        matchPref= new MatchPref(this);
+        matchPref = new MatchPref(this);
+
+
+        binding.btnSkip.setOnClickListener(view -> {
+
+        });
 
         setSpinnerAges();
 
@@ -51,11 +57,11 @@ private MatchPref matchPref;
                     binding.spinnerReligion.getSelectedItemPosition() == 0 ||
                     binding.spinnerComunity.getSelectedItemPosition() == 0 ||
                     binding.spinnerSubCommunity.getSelectedItemPosition() == 0 ||
-                    binding.spinnerMaritalStatus.getSelectedItemPosition() == 0){
-                Utils.showSnackBar(this,"Select valid option");
-            }else{
+                    binding.spinnerMaritalStatus.getSelectedItemPosition() == 0) {
+                Utils.showSnackBar(this, "Select valid option");
+            } else {
 
-                Match match= new Match(binding.spinnerAgeMin.getSelectedItem().toString(),
+                Match match = new Match(binding.spinnerAgeMin.getSelectedItem().toString(),
                         binding.spinnerAgeMax.getSelectedItem().toString(),
                         binding.spinnerHeightMin.getSelectedItem().toString(),
                         binding.spinnerHeightMax.getSelectedItem().toString(),
@@ -66,13 +72,10 @@ private MatchPref matchPref;
                         binding.spinnerMaritalStatus.getSelectedItem().toString());
                 matchPref.savePref(match);
 
-                Utils.showSnackBar(this,matchPref.fetchPref().toString());
-
+                Utils.showSnackBar(this, matchPref.fetchPref().toString());
 
 
             }
-
-
 
 
         });
