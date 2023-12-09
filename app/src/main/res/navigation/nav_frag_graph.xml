@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_frag_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.mehboob.myshadi.views.dashboard.frags.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.mehboob.myshadi.views.dashboard.frags.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/matchesFragment"
+        android:name="com.mehboob.myshadi.views.dashboard.frags.MatchesFragment"
+        android:label="fragment_matches"
+        tools:layout="@layout/fragment_matches" />
+    <fragment
+        android:id="@+id/inboxFragment"
+        android:name="com.mehboob.myshadi.views.dashboard.frags.InboxFragment"
+        android:label="fragment_inbox"
+        tools:layout="@layout/fragment_inbox" />
+    <fragment
+        android:id="@+id/premiumFragment"
+        android:name="com.mehboob.myshadi.views.dashboard.frags.PremiumFragment"
+        android:label="fragment_premium"
+        tools:layout="@layout/fragment_premium" />
+</navigation>

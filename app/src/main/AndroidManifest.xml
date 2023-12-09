@@ -13,9 +13,11 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".views.dashboard.DashBoardActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.SetPreferencesActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,9 +55,7 @@
             android:exported="false" />
         <activity
             android:name=".views.activities.MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

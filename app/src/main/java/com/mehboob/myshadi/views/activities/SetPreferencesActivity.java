@@ -2,6 +2,7 @@ package com.mehboob.myshadi.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,7 @@ import com.mehboob.myshadi.databinding.ActivitySetPreferencesBinding;
 import com.mehboob.myshadi.model.match.Match;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.utils.Utils;
+import com.mehboob.myshadi.views.dashboard.DashBoardActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +34,9 @@ public class SetPreferencesActivity extends AppCompatActivity {
 
 
         binding.btnSkip.setOnClickListener(view -> {
-
+ updateUi();
         });
-
+binding.btnContinue.setOnClickListener(view -> updateUi());
         setSpinnerAges();
 
         setSpinnerHeights();
@@ -80,7 +82,9 @@ public class SetPreferencesActivity extends AppCompatActivity {
 
         });
     }
-
+public void updateUi(){
+        startActivity(new Intent(SetPreferencesActivity.this, DashBoardActivity.class));
+}
     private void setMaritalStatus() {
 
 
