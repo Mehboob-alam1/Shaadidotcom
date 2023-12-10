@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityPickPhotosBinding;
+import com.mehboob.myshadi.utils.TinyDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +22,16 @@ public class PickPhotosActivity extends AppCompatActivity {
     private ActivityPickPhotosBinding binding;
     private List<Uri> selectedImages = new ArrayList<>();
     List<ImageView> imageViewList;
+    private TinyDB tinyDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPickPhotosBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+tinyDB= new TinyDB(this);
 
         getImagesToViews();
-
 
 
     }
@@ -68,7 +69,8 @@ public class PickPhotosActivity extends AppCompatActivity {
                     selectedImages.add(selectedImageUri);
                     // viewModel.setSelectedImages(selectedImages);
 
-                    if (selectedImages!=null){
+                    if (selectedImages != null) {
+
                         updateImageViews(selectedImages);
                     }
                 }
@@ -86,4 +88,6 @@ public class PickPhotosActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

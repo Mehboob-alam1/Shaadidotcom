@@ -96,7 +96,7 @@ public class IncomeDetailsActivity extends AppCompatActivity {
                 sessionManager.fetchWorkAs(),
                 "",
                 userData.getUserId());
-        fupViewModel.uploadUserProfile(profile);
+        fupViewModel.uploadUserProfile("",profile);
 
         fupViewModel.getResponse().observe(this, profileResponse -> {
 
