@@ -67,4 +67,6 @@
     <string name="community_should_be"><b>Community</b> Should be</string>
     <string name="sub_community_should_be"><b>Sub-Community</b> should be</string>
     <string name="marital_status_should_be"><b>Marital</b> status should be</string>
+    <string name="settings_options"><![CDATA[Settings & Options]]></string>
+    <string name="help_support"><![CDATA[Help & Support]]></string>
 </resources>
