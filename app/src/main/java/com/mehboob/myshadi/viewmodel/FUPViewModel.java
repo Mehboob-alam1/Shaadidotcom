@@ -19,10 +19,9 @@ import java.util.List;
 public class FUPViewModel extends AndroidViewModel {
 
 
-
     private MutableLiveData<ProfileResponse> response;
 
-    private  MutableLiveData<UserProfile> userProfileMutableLiveData;
+    private MutableLiveData<UserProfile> userProfileMutableLiveData;
 
     private final MutableLiveData<List<Uri>> selectedImages = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isProfile = new MutableLiveData<>();
@@ -30,9 +29,9 @@ public class FUPViewModel extends AndroidViewModel {
 
     public FUPViewModel(@NonNull Application application) {
         super(application);
-      repository= new FirebaseUserProfileRepository();
-response=repository.getProfileResponse();
-      userProfileMutableLiveData=repository.getUserProfileMutableLiveData();
+        repository = new FirebaseUserProfileRepository(application);
+        response = repository.getProfileResponse();
+        userProfileMutableLiveData = repository.getUserProfileMutableLiveData();
     }
 
 
@@ -44,7 +43,7 @@ response=repository.getProfileResponse();
         return userProfileMutableLiveData;
     }
 
-    public void uploadUserProfile(List<Uri> images,UserProfile userProfile){
+    public void uploadUserProfile(List<Uri> images, UserProfile userProfile) {
 
         repository.uploadImagesToFirebase(images, userProfile, new FirebaseUserProfileRepository.StorageUploadCallback() {
             @Override
@@ -54,10 +53,11 @@ response=repository.getProfileResponse();
 
             @Override
             public void onError(String errorMessage) {
-isProfile.setValue(false);
+                isProfile.setValue(false);
             }
         });
     }
+
     public LiveData<List<Uri>> getSelectedImages() {
         return selectedImages;
     }

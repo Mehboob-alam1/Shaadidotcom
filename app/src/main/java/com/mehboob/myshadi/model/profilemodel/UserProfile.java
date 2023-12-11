@@ -1,5 +1,7 @@
 package com.mehboob.myshadi.model.profilemodel;
 
+import java.util.ArrayList;
+
 public class UserProfile {
 
 
@@ -38,11 +40,21 @@ public class UserProfile {
     private String imageUrl;
     private String userId;
 
+    private ArrayList<String> images;
+
 
     public UserProfile() {
     }
 
-    public UserProfile(String profileFor, String gender, String fullName, String dob, String religion, String community, String livingIn, String email, String phoneNumber, String countryCode, String stateName, String stateCode, String cityName, String subCommunity, String maritalStatus, String children, String height, String diet, String qualifications, String college, String income, String worksWith, String workAs, String imageUrl, String userId) {
+    public ArrayList<String> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<String> images) {
+        this.images = images;
+    }
+
+    public UserProfile(String profileFor, String gender, String fullName, String dob, String religion, String community, String livingIn, String email, String phoneNumber, String countryCode, String stateName, String stateCode, String cityName, String subCommunity, String maritalStatus, String children, String height, String diet, String qualifications, String college, String income, String worksWith, String workAs, String imageUrl, String userId, ArrayList<String> images) {
         this.profileFor = profileFor;
         this.gender = gender;
         this.fullName = fullName;
@@ -68,6 +80,7 @@ public class UserProfile {
         this.workAs = workAs;
         this.imageUrl = imageUrl;
         this.userId = userId;
+        this.images = images;
     }
 
     public String getImageUrl() {

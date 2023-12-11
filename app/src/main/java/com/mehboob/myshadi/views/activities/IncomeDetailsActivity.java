@@ -62,7 +62,10 @@ public class IncomeDetailsActivity extends AppCompatActivity {
                 sessionManager.saveIncome(binding.etIncome.getText().toString());
                 sessionManager.saveWorkAs(binding.etWorksAs.getText().toString());
 
-                uploadData();
+                startActivity(new Intent(IncomeDetailsActivity.this,PickPhotosActivity.class));
+
+
+            //    uploadData();
             }
 
 
@@ -70,44 +73,7 @@ public class IncomeDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void uploadData() {
-        UserProfile profile = new UserProfile(sessionManager.fetchProfileFor(),
-                sessionManager.fetchGender(),
-                sessionManager.fetchFullName(),
-                sessionManager.fetchDob(),
-                sessionManager.fetchReligion(),
-                sessionManager.fetchCommunity(),
-                sessionManager.fetchLivingIn(),
-                sessionManager.fetchEmail(),
-                sessionManager.fetchPhoneNumber(),
-                sessionManager.fetchCountryCode(),
-                sessionManager.fetchStateName(),
-                sessionManager.fetchStateCode(),
-                sessionManager.fetchCityName(),
-                sessionManager.fetchSubCommunity(),
-                sessionManager.fetchMaritalStatus(),
-                sessionManager.fetchChildren(),
-                sessionManager.fetchHeight(),
-                sessionManager.fetchDiet(),
-                sessionManager.fetchQualifications(),
-                sessionManager.fetchCollege(),
-                sessionManager.fetchIncome(),
-                sessionManager.fetchWorkWith(),
-                sessionManager.fetchWorkAs(),
-                "",
-                userData.getUserId());
-        fupViewModel.uploadUserProfile("",profile);
 
-        fupViewModel.getResponse().observe(this, profileResponse -> {
-
-            Utils.showSnackBar(this, profileResponse.getMessage() + profileResponse.isUpload());
-
-            if (profileResponse.isUpload()) {
-                startActivity(new Intent(IncomeDetailsActivity.this, SetPreferencesActivity.class));
-            }
-
-        });
-    }
 
     private void setWorkWithSpinner() {
 

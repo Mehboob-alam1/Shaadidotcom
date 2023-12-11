@@ -1,5 +1,6 @@
 package com.mehboob.myshadi.repository;
 
+import android.app.Application;
 import android.net.Uri;
 
 import androidx.lifecycle.MutableLiveData;
@@ -11,6 +12,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.models.User;
 import com.mehboob.myshadi.utils.TinyDB;
 
 import java.util.ArrayList;
@@ -30,29 +32,59 @@ public class FirebaseUserProfileRepository {
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     int uploadedCount = 0;
-    public FirebaseUserProfileRepository() {
+    private Application application;
+    public FirebaseUserProfileRepository(Application application) {
         this.storageReference = FirebaseStorage.getInstance().getReference("userProfiles").child("images");
         databaseReference= FirebaseDatabase.getInstance().getReference();
+
+        this.application=application;
     }
 
     public MutableLiveData<UserProfile> getUserProfileMutableLiveData() {
         return userProfileMutableLiveData;
     }
 
-    public void uploadProfile(UserProfile userProfile,List<String> imageUrls) {
+    public void uploadProfile(UserProfile userProfile,ArrayList<String> imageUrls) {
+
+        UserProfile profile = new UserProfile(userProfile.getProfileFor(),
+                userProfile.getGender(),
+                userProfile.getFullName(),
+                userProfile.getDob(),
+                userProfile.getReligion(),
+                userProfile.getCommunity(),
+                userProfile.getLivingIn(),
+                userProfile.getEmail(),
+                userProfile.getPhoneNumber(),
+                userProfile.getCountryCode(),
+                userProfile.getStateName(),
+                userProfile.getStateCode(),
+                userProfile.getCityName(),
+                userProfile.getSubCommunity(),
+                userProfile.getMaritalStatus(),
+                userProfile.getChildren(),
+                userProfile.getHeight(),
+                userProfile.getDiet(),
+                userProfile.getQualifications(),
+                userProfile.getCollege(),
+                userProfile.getIncome(),
+                userProfile.getWorksWith(),
+                userProfile.getWorkAs(),
+                imageUrls.get(0),
+                userProfile.getUserId()
+                ,imageUrls);
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
 
-        userProfileRef.child(userProfile.getGender())
-                .child(userProfile.getLivingIn())
-                .child(userProfile.getReligion())
-                .child(userProfile.getCommunity())
-                .child(userProfile.getSubCommunity())
-                .child(userProfile.getMaritalStatus())
+        userProfileRef.child(profile.getGender())
+                .child(profile.getLivingIn())
+                .child(profile.getReligion())
+                .child(profile.getCommunity())
+                .child(profile.getSubCommunity())
+                .child(profile.getMaritalStatus())
 
-                .child(userProfile.getUserId())
-                .setValue(userProfile)
+                .child(profile.getUserId())
+                .setValue(profile)
 
                 .addOnCompleteListener(task -> {
 
@@ -78,7 +110,7 @@ public class FirebaseUserProfileRepository {
     public void uploadImagesToFirebase(List<Uri> images,UserProfile userProfile, StorageUploadCallback callback) {
         int totalImages = images.size();
 
-        List<String> imageUrls = new ArrayList<>();
+        ArrayList<String> imageUrls = new ArrayList<>();
 
         for (Uri imageUri : images) {
             // Create a unique filename for the image (you may want to improve this logic)
@@ -91,14 +123,16 @@ public class FirebaseUserProfileRepository {
             imageRef.putFile(imageUri)
                     .addOnSuccessListener(taskSnapshot -> {
                         // Image uploaded successfully
-                        String imageUrl = imageRef.getDownloadUrl().toString();
+                        String imageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
                         imageUrls.add(imageUrl);
 
                         uploadedCount++;
 
                         // Check if all images are uploaded
                         if (uploadedCount == totalImages) {
-                            TinyDB tinyDB= new TinyDB(application)
+                            TinyDB tinyDB= new TinyDB(application);
+                            tinyDB.putListString("images", imageUrls);
+
                             // All images uploaded, now save image URLs to Firebase Realtime Database
                             uploadProfile(userProfile,imageUrls);
                             callback.onSuccess(imageUrls);

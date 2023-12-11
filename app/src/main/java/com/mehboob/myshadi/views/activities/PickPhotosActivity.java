@@ -3,17 +3,26 @@ package com.mehboob.myshadi.views.activities;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityPickPhotosBinding;
+import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.models.User;
+import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.TinyDB;
+import com.mehboob.myshadi.utils.Utils;
+import com.mehboob.myshadi.viewmodel.FUPViewModel;
+import com.mehboob.myshadi.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +32,94 @@ public class PickPhotosActivity extends AppCompatActivity {
     private List<Uri> selectedImages = new ArrayList<>();
     List<ImageView> imageViewList;
     private TinyDB tinyDB;
+    private SessionManager sessionManager;
+    private FUPViewModel fupViewModel;
+    private UserViewModel userViewModel;
+
+    private ArrayList<String> images;
+
+    private User userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPickPhotosBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-tinyDB= new TinyDB(this);
+        fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        tinyDB = new TinyDB(this);
+        sessionManager = new SessionManager(this);
+
+
+        userViewModel.getLiveData().observe(this, user -> userData = user);
 
         getImagesToViews();
 
 
+        binding.btnContinue.setOnClickListener(view -> {
+
+            if (!selectedImages.isEmpty()){
+
+                binding.lottieLoading.setVisibility(View.VISIBLE);
+                uploadData();
+
+
+            }else{
+                Utils.showSnackBar(this,"Add at least one photo");
+            }
+        });
+
+
+    }
+
+
+    private void uploadData() {
+        UserProfile profile = new UserProfile(sessionManager.fetchProfileFor(),
+                sessionManager.fetchGender(),
+                sessionManager.fetchFullName(),
+                sessionManager.fetchDob(),
+                sessionManager.fetchReligion(),
+                sessionManager.fetchCommunity(),
+                sessionManager.fetchLivingIn(),
+                sessionManager.fetchEmail(),
+                sessionManager.fetchPhoneNumber(),
+                sessionManager.fetchCountryCode(),
+                sessionManager.fetchStateName(),
+                sessionManager.fetchStateCode(),
+                sessionManager.fetchCityName(),
+                sessionManager.fetchSubCommunity(),
+                sessionManager.fetchMaritalStatus(),
+                sessionManager.fetchChildren(),
+                sessionManager.fetchHeight(),
+                sessionManager.fetchDiet(),
+                sessionManager.fetchQualifications(),
+                sessionManager.fetchCollege(),
+                sessionManager.fetchIncome(),
+                sessionManager.fetchWorkWith(),
+                sessionManager.fetchWorkAs(),
+                "",
+                userData.getUserId()
+                , new ArrayList<>());
+        fupViewModel.uploadUserProfile(selectedImages, profile);
+
+        fupViewModel.getResponse().observe(this, profileResponse -> {
+
+
+
+            if (profileResponse.isUpload()) {
+
+                binding.lottieLoading.setVisibility(View.GONE);
+                binding.lottieLoading.cancelAnimation();
+                Utils.showSnackBar(this,"Profile created successfully");
+                startActivity(new Intent(PickPhotosActivity.this, SetPreferencesActivity.class));
+            }else{
+                binding.lottieLoading.setVisibility(View.GONE);
+                binding.lottieLoading.cancelAnimation();
+                Utils.showSnackBar(this,profileResponse.getMessage());
+            }
+
+
+        });
     }
 
     private void getImagesToViews() {
