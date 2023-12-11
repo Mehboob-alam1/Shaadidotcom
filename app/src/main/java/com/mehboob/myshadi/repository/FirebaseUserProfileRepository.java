@@ -25,6 +25,9 @@ public class FirebaseUserProfileRepository {
 
     private MutableLiveData<UserProfile> userProfileMutableLiveData = new MutableLiveData<>();
 
+    private MutableLiveData<Boolean> isProfileComplete= new MutableLiveData<>();
+
+
     public MutableLiveData<ProfileResponse> getProfileResponse() {
         return profileResponse;
     }
@@ -38,6 +41,14 @@ public class FirebaseUserProfileRepository {
         databaseReference= FirebaseDatabase.getInstance().getReference();
 
         this.application=application;
+    }
+
+    public MutableLiveData<Boolean> getIsProfileComplete() {
+        return isProfileComplete;
+    }
+
+    public void setIsProfileComplete(MutableLiveData<Boolean> isProfileComplete) {
+        this.isProfileComplete = isProfileComplete;
     }
 
     public MutableLiveData<UserProfile> getUserProfileMutableLiveData() {
@@ -94,12 +105,15 @@ public class FirebaseUserProfileRepository {
                         profileResponse.setValue(new ProfileResponse(true, "Profile uploaded"));
 
                         userProfileMutableLiveData.setValue(userProfile);
+                        isProfileComplete.setValue(true);
 
                     } else {
+                        isProfileComplete.setValue(false);
                         profileResponse.setValue(new ProfileResponse(false, "Something went wrong"));
 
                     }
                 }).addOnFailureListener(e -> {
+                    isProfileComplete.setValue(false);
                     profileResponse.setValue(new ProfileResponse(false, e.getLocalizedMessage().toString()));
 
                 });
@@ -151,5 +165,12 @@ public class FirebaseUserProfileRepository {
         void onError(String errorMessage);
     }
 
+
+    public void checkProfileCompletion(){
+
+
+
+
+    }
 
 }

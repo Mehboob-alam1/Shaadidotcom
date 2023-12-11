@@ -25,6 +25,8 @@ public class FUPViewModel extends AndroidViewModel {
 
     private final MutableLiveData<List<Uri>> selectedImages = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isProfile = new MutableLiveData<>();
+
+    private MutableLiveData<Boolean> isProfileComplete;
     private FirebaseUserProfileRepository repository;
 
     public FUPViewModel(@NonNull Application application) {
@@ -32,6 +34,7 @@ public class FUPViewModel extends AndroidViewModel {
         repository = new FirebaseUserProfileRepository(application);
         response = repository.getProfileResponse();
         userProfileMutableLiveData = repository.getUserProfileMutableLiveData();
+        isProfileComplete=repository.getIsProfileComplete();
     }
 
 
@@ -41,6 +44,10 @@ public class FUPViewModel extends AndroidViewModel {
 
     public MutableLiveData<UserProfile> getUserProfileMutableLiveData() {
         return userProfileMutableLiveData;
+    }
+
+    public MutableLiveData<Boolean> getIsProfileComplete() {
+        return isProfileComplete;
     }
 
     public void uploadUserProfile(List<Uri> images, UserProfile userProfile) {

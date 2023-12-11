@@ -1,6 +1,8 @@
 package com.mehboob.myshadi.views.fragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,11 +13,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.utils.Utils;
@@ -31,6 +36,9 @@ import com.mehboob.myshadi.model.profilemodel.UserAuth;
 import com.mehboob.myshadi.room.models.User;
 import com.mehboob.myshadi.viewmodel.AuthViewModel;
 import com.mehboob.myshadi.viewmodel.UserViewModel;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 
 public class SignUpFragment extends Fragment {
@@ -167,5 +175,42 @@ public class SignUpFragment extends Fragment {
 
     public void navigate(Bundle savedInstanceState) {
         Utils.safelyNavigate(navController, R.id.action_signUpFragment_to_signInFragment, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+       authViewModel.getUserAuthMutableLiveData().observe(getViewLifecycleOwner(), new Observer<UserAuth>() {
+           @Override
+           public void onChanged(UserAuth userAuth) {
+               if (userAuth.isAuthenticated()){
+
+
+
+               }
+           }
+       });
+    }
+
+
+    public void getUserGoogleImage(){
+        Glide.with(getActivity()).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into();
+       BitmapDrawable draw = (BitmapDrawable) profileImage.getDrawable();
+        Bitmap bitmap = draw.getBitmap();
+
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = new File(sdCard.getAbsolutePath() + "/YourFolderName");
+        dir.mkdirs();
+        String fileName = String.format("%d.jpg", System.currentTimeMillis());
+        File outFile = new File(dir, fileName);
+        try{
+            FileOutputStream outStream = new FileOutputStream(outFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outStream);
+            outStream.flush();
+            outStream.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
