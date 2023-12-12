@@ -82,7 +82,8 @@ public class FirebaseUserProfileRepository {
                 userProfile.getWorkAs(),
                 imageUrls.get(0),
                 userProfile.getUserId()
-                ,imageUrls);
+                ,imageUrls,
+                true);
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
@@ -118,6 +119,11 @@ public class FirebaseUserProfileRepository {
 
                 });
 
+
+    }
+
+
+    public void getProfile(){
 
     }
 

@@ -42,8 +42,20 @@ public class UserProfile {
 
     private ArrayList<String> images;
 
+    private boolean isProfileComplete;
+
+
+
 
     public UserProfile() {
+    }
+
+    public boolean isProfileComplete() {
+        return isProfileComplete;
+    }
+
+    public void setProfileComplete(boolean profileComplete) {
+        isProfileComplete = profileComplete;
     }
 
     public ArrayList<String> getImages() {
@@ -54,7 +66,7 @@ public class UserProfile {
         this.images = images;
     }
 
-    public UserProfile(String profileFor, String gender, String fullName, String dob, String religion, String community, String livingIn, String email, String phoneNumber, String countryCode, String stateName, String stateCode, String cityName, String subCommunity, String maritalStatus, String children, String height, String diet, String qualifications, String college, String income, String worksWith, String workAs, String imageUrl, String userId, ArrayList<String> images) {
+    public UserProfile(String profileFor, String gender, String fullName, String dob, String religion, String community, String livingIn, String email, String phoneNumber, String countryCode, String stateName, String stateCode, String cityName, String subCommunity, String maritalStatus, String children, String height, String diet, String qualifications, String college, String income, String worksWith, String workAs, String imageUrl, String userId, ArrayList<String> images,boolean isProfileComplete) {
         this.profileFor = profileFor;
         this.gender = gender;
         this.fullName = fullName;
@@ -81,6 +93,7 @@ public class UserProfile {
         this.imageUrl = imageUrl;
         this.userId = userId;
         this.images = images;
+        this.isProfileComplete=isProfileComplete;
     }
 
     public String getImageUrl() {

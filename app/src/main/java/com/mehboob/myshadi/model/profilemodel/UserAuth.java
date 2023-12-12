@@ -10,8 +10,9 @@ public class UserAuth {
     private boolean isCreated;
 
     private String userId;
+    private String photoUrl;
 
-    public UserAuth(String userName, String name, String email, boolean isAuthenticated, boolean isNew, boolean isCreated,String userId) {
+    public UserAuth(String userName, String name, String email, boolean isAuthenticated, boolean isNew, boolean isCreated,String userId,String photoUrl) {
         this.userName = userName;
         this.name = name;
         this.email = email;
@@ -19,6 +20,15 @@ public class UserAuth {
         this.isNew = isNew;
         this.isCreated = isCreated;
         this.userId=userId;
+        this.photoUrl=photoUrl;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public String getUserId() {

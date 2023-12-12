@@ -54,8 +54,9 @@ public class GoogleSignInRepo {
                     String name = firebaseUser.getDisplayName();
                     String email = firebaseUser.getEmail();
                     String userId = firebaseUser.getUid();
+                       String photoUrl=             firebaseUser.getPhotoUrl().toString();
 
-                    UserAuth user = new UserAuth(uid, name, email, true, isNewUser, true, userId);
+                    UserAuth user = new UserAuth(uid, name, email, true, isNewUser, true, userId,photoUrl);
                     user.setNew(isNewUser);
                     authenticatedUserMutableLiveData.postValue(user);
                     //  authenticatedUserMutableLiveData.setValue(user);

@@ -99,7 +99,8 @@ public class PickPhotosActivity extends AppCompatActivity {
                 sessionManager.fetchWorkAs(),
                 "",
                 userData.getUserId()
-                , new ArrayList<>());
+                , new ArrayList<>(),
+                false);
         fupViewModel.uploadUserProfile(selectedImages, profile);
 
         fupViewModel.getResponse().observe(this, profileResponse -> {

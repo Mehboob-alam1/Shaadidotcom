@@ -1,8 +1,12 @@
 package com.mehboob.myshadi.views.fragments;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,8 +22,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.util.Util;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,12 +39,16 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.mehboob.myshadi.R;
+import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.databinding.FragmentSignUpBinding;
 import com.mehboob.myshadi.model.profilemodel.UserAuth;
 import com.mehboob.myshadi.room.models.User;
 import com.mehboob.myshadi.viewmodel.AuthViewModel;
+import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.UserViewModel;
+import com.mehboob.myshadi.views.activities.ProfileForActivity;
+import com.mehboob.myshadi.views.dashboard.DashBoardActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,12 +66,16 @@ public class SignUpFragment extends Fragment {
     private final int RC_SIGN_IN = 100;
 
     private UserViewModel userViewModel;
+    private UserAuth userAuth;
+    private FUPViewModel fupViewModel;
 
+    private boolean ifProfileComplete;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
 
         authViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(AuthViewModel.class);
 
@@ -86,17 +103,7 @@ public class SignUpFragment extends Fragment {
 
         });
 
-        userViewModel.getLiveData().observe(getViewLifecycleOwner(), user -> {
-            if (user != null && user.isAuthenticated()) {
-                // User is added to the Room database and authenticated, proceed with your app logic
-                // For example, navigate to the main activity
-                navigate(savedInstanceState);
-            } else {
-                // User not added or not authenticated, show the signup page
-                // For example, display a fragment with the signup form
-                Log.d("room", "onCreateView: nothings");
-            }
-        });
+
         return binding.getRoot();
     }
 
@@ -108,10 +115,11 @@ public class SignUpFragment extends Fragment {
 
         navController = Navigation.findNavController(view);
         binding.btnSignUpGoogle.setOnClickListener(view1 -> {
-            Intent intent = googleSignInClient.getSignInIntent();
-            // Start activity for result
-            startActivityForResult(intent, RC_SIGN_IN);
+            btnClickSignInGoogle();
+
+
         });
+
 
         authViewModel.getUserAuthMutableLiveData().observe(getViewLifecycleOwner(), new Observer<UserAuth>() {
             @Override
@@ -124,6 +132,14 @@ public class SignUpFragment extends Fragment {
                 }
             }
         });
+
+    }
+
+    public void btnClickSignInGoogle() {
+
+        Intent intent = googleSignInClient.getSignInIntent();
+        // Start activity for result
+        startActivityForResult(intent, RC_SIGN_IN);
 
     }
 
@@ -161,15 +177,15 @@ public class SignUpFragment extends Fragment {
                 , userAuth.getUserId(), true));
 
 
-        userViewModel.getLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-
-                Log.d("room", "Inserted to local");
-                navigate(savedInstanceState);
-
-            }
-        });
+//        userViewModel.getLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
+//            @Override
+//            public void onChanged(User user) {
+//
+//                Log.d("room", "Inserted to local");
+//                navigate(savedInstanceState);
+//
+//            }
+//        });
 
     }
 
@@ -178,39 +194,72 @@ public class SignUpFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
 
-       authViewModel.getUserAuthMutableLiveData().observe(getViewLifecycleOwner(), new Observer<UserAuth>() {
-           @Override
-           public void onChanged(UserAuth userAuth) {
-               if (userAuth.isAuthenticated()){
+        userViewModel.getLiveData().observe(getViewLifecycleOwner(), user -> {
+            if (user != null && user.isAuthenticated()) {
+                // User is added to the Room database and authenticated, proceed with your app logic
+                // For example, navigate to the main activity
+
+                Toast.makeText(requireActivity(), "User is already authenticated", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(requireActivity(), ""+user.getEmail(), Toast.LENGTH_SHORT).show();
+                boolean isProfileComplete = isProfile();
+
+                if (isProfileComplete){
+                    startActivity(new Intent(requireActivity().getApplication(), DashBoardActivity.class));
+
+                    requireActivity().finishAffinity();
+                }else {
+                    startActivity(new Intent(requireActivity().getApplication(), ProfileForActivity.class));
+                    requireActivity().finishAffinity();
+                }
 
 
+            } else {
+                // User not added or not authenticated, show the signup page
+                // For example, display a fragment with the signup form
+                Log.d("room", "onCreateView: nothings");
+            }
+        });
 
-               }
-           }
-       });
+
+//        authViewModel.getLoggedState().observe(getViewLifecycleOwner(), aBoolean -> {
+//
+//            if (aBoolean){
+//
+//                fupViewModel.getUserProfileMutableLiveData().observe(getViewLifecycleOwner(), userProfile -> {
+//                    if (userProfile.isProfileComplete()){
+//
+//                        // navigate to main screen
+//
+//
+//
+
+//                    }else{
+//                        // navigate to Profile for activity
+//
+//                        Utils.showSnackBar(requireActivity(),"Complete the profile");
+//
+
+//                    }
+//                });
+//            }
+//
+//
+//        });
+
     }
 
+    private boolean isProfile() {
 
-    public void getUserGoogleImage(){
-        Glide.with(getActivity()).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into();
-       BitmapDrawable draw = (BitmapDrawable) profileImage.getDrawable();
-        Bitmap bitmap = draw.getBitmap();
+        fupViewModel.getUserProfileMutableLiveData().observe(getViewLifecycleOwner(), userProfile -> {
 
-        File sdCard = Environment.getExternalStorageDirectory();
-        File dir = new File(sdCard.getAbsolutePath() + "/YourFolderName");
-        dir.mkdirs();
-        String fileName = String.format("%d.jpg", System.currentTimeMillis());
-        File outFile = new File(dir, fileName);
-        try{
-            FileOutputStream outStream = new FileOutputStream(outFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outStream);
-            outStream.flush();
-            outStream.close();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+            ifProfileComplete = userProfile.isProfileComplete();
+
+        });
+
+        return ifProfileComplete;
     }
 }
