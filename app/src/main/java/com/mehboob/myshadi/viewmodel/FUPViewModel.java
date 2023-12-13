@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
@@ -19,48 +20,55 @@ import java.util.List;
 public class FUPViewModel extends AndroidViewModel {
 
 
-    private MutableLiveData<ProfileResponse> response;
 
-    private MutableLiveData<UserProfile> userProfileMutableLiveData;
 
     private final MutableLiveData<List<Uri>> selectedImages = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> isProfile = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> isProfileComplete;
+    private MutableLiveData<UserProfile> userProfileLiveData ;
+
+    private MutableLiveData<Boolean> checkIfUpload;
+
+
+
     private FirebaseUserProfileRepository repository;
 
     public FUPViewModel(@NonNull Application application) {
         super(application);
         repository = new FirebaseUserProfileRepository(application);
-        response = repository.getProfileResponse();
-        userProfileMutableLiveData = repository.getUserProfileMutableLiveData();
-        isProfileComplete=repository.getIsProfileComplete();
+checkIfUpload=repository.getIsProfileCompleted();
+        userProfileLiveData=repository.getUserProfileLiveData();
+
     }
 
 
-    public MutableLiveData<ProfileResponse> getResponse() {
-        return response;
+    public MutableLiveData<Boolean> getCheckIfUpload() {
+        return checkIfUpload;
     }
 
-    public MutableLiveData<UserProfile> getUserProfileMutableLiveData() {
-        return userProfileMutableLiveData;
+    public MutableLiveData<UserProfile> getUserProfileLiveData() {
+        return userProfileLiveData;
     }
 
-    public MutableLiveData<Boolean> getIsProfileComplete() {
-        return isProfileComplete;
+
+
+    public void getProfile(UserProfile userProfile){
+
+
+        repository.getProfileData(userProfile);
     }
+
 
     public void uploadUserProfile(List<Uri> images, UserProfile userProfile) {
 
         repository.uploadImagesToFirebase(images, userProfile, new FirebaseUserProfileRepository.StorageUploadCallback() {
             @Override
             public void onSuccess(List<String> imageUrls) {
-                isProfile.setValue(true);
+
             }
 
             @Override
             public void onError(String errorMessage) {
-                isProfile.setValue(false);
+
             }
         });
     }
@@ -73,5 +81,18 @@ public class FUPViewModel extends AndroidViewModel {
         selectedImages.setValue(images);
     }
 
+    public interface ProfileCompletionCallback {
+        void onProfileCompletion(boolean isProfileComplete);
+    }
+    public void checkProfileCompletion(String userId, ProfileCompletionCallback callback) {
+        LiveData<Boolean> profileCompleteLiveData = repository.isProfileComplete(userId);
 
+        profileCompleteLiveData.observeForever(new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isProfileComplete) {
+                callback.onProfileCompletion(isProfileComplete);
+                profileCompleteLiveData.removeObserver(this);
+            }
+        });
+    }
 }

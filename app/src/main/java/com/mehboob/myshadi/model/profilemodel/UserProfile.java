@@ -96,6 +96,17 @@ public class UserProfile {
         this.isProfileComplete=isProfileComplete;
     }
 
+    public UserProfile(String gender,String livingIn,String religion,String community,String subCommunity,String maritalStatus,String userId){
+
+        this.gender=gender;
+        this.livingIn=livingIn;
+        this.religion=religion;
+        this.community=community;
+        this.subCommunity=subCommunity;
+        this.maritalStatus=maritalStatus;
+        this.userId=userId;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }

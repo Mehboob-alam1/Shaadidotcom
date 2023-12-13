@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityIncomeDetailsBinding;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
@@ -111,9 +112,9 @@ public class IncomeDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        fupViewModel.getUserProfileMutableLiveData().observe(this, userProfile -> {
-            Utils.showSnackBar(this, userProfile.toString());
-        });
+//        fupViewModel.get(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(this, userProfile -> {
+//            Utils.showSnackBar(this, userProfile.toString());
+//        });
 
 
     }

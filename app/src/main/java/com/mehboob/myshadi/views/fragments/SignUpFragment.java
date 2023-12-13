@@ -2,6 +2,7 @@ package com.mehboob.myshadi.views.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -54,7 +55,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends Fragment implements FUPViewModel.ProfileCompletionCallback {
 
     private FragmentSignUpBinding binding;
     private NavController navController;
@@ -70,6 +71,8 @@ public class SignUpFragment extends Fragment {
     private FUPViewModel fupViewModel;
 
     private boolean ifProfileComplete;
+
+    private ProgressDialog dialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,7 +94,9 @@ public class SignUpFragment extends Fragment {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-
+dialog= new ProgressDialog(requireActivity());
+dialog.setMessage("Please wait");
+dialog.setCancelable(false);
         // Initialize sign in client
         googleSignInClient = GoogleSignIn.getClient(getActivity().getApplication(), googleSignInOptions);
 
@@ -106,7 +111,9 @@ public class SignUpFragment extends Fragment {
 
         return binding.getRoot();
     }
-
+    private void checkProfile(String userId) {
+        fupViewModel.checkProfileCompletion(userId, this);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -177,15 +184,6 @@ public class SignUpFragment extends Fragment {
                 , userAuth.getUserId(), true));
 
 
-//        userViewModel.getLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
-//            @Override
-//            public void onChanged(User user) {
-//
-//                Log.d("room", "Inserted to local");
-//                navigate(savedInstanceState);
-//
-//            }
-//        });
 
     }
 
@@ -204,62 +202,58 @@ public class SignUpFragment extends Fragment {
 
                 Toast.makeText(requireActivity(), "User is already authenticated", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(requireActivity(), ""+user.getEmail(), Toast.LENGTH_SHORT).show();
-                boolean isProfileComplete = isProfile();
-
-                if (isProfileComplete){
-                    startActivity(new Intent(requireActivity().getApplication(), DashBoardActivity.class));
-
-                    requireActivity().finishAffinity();
-                }else {
-                    startActivity(new Intent(requireActivity().getApplication(), ProfileForActivity.class));
-                    requireActivity().finishAffinity();
-                }
+                Toast.makeText(requireActivity(), "" + user.getEmail(), Toast.LENGTH_SHORT).show();
+     checkProfile(user.getUserId());
 
 
             } else {
                 // User not added or not authenticated, show the signup page
                 // For example, display a fragment with the signup form
+
+                dialog.dismiss();
                 Log.d("room", "onCreateView: nothings");
             }
         });
 
 
-//        authViewModel.getLoggedState().observe(getViewLifecycleOwner(), aBoolean -> {
-//
-//            if (aBoolean){
-//
-//                fupViewModel.getUserProfileMutableLiveData().observe(getViewLifecycleOwner(), userProfile -> {
-//                    if (userProfile.isProfileComplete()){
-//
-//                        // navigate to main screen
-//
-//
-//
-
-//                    }else{
-//                        // navigate to Profile for activity
-//
-//                        Utils.showSnackBar(requireActivity(),"Complete the profile");
-//
-
-//                    }
-//                });
-//            }
-//
-//
-//        });
 
     }
 
-    private boolean isProfile() {
 
-        fupViewModel.getUserProfileMutableLiveData().observe(getViewLifecycleOwner(), userProfile -> {
 
-            ifProfileComplete = userProfile.isProfileComplete();
+    @Override
+    public void onProfileCompletion(boolean isProfileComplete) {
 
-        });
 
-        return ifProfileComplete;
+
+            Log.d("ProfileCompletion", "onProfileCompletion: "+ isProfileComplete);
+            if (isProfileComplete){
+                startActivity(new Intent(requireActivity(),DashBoardActivity.class));
+                requireActivity().finishAffinity();
+
+
+            }else{
+
+                startActivity(new Intent(requireActivity(),ProfileForActivity.class));
+                requireActivity().finishAffinity();
+            }
+
+            dialog.dismiss();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        dialog.show();
+
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        dialog.dismiss();
     }
 }

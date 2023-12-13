@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityPickPhotosBinding;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
@@ -27,7 +29,7 @@ import com.mehboob.myshadi.viewmodel.UserViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PickPhotosActivity extends AppCompatActivity {
+public class PickPhotosActivity extends AppCompatActivity implements FUPViewModel.ProfileCompletionCallback {
     private ActivityPickPhotosBinding binding;
     private List<Uri> selectedImages = new ArrayList<>();
     List<ImageView> imageViewList;
@@ -58,14 +60,14 @@ public class PickPhotosActivity extends AppCompatActivity {
 
         binding.btnContinue.setOnClickListener(view -> {
 
-            if (!selectedImages.isEmpty()){
+            if (!selectedImages.isEmpty()) {
 
                 binding.lottieLoading.setVisibility(View.VISIBLE);
                 uploadData();
 
 
-            }else{
-                Utils.showSnackBar(this,"Add at least one photo");
+            } else {
+                Utils.showSnackBar(this, "Add at least one photo");
             }
         });
 
@@ -103,25 +105,44 @@ public class PickPhotosActivity extends AppCompatActivity {
                 false);
         fupViewModel.uploadUserProfile(selectedImages, profile);
 
-        fupViewModel.getResponse().observe(this, profileResponse -> {
+        fupViewModel.getCheckIfUpload().observe(this, aBoolean -> {
 
-
-
-            if (profileResponse.isUpload()) {
+            if (aBoolean) {
 
                 binding.lottieLoading.setVisibility(View.GONE);
                 binding.lottieLoading.cancelAnimation();
-                Utils.showSnackBar(this,"Profile created successfully");
+                Utils.showSnackBar(this, "Profile created successfully");
                 startActivity(new Intent(PickPhotosActivity.this, SetPreferencesActivity.class));
-            }else{
+            } else {
                 binding.lottieLoading.setVisibility(View.GONE);
                 binding.lottieLoading.cancelAnimation();
-                Utils.showSnackBar(this,profileResponse.getMessage());
+                Utils.showSnackBar(this, "Something went wrong");
             }
 
 
         });
+
+
+//        fupViewModel.ge(userData.getUserId()).observe(this, aBoolean -> {
+//
+//
+//
+//            if (aBoolean) {
+//
+//                binding.lottieLoading.setVisibility(View.GONE);
+//                binding.lottieLoading.cancelAnimation();
+//                Utils.showSnackBar(this,"Profile created successfully");
+//                startActivity(new Intent(PickPhotosActivity.this, SetPreferencesActivity.class));
+//            }else{
+//                binding.lottieLoading.setVisibility(View.GONE);
+//                binding.lottieLoading.cancelAnimation();
+//                Utils.showSnackBar(this,"Something went wrong");
+//            }
+//
+//
+//        });
     }
+
 
     private void getImagesToViews() {
         imageViewList = new ArrayList<>();
@@ -177,4 +198,10 @@ public class PickPhotosActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onProfileCompletion(boolean isProfileComplete) {
+
+
+        Log.d("PickPhotosActivity", "onProfileCompletion: "+isProfileComplete);
+    }
 }

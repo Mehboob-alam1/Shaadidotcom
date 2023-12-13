@@ -90,4 +90,8 @@ dependencies {
     // lottie
 
     implementation 'com.airbnb.android:lottie:6.2.0'
+
+    //bottom bar
+
+    implementation 'com.etebarian:meow-bottom-navigation:1.2.0'
 }

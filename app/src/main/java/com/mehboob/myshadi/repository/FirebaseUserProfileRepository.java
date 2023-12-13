@@ -3,11 +3,17 @@ package com.mehboob.myshadi.repository;
 import android.app.Application;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
@@ -21,41 +27,28 @@ import java.util.List;
 public class FirebaseUserProfileRepository {
 
 
-    private MutableLiveData<ProfileResponse> profileResponse = new MutableLiveData<>();
+    private MutableLiveData<UserProfile> userProfileLiveData;
 
-    private MutableLiveData<UserProfile> userProfileMutableLiveData = new MutableLiveData<>();
-
-    private MutableLiveData<Boolean> isProfileComplete= new MutableLiveData<>();
-
-
-    public MutableLiveData<ProfileResponse> getProfileResponse() {
-        return profileResponse;
-    }
 
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     int uploadedCount = 0;
     private Application application;
+    private MutableLiveData<Boolean> isProfileCompleted;
+
     public FirebaseUserProfileRepository(Application application) {
         this.storageReference = FirebaseStorage.getInstance().getReference("userProfiles").child("images");
-        databaseReference= FirebaseDatabase.getInstance().getReference();
-
-        this.application=application;
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        userProfileLiveData = new MutableLiveData<>();
+        this.application = application;
+        isProfileCompleted = new MutableLiveData<>();
     }
 
-    public MutableLiveData<Boolean> getIsProfileComplete() {
-        return isProfileComplete;
+    public MutableLiveData<Boolean> getIsProfileCompleted() {
+        return isProfileCompleted;
     }
 
-    public void setIsProfileComplete(MutableLiveData<Boolean> isProfileComplete) {
-        this.isProfileComplete = isProfileComplete;
-    }
-
-    public MutableLiveData<UserProfile> getUserProfileMutableLiveData() {
-        return userProfileMutableLiveData;
-    }
-
-    public void uploadProfile(UserProfile userProfile,ArrayList<String> imageUrls) {
+    public void uploadProfile(UserProfile userProfile, ArrayList<String> imageUrls) {
 
         UserProfile profile = new UserProfile(userProfile.getProfileFor(),
                 userProfile.getGender(),
@@ -82,18 +75,12 @@ public class FirebaseUserProfileRepository {
                 userProfile.getWorkAs(),
                 imageUrls.get(0),
                 userProfile.getUserId()
-                ,imageUrls,
+                , imageUrls,
                 true);
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
-
-        userProfileRef.child(profile.getGender())
-                .child(profile.getLivingIn())
-                .child(profile.getReligion())
-                .child(profile.getCommunity())
-                .child(profile.getSubCommunity())
-                .child(profile.getMaritalStatus())
+        userProfileRef
 
                 .child(profile.getUserId())
                 .setValue(profile)
@@ -103,19 +90,19 @@ public class FirebaseUserProfileRepository {
 
                     if (task.isComplete() && task.isSuccessful()) {
 
-                        profileResponse.setValue(new ProfileResponse(true, "Profile uploaded"));
 
-                        userProfileMutableLiveData.setValue(userProfile);
-                        isProfileComplete.setValue(true);
+                        userProfileLiveData.setValue(userProfile);
+
+                        isProfileCompleted.setValue(true);
+
 
                     } else {
-                        isProfileComplete.setValue(false);
-                        profileResponse.setValue(new ProfileResponse(false, "Something went wrong"));
-
+                        userProfileLiveData.setValue(null);
+                        isProfileCompleted.setValue(false);
                     }
                 }).addOnFailureListener(e -> {
-                    isProfileComplete.setValue(false);
-                    profileResponse.setValue(new ProfileResponse(false, e.getLocalizedMessage().toString()));
+                    userProfileLiveData.setValue(null);
+                    isProfileCompleted.setValue(false);
 
                 });
 
@@ -123,11 +110,45 @@ public class FirebaseUserProfileRepository {
     }
 
 
-    public void getProfile(){
+    // Method to fetch user profile data from Firebase
+    public void getProfileData(UserProfile profile) {
+
+
+        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
+
+                .child(profile.getUserId());
+
+        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+                    userProfileLiveData.setValue(userProfile);
+
+                } else {
+                    // Handle the case where the profile data doesn't exist
+
+                    userProfileLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle the error
+
+                userProfileLiveData.setValue(null);
+            }
+        });
+
 
     }
 
-    public void uploadImagesToFirebase(List<Uri> images,UserProfile userProfile, StorageUploadCallback callback) {
+    // Getter method for the MutableLiveData
+    public MutableLiveData<UserProfile> getUserProfileLiveData() {
+        return userProfileLiveData;
+    }
+
+    public void uploadImagesToFirebase(List<Uri> images, UserProfile userProfile, StorageUploadCallback callback) {
         int totalImages = images.size();
 
         ArrayList<String> imageUrls = new ArrayList<>();
@@ -150,11 +171,11 @@ public class FirebaseUserProfileRepository {
 
                         // Check if all images are uploaded
                         if (uploadedCount == totalImages) {
-                            TinyDB tinyDB= new TinyDB(application);
+                            TinyDB tinyDB = new TinyDB(application);
                             tinyDB.putListString("images", imageUrls);
 
                             // All images uploaded, now save image URLs to Firebase Realtime Database
-                            uploadProfile(userProfile,imageUrls);
+                            uploadProfile(userProfile, imageUrls);
                             callback.onSuccess(imageUrls);
                         }
                     })
@@ -172,11 +193,34 @@ public class FirebaseUserProfileRepository {
     }
 
 
-    public void checkProfileCompletion(){
+    public MutableLiveData<Boolean> isProfileComplete(String userId) {
+        MutableLiveData<Boolean> isProfileCompleteLiveData = new MutableLiveData<>();
 
+        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
+                .child(userId)
+                .child("profileComplete");
 
+        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    boolean isProfileComplete = dataSnapshot.getValue(Boolean.class);
+                    isProfileCompleteLiveData.setValue(isProfileComplete);
+                } else {
+                    // Handle the case where the node doesn't exist
+                    isProfileCompleteLiveData.setValue(false);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle the error
+                isProfileCompleteLiveData.setValue(false);
+            }
+        });
 
+        return isProfileCompleteLiveData;
     }
+
 
 }
