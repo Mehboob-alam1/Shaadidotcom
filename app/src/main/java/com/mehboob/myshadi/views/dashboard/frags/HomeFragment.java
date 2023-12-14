@@ -21,8 +21,11 @@ import com.mehboob.myshadi.databinding.FragmentHomeBinding;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
+import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 import com.mehboob.myshadi.views.dashboard.EditProfileActivity;
 import com.mehboob.myshadi.views.dashboard.premium.UpgradePremiumActivity;
+
+import java.util.List;
 
 
 public class HomeFragment extends Fragment {
@@ -31,6 +34,8 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     private FUPViewModel fupViewModel;
+
+    private MatchMakingViewModel matchMakingViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,5 +84,19 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         fupViewModel = new ViewModelProvider(requireActivity()).get(FUPViewModel.class);
 
+        matchMakingViewModel= new ViewModelProvider(requireActivity()).get(MatchMakingViewModel.class);
+
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+        matchMakingViewModel.getBestRecentMatchedProfiles().observe(getViewLifecycleOwner(), userProfiles -> {
+
+        });
     }
 }
