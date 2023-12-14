@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.repository.FirebaseUserProfileRepository;
@@ -29,7 +30,7 @@ public class FUPViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> checkIfUpload;
 
 
-
+private MutableLiveData<Boolean> isPreferencesAdded;
     private FirebaseUserProfileRepository repository;
 
     public FUPViewModel(@NonNull Application application) {
@@ -37,12 +38,17 @@ public class FUPViewModel extends AndroidViewModel {
         repository = new FirebaseUserProfileRepository(application);
 checkIfUpload=repository.getIsProfileCompleted();
         userProfileLiveData=repository.getUserProfileLiveData();
+        isPreferencesAdded=repository.getIsPreferencesAdded();
 
     }
 
 
     public MutableLiveData<Boolean> getCheckIfUpload() {
         return checkIfUpload;
+    }
+
+    public MutableLiveData<Boolean> getIsPreferencesAdded() {
+        return isPreferencesAdded;
     }
 
     public MutableLiveData<UserProfile> getUserProfileLiveData() {
@@ -57,6 +63,10 @@ checkIfUpload=repository.getIsProfileCompleted();
         repository.getProfileData(userProfile);
     }
 
+
+    public void updatePreferences(Preferences preferences,String userId){
+        repository.updatePreferences(preferences,userId);
+    }
 
     public void uploadUserProfile(List<Uri> images, UserProfile userProfile) {
 

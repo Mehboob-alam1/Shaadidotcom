@@ -1,6 +1,7 @@
 package com.mehboob.myshadi.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +10,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivitySetPreferencesBinding;
-import com.mehboob.myshadi.model.match.Match;
+
+import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.utils.Utils;
+import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.views.dashboard.DashBoardActivity;
 
 import java.util.ArrayList;
@@ -22,11 +26,12 @@ import java.util.List;
 public class SetPreferencesActivity extends AppCompatActivity {
     private ActivitySetPreferencesBinding binding;
     private MatchPref matchPref;
+    private FUPViewModel fupViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
         binding = ActivitySetPreferencesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -34,9 +39,9 @@ public class SetPreferencesActivity extends AppCompatActivity {
 
 
         binding.btnSkip.setOnClickListener(view -> {
- updateUi();
+            updateUi();
         });
-binding.btnContinue.setOnClickListener(view -> updateUi());
+
         setSpinnerAges();
 
         setSpinnerHeights();
@@ -63,7 +68,8 @@ binding.btnContinue.setOnClickListener(view -> updateUi());
                 Utils.showSnackBar(this, "Select valid option");
             } else {
 
-                Match match = new Match(binding.spinnerAgeMin.getSelectedItem().toString(),
+
+                Preferences preferences = new Preferences(binding.spinnerAgeMin.getSelectedItem().toString(),
                         binding.spinnerAgeMax.getSelectedItem().toString(),
                         binding.spinnerHeightMin.getSelectedItem().toString(),
                         binding.spinnerHeightMax.getSelectedItem().toString(),
@@ -72,9 +78,20 @@ binding.btnContinue.setOnClickListener(view -> updateUi());
                         binding.spinnerComunity.getSelectedItem().toString(),
                         binding.spinnerSubCommunity.getSelectedItem().toString(),
                         binding.spinnerMaritalStatus.getSelectedItem().toString());
-                matchPref.savePref(match);
 
-                Utils.showSnackBar(this, matchPref.fetchPref().toString());
+                fupViewModel.updatePreferences(preferences, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                matchPref.savePref(preferences);
+                fupViewModel.getIsPreferencesAdded().observe(this, aBoolean -> {
+                    if (aBoolean) {
+                        Utils.showSnackBar(this, "Preferences update successfully");
+                        updateUi();
+                    }else{
+                        Utils.showSnackBar(this,"Something went wrong");
+                    }
+                });
+
+
+              //  Utils.showSnackBar(this, matchPref.fetchPref().toString());
 
 
             }
@@ -82,9 +99,11 @@ binding.btnContinue.setOnClickListener(view -> updateUi());
 
         });
     }
-public void updateUi(){
+
+    public void updateUi() {
         startActivity(new Intent(SetPreferencesActivity.this, DashBoardActivity.class));
-}
+    }
+
     private void setMaritalStatus() {
 
 
@@ -218,6 +237,19 @@ public void updateUi(){
 
 
         heightAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        fupViewModel.getUserProfileLiveData().observe(this, userProfile -> {
+
+            binding.spinnerCity.setText(userProfile.getCityName());
+
+        });
+
 
     }
 }

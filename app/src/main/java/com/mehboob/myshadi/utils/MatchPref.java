@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mehboob.myshadi.model.match.Match;
+import com.mehboob.myshadi.model.profilemodel.Preferences;
 
 import java.lang.reflect.Type;
 
@@ -21,7 +21,7 @@ public class MatchPref {
     }
 
 
-    public void savePref(Match match) {
+    public void savePref(Preferences match) {
 
 //        SharedPreferences.Editor editor = sharedPreferences.edit();
 //        Gson gson = new Gson();
@@ -31,14 +31,14 @@ public class MatchPref {
 //        editor.commit();
 
         Gson gson = new Gson();
-        String jsonStr = gson.toJson(match, Match.class);
+        String jsonStr = gson.toJson(match, Preferences.class);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PREFERENCE, jsonStr);
         editor.apply();
 
     }
 
-    public Match fetchPref() {
+    public Preferences fetchPref() {
 
 //
 //        String jsonObj = sharedPreferences.getString(PREFERENCE, null);
@@ -50,7 +50,7 @@ public class MatchPref {
         String json = sharedPreferences.getString(PREFERENCE, null);
         if (json != null) {
             Gson gson = new Gson();
-            return gson.fromJson(json, Match.class);
+            return gson.fromJson(json, Preferences.class);
         } else {
             return null; // Handle the case where the key is not found
         }

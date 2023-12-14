@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.models.User;
@@ -35,6 +36,7 @@ public class FirebaseUserProfileRepository {
     int uploadedCount = 0;
     private Application application;
     private MutableLiveData<Boolean> isProfileCompleted;
+    private MutableLiveData<Boolean> isPreferencesAdded;
 
     public FirebaseUserProfileRepository(Application application) {
         this.storageReference = FirebaseStorage.getInstance().getReference("userProfiles").child("images");
@@ -42,10 +44,15 @@ public class FirebaseUserProfileRepository {
         userProfileLiveData = new MutableLiveData<>();
         this.application = application;
         isProfileCompleted = new MutableLiveData<>();
+        isPreferencesAdded= new MutableLiveData<>();
     }
 
     public MutableLiveData<Boolean> getIsProfileCompleted() {
         return isProfileCompleted;
+    }
+
+    public MutableLiveData<Boolean> getIsPreferencesAdded() {
+        return isPreferencesAdded;
     }
 
     public void uploadProfile(UserProfile userProfile, ArrayList<String> imageUrls) {
@@ -151,7 +158,26 @@ public class FirebaseUserProfileRepository {
     public MutableLiveData<UserProfile> getUserProfileLiveData() {
         return userProfileLiveData;
     }
+public void updatePreferences(Preferences preferences,String userId){
 
+    DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
+
+            userProfileRef.child(userId)
+            .child("preferences")
+            .setValue(preferences)
+            .addOnCompleteListener(task -> {
+
+                if (task.isComplete()&& task.isSuccessful()) {
+
+                    isPreferencesAdded.setValue(true);
+
+                }else{
+                    isPreferencesAdded.setValue(false);
+                }
+            }).addOnFailureListener(e -> {
+                isPreferencesAdded.setValue(false);
+            });
+}
     public void uploadImagesToFirebase(List<Uri> images, UserProfile userProfile, StorageUploadCallback callback) {
         int totalImages = images.size();
 
@@ -203,6 +229,8 @@ public class FirebaseUserProfileRepository {
 
         void onError(String errorMessage);
     }
+
+
 
 
     public MutableLiveData<Boolean> isProfileComplete(String userId) {
