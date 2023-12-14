@@ -14,6 +14,9 @@ import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.MatchPref;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MatchMakingRepository {
 
 
@@ -21,20 +24,27 @@ public class MatchMakingRepository {
 
     private MatchPref matchPref;
 
+    private List<UserProfile> bestMatchRecentProfiles;
 
-    public MatchMakingRepository(Application application){
+    private MutableLiveData<List<UserProfile>> bestMatchRecentUsers;
 
-        matchPref= new MatchPref(application.getApplicationContext());
+    public MatchMakingRepository(Application application) {
 
-        this.application= application;
+        matchPref = new MatchPref(application.getApplicationContext());
 
+        this.application = application;
+
+        bestMatchRecentUsers= new MutableLiveData<>();
+        bestMatchRecentProfiles= new ArrayList<>();
 
 
     }
 
+    public MutableLiveData<List<UserProfile>> getBestMatchRecentUsers() {
+        return bestMatchRecentUsers;
+    }
 
-
-    public void checkRecentMatches(UserProfile currentUserProfile){
+    public void checkRecentBestMatchesProfiles(UserProfile currentUserProfile) {
 
         DatabaseReference profilesRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
@@ -47,7 +57,12 @@ public class MatchMakingRepository {
                     // Check if the profile matches preferences
                     if (arePreferencesMatching(currentUserProfile, userProfile)) {
                         // This profile is a potential match
+
+                        bestMatchRecentProfiles.add(userProfile);
+
+                        bestMatchRecentUsers.setValue(bestMatchRecentProfiles);
                     }
+
                 }
             }
 
@@ -63,7 +78,12 @@ public class MatchMakingRepository {
         int age1 = Integer.parseInt(currentUserProfile.getDob());
         int age2 = Integer.parseInt(otherUserProfile.getDob());
 
+        int height1 = Integer.parseInt(currentUserProfile.getHeight());
+        int height2 = Integer.parseInt(otherUserProfile.getHeight());
 
+
+        int minHeight = Math.min(Integer.parseInt(currentUserProfile.getPreferences().getMinHeight()), Integer.parseInt(otherUserProfile.getPreferences().getMinHeight()));
+        int maxHeight = Math.max(Integer.parseInt(currentUserProfile.getPreferences().getMaxHeight()), Integer.parseInt(otherUserProfile.getPreferences().getMaxHeight()));
         //TODO
         // Profile matchmaking
         int minAge = Math.min(Integer.parseInt(currentUserProfile.getPreferences().getMinAge()), Integer.parseInt(otherUserProfile.getPreferences().getMinAge()));
@@ -72,6 +92,12 @@ public class MatchMakingRepository {
         // Check if ages and other preferences are within the specified range
         return age1 >= minAge && age1 <= maxAge &&
                 age2 >= minAge && age2 <= maxAge &&
+                height1>=minHeight && height1<=maxHeight &&
+                height2>=minHeight && height2 <=maxHeight &&
+                currentUserProfile.getPreferences().getCity().equals(otherUserProfile.getPreferences().getCity()) &&
+                currentUserProfile.getPreferences().getCommunity().equals(otherUserProfile.getCommunity()) &&
+                currentUserProfile.getPreferences().getSubCommunity().equals(otherUserProfile.getSubCommunity()) &&
+                currentUserProfile.getPreferences().getMaritalStatus().equals(otherUserProfile.getPreferences().getMaritalStatus())&&
                 currentUserProfile.getPreferences().getReligion().equals(otherUserProfile.getPreferences().getReligion());
 
         // Implement logic to compare preferences (e.g., age range, religion, etc.)
