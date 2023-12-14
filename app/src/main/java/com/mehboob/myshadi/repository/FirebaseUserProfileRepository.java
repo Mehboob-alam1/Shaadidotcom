@@ -76,7 +76,11 @@ public class FirebaseUserProfileRepository {
                 imageUrls.get(0),
                 userProfile.getUserId()
                 , imageUrls,
-                true);
+                true,
+                userProfile.getAccountType(),
+                userProfile.getIsVerified()
+                , userProfile.getTime(),
+                userProfile.getPreferences());
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
@@ -162,9 +166,16 @@ public class FirebaseUserProfileRepository {
 
             // Upload the image to Firebase Storage
             imageRef.putFile(imageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        // Image uploaded successfully
-                        String imageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
+                    .continueWithTask(task -> {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+                        // Continue with the task to get the download URL
+                        return imageRef.getDownloadUrl();
+                    })
+                    .addOnSuccessListener(uri -> {
+                        // Image uploaded successfully, and download URL obtained
+                        String imageUrl = uri.toString();
                         imageUrls.add(imageUrl);
 
                         uploadedCount++;
@@ -179,6 +190,7 @@ public class FirebaseUserProfileRepository {
                             callback.onSuccess(imageUrls);
                         }
                     })
+
                     .addOnFailureListener(e -> {
                         // Handle the error
                         callback.onError(e.getMessage());

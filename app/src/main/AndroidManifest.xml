@@ -13,19 +13,20 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".views.dashboard.premium.UpgradePremiumActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.dashboard.EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.PickPhotosActivity"
-            android:exported="true" >
-
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".views.dashboard.DashBoardActivity"
             android:exported="false" />
         <activity
             android:name=".views.activities.SetPreferencesActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".views.activities.IncomeDetailsActivity"
             android:exported="false" />
@@ -57,15 +58,13 @@
             android:exported="false" />
         <activity
             android:name=".views.activities.MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
 
         <meta-data
             android:name="preloaded_fonts"

@@ -1,6 +1,8 @@
 package com.mehboob.myshadi.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +17,12 @@ import android.widget.Toast;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityEmailPhoneNumberBinding;
 import com.mehboob.myshadi.utils.SessionManager;
+import com.mehboob.myshadi.viewmodel.UserViewModel;
 
 public class EmailPhoneNumberActivity extends AppCompatActivity {
     private ActivityEmailPhoneNumberBinding binding;
     private SessionManager sessionManager;
+    private UserViewModel userViewModel;
     String[] phoneCountryCodes = {"+92",
             "+93", "+355", "+213", "+376", "+244", "+1-268", "+54", "+374", "+61", "+43",
             "+994", "+1-242", "+973", "+880", "+1-246", "+375", "+32", "+501", "+229", "+975",
@@ -47,9 +51,10 @@ public class EmailPhoneNumberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityEmailPhoneNumberBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         sessionManager = new SessionManager(this);
         setPhoneCodes();
-binding.imgBack.setOnClickListener(view -> finish());
+        binding.imgBack.setOnClickListener(view -> finish());
 
         binding.etEmail.addTextChangedListener(textWatcher);
         binding.etPhoneNumber.addTextChangedListener(textWatcher);
@@ -57,7 +62,7 @@ binding.imgBack.setOnClickListener(view -> finish());
 
         binding.btnContinue.setOnClickListener(view -> {
 
-            if (binding.etPhoneNumber.getText().toString().length() < 9) {
+            if (binding.etPhoneNumber.getText().toString().length() < 10) {
                 Toast.makeText(this, "Phone number invalid", Toast.LENGTH_SHORT).show();
             } else {
 
@@ -125,5 +130,16 @@ binding.imgBack.setOnClickListener(view -> finish());
         } else {
             binding.btnContinue.setBackground(getResources().getDrawable(R.drawable.btn_back_unclicked));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        userViewModel.getLiveData().observe(this, user -> {
+            binding.etEmail.setText(user.getEmail());
+
+        });
+
     }
 }

@@ -44,10 +44,48 @@ public class UserProfile {
 
     private boolean isProfileComplete;
 
+    private String accountType;
 
+    private boolean isVerified;
+
+    private String time;
+
+
+    private Preferences preferences;
 
 
     public UserProfile() {
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+
+
+    public boolean getIsVerified() {
+        return isVerified;
+    }
+
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public Preferences getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(Preferences preferences) {
+        this.preferences = preferences;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     public boolean isProfileComplete() {
@@ -66,7 +104,10 @@ public class UserProfile {
         this.images = images;
     }
 
-    public UserProfile(String profileFor, String gender, String fullName, String dob, String religion, String community, String livingIn, String email, String phoneNumber, String countryCode, String stateName, String stateCode, String cityName, String subCommunity, String maritalStatus, String children, String height, String diet, String qualifications, String college, String income, String worksWith, String workAs, String imageUrl, String userId, ArrayList<String> images,boolean isProfileComplete) {
+    public UserProfile(String profileFor, String gender, String fullName, String dob, String religion, String community, String livingIn, String email, String phoneNumber, String countryCode, String stateName, String stateCode, String cityName, String subCommunity, String maritalStatus, String children, String height, String diet, String qualifications, String college,
+                       String income, String worksWith, String workAs, String imageUrl, String userId,
+                       ArrayList<String> images,boolean isProfileComplete,String accountType,boolean isVerified,String time,
+                       Preferences preferences) {
         this.profileFor = profileFor;
         this.gender = gender;
         this.fullName = fullName;
@@ -94,6 +135,12 @@ public class UserProfile {
         this.userId = userId;
         this.images = images;
         this.isProfileComplete=isProfileComplete;
+        this.accountType=accountType;
+        this.isVerified=isVerified;
+
+        this.time=time;
+
+        this.preferences=preferences;
     }
 
     public UserProfile(String gender,String livingIn,String religion,String community,String subCommunity,String maritalStatus,String userId){

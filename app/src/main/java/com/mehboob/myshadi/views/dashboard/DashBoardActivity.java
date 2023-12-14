@@ -31,27 +31,26 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
 public class DashBoardActivity extends AppCompatActivity {
-private ActivityDashBoardBinding binding;
+    private ActivityDashBoardBinding binding;
 
-private SessionManager sessionManager;
-private FUPViewModel fupViewModel;
+    private SessionManager sessionManager;
+    private FUPViewModel fupViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityDashBoardBinding.inflate(getLayoutInflater());
+        binding = ActivityDashBoardBinding.inflate(getLayoutInflater());
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
         setContentView(binding.getRoot());
-        sessionManager= new SessionManager(this);
+        sessionManager = new SessionManager(this);
 
-setBottomBar();
+        setBottomBar();
 
 
         getProfileUpdates();
 
 
-        fupViewModel.getUserProfileLiveData().observe(this, userProfile -> Utils.showSnackBar(DashBoardActivity.this,userProfile.toString()));
-
+        fupViewModel.getUserProfileLiveData().observe(this, userProfile -> Utils.showSnackBar(DashBoardActivity.this, userProfile.toString()));
 
 
     }
@@ -60,15 +59,11 @@ setBottomBar();
     private void setBottomBar() {
 
 
-BottomNavigationView bottomNavigation= findViewById(R.id.bottom_nav);
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_nav);
 
-        NavController   navController= Navigation.findNavController(this,R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
-        NavigationUI.setupWithNavController(bottomNavigation,navController);
-
-
-
-
+        NavigationUI.setupWithNavController(bottomNavigation, navController);
 
 
     }
@@ -76,7 +71,7 @@ BottomNavigationView bottomNavigation= findViewById(R.id.bottom_nav);
     private void getProfileUpdates() {
 
 
-        UserProfile profile= new UserProfile(sessionManager.fetchGender(),
+        UserProfile profile = new UserProfile(sessionManager.fetchGender(),
                 sessionManager.fetchLivingIn(),
                 sessionManager.fetchReligion(),
                 sessionManager.fetchCommunity(),
@@ -85,7 +80,6 @@ BottomNavigationView bottomNavigation= findViewById(R.id.bottom_nav);
                 FirebaseAuth.getInstance().getCurrentUser().getUid());
         fupViewModel.getProfile(profile);
     }
-
 
 
 }

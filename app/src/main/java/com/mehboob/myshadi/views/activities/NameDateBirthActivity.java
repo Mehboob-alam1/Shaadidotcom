@@ -1,8 +1,10 @@
 package com.mehboob.myshadi.views.activities;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityNameDateBirthBinding;
 import com.mehboob.myshadi.utils.SessionManager;
+import com.mehboob.myshadi.utils.Utils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,6 +26,7 @@ public class NameDateBirthActivity extends AppCompatActivity {
     private ActivityNameDateBirthBinding binding;
     private SessionManager sessionManager;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,7 @@ public class NameDateBirthActivity extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void validateDate() {
         String dayStr = binding.etDay.getText().toString();
         String monthStr = binding.etMonth.getText().toString();
@@ -84,7 +89,10 @@ public class NameDateBirthActivity extends AppCompatActivity {
         // Continue with your logic if the date is valid and age is at least 21
         // ...
         String fullName=firstName + " "+lastName;
-        String dob=dayStr +"/"+monthStr+ "/"+yearStr;
+
+       // String dateOfBirth = "2000-12-31";
+        String dob=yearStr +"-"+monthStr+ "-"+dayStr;
+        Utils.calculateAge(dob);
         sessionManager.saveFullName(fullName);
         sessionManager.saveDOb(dob);
         startActivity(new Intent(NameDateBirthActivity.this, ReligionCastActivity.class));

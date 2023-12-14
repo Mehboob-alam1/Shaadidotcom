@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityPickPhotosBinding;
+import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.models.User;
 import com.mehboob.myshadi.utils.SessionManager;
@@ -102,7 +103,11 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
                 "",
                 userData.getUserId()
                 , new ArrayList<>(),
-                false);
+                false
+                , "Free",
+                false,
+                String.valueOf(System.currentTimeMillis()),
+                new Preferences());
         fupViewModel.uploadUserProfile(selectedImages, profile);
 
         fupViewModel.getCheckIfUpload().observe(this, aBoolean -> {
@@ -202,6 +207,6 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
     public void onProfileCompletion(boolean isProfileComplete) {
 
 
-        Log.d("PickPhotosActivity", "onProfileCompletion: "+isProfileComplete);
+        Log.d("PickPhotosActivity", "onProfileCompletion: " + isProfileComplete);
     }
 }
