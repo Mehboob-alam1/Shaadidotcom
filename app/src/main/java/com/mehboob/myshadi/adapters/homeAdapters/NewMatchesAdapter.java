@@ -76,8 +76,12 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
 
     public void setNewMatches(List<UserProfile> newMatches) {
 
-        this.newMatches = newMatches;
+        this.newMatches.addAll(newMatches);
         notifyDataSetChanged();
+    }
+
+    public List<UserProfile> getNewMatches() {
+        return newMatches;
     }
 
     public class Holder extends RecyclerView.ViewHolder {

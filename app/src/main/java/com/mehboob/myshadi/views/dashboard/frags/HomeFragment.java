@@ -1,14 +1,11 @@
 package com.mehboob.myshadi.views.dashboard.frags;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +14,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.mehboob.myshadi.R;
 
+import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
 import com.mehboob.myshadi.databinding.FragmentHomeBinding;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.Utils;
@@ -25,6 +23,7 @@ import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 import com.mehboob.myshadi.views.dashboard.EditProfileActivity;
 import com.mehboob.myshadi.views.dashboard.premium.UpgradePremiumActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,6 +36,8 @@ public class HomeFragment extends Fragment {
 
     private MatchMakingViewModel matchMakingViewModel;
 
+    private NewMatchesAdapter newMatchesAdapter;
+    private LinearLayoutManager layoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,8 +50,20 @@ public class HomeFragment extends Fragment {
 
         setProfileData();
 
+        setNewMatchesRecyclerView();
+
 
         return binding.getRoot();
+    }
+
+    private void setNewMatchesRecyclerView() {
+
+        newMatchesAdapter = new NewMatchesAdapter( new ArrayList<>(),getActivity().getApplication());
+        layoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,true);
+
+
+        layoutManager.setStackFromEnd(true);
+        binding.recyclerNewMatches.setLayoutManager(layoutManager);
     }
 
     private void setProfileData() {
@@ -100,7 +113,11 @@ public class HomeFragment extends Fragment {
 
             if (userProfiles!=null){
 
+
+
                 binding.lineNewMatches.setVisibility(View.VISIBLE);
+
+                newMatchesAdapter.setNewMatches(userProfiles);
             }
 
 

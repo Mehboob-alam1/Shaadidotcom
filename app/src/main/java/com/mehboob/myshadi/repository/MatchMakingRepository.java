@@ -14,8 +14,12 @@ import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.MatchPref;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MatchMakingRepository {
 
@@ -47,8 +51,15 @@ public class MatchMakingRepository {
     public void checkRecentBestMatchesProfiles(UserProfile currentUserProfile) {
 
         DatabaseReference profilesRef = FirebaseDatabase.getInstance().getReference("userProfiles");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
+        Date startDate = calendar.getTime();
 
-        profilesRef.orderByChild("time").limitToFirst(10).addListenerForSingleValueEvent(new ValueEventListener() {
+        // Format dates for display
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        String formattedStartDate = sdf.format(startDate);
+        String formattedCurrentDate = sdf.format(new Date());
+        profilesRef.orderByChild("time").startAt(startDate.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot profileSnapshot : dataSnapshot.getChildren()) {

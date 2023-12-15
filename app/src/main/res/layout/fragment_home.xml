@@ -281,14 +281,29 @@
                 android:orientation="vertical"
        >
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="New Matches"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
+                    android:text="(9)"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="New Matches"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
