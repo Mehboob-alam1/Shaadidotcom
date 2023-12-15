@@ -223,6 +223,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@color/white"
+                android:id="@+id/linePremiumMatches"
+                android:visibility="gone"
                 android:orientation="vertical"
 
                >
@@ -273,7 +275,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:visibility="visible"
                 android:background="@color/white"
+                android:id="@+id/lineNewMatches"
                 android:orientation="vertical"
        >
 
@@ -298,6 +302,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/recyclerNewMatches"
+                    tools:listitem="@layout/matches_sample"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp" />
 

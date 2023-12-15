@@ -37,6 +37,7 @@ public class HomeFragment extends Fragment {
 
     private MatchMakingViewModel matchMakingViewModel;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -97,6 +98,20 @@ public class HomeFragment extends Fragment {
 
         matchMakingViewModel.getBestRecentMatchedProfiles().observe(getViewLifecycleOwner(), userProfiles -> {
 
+            if (userProfiles!=null){
+
+                binding.lineNewMatches.setVisibility(View.VISIBLE);
+            }
+
+
+
+
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
     }
 }
