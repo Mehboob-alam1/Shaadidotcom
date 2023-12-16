@@ -43,6 +43,9 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
 
     private User userData;
 
+    private String latitude = "";
+    private String longitude = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +110,8 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
                 , "Free",
                 false,
                 String.valueOf(System.currentTimeMillis()),
-                new Preferences());
+                new Preferences(),
+                latitude, longitude);
         fupViewModel.uploadUserProfile(selectedImages, profile);
 
         fupViewModel.getCheckIfUpload().observe(this, aBoolean -> {

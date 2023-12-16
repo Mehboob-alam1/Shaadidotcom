@@ -53,6 +53,26 @@ public class UserProfile {
 
     private Preferences preferences;
 
+    private String latitude;
+
+    private String longitude;
+
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
     public UserProfile() {
     }
@@ -107,7 +127,9 @@ public class UserProfile {
     public UserProfile(String profileFor, String gender, String fullName, String dob, String religion, String community, String livingIn, String email, String phoneNumber, String countryCode, String stateName, String stateCode, String cityName, String subCommunity, String maritalStatus, String children, String height, String diet, String qualifications, String college,
                        String income, String worksWith, String workAs, String imageUrl, String userId,
                        ArrayList<String> images,boolean isProfileComplete,String accountType,boolean isVerified,String time,
-                       Preferences preferences) {
+                       Preferences preferences,
+                       String latitude,
+                       String longitude) {
         this.profileFor = profileFor;
         this.gender = gender;
         this.fullName = fullName;
@@ -141,6 +163,9 @@ public class UserProfile {
         this.time=time;
 
         this.preferences=preferences;
+
+        this.latitude=latitude;
+        this.longitude=longitude;
     }
 
     public UserProfile(String gender,String livingIn,String religion,String community,String subCommunity,String maritalStatus,String userId){

@@ -87,7 +87,9 @@ public class FirebaseUserProfileRepository {
                 userProfile.getAccountType(),
                 userProfile.getIsVerified()
                 , userProfile.getTime(),
-                userProfile.getPreferences());
+                userProfile.getPreferences(),
+                userProfile.getLatitude(),
+                userProfile.getLongitude());
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 

@@ -8,59 +8,72 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.tabs.TabLayout;
 import com.mehboob.myshadi.R;
+import com.mehboob.myshadi.adapters.homeAdapters.MatchesTabAdapter;
+import com.mehboob.myshadi.databinding.FragmentMatchesBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MatchesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class MatchesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+   private FragmentMatchesBinding binding;
 
-    public MatchesFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MatchesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MatchesFragment newInstance(String param1, String param2) {
-        MatchesFragment fragment = new MatchesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_matches, container, false);
+
+        binding=FragmentMatchesBinding.inflate(inflater,container,false);
+
+
+        settingTabLayout();
+
+
+
+     return    binding.getRoot();
+    }
+
+    private void settingTabLayout() {
+
+
+//        binding.tabLayout.addTab(new TabLayout.Tab().setText("My Matches"));
+//        binding.tabLayout.addTab(new TabLayout.Tab().setText("Near me") .setIcon(R.drawable.baseline_location_on_24));
+//        binding.tabLayout.addTab(new TabLayout.Tab().setText("Shortlisted"));
+//        binding.tabLayout.addTab(new TabLayout.Tab().setText("Search").setIcon(R.drawable.baseline_search_24));
+//        binding.tabLayout.addTab(new TabLayout.Tab().setText("New"));
+//        binding.tabLayout.addTab(new TabLayout.Tab().setText("Daily"));
+        binding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final MatchesTabAdapter adapter = new MatchesTabAdapter(requireActivity(),requireActivity().getSupportFragmentManager(), binding.tabLayout.getTabCount());
+        binding.viewPager.setAdapter(adapter);
+
+        binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout));
+
+        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                binding.viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
     }
 }
