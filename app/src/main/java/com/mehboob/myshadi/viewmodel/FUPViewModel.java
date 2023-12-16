@@ -68,6 +68,12 @@ checkIfUpload=repository.getIsProfileCompleted();
         repository.updatePreferences(preferences,userId);
     }
 
+    public void updateLocation(String lat,String lon){
+
+        repository.updateLocation(lat,lon);
+
+    }
+
     public void uploadUserProfile(List<Uri> images, UserProfile userProfile) {
 
         repository.uploadImagesToFirebase(images, userProfile, new FirebaseUserProfileRepository.StorageUploadCallback() {

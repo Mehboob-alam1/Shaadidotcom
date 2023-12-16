@@ -1,13 +1,22 @@
 package com.mehboob.myshadi.views.activities;
 
+import static androidx.constraintlayout.motion.widget.Debug.getLocation;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,7 +24,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityPickPhotosBinding;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
@@ -30,8 +38,12 @@ import com.mehboob.myshadi.viewmodel.UserViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PickPhotosActivity extends AppCompatActivity implements FUPViewModel.ProfileCompletionCallback {
+public class PickPhotosActivity extends AppCompatActivity implements FUPViewModel.ProfileCompletionCallback, LocationListener {
     private ActivityPickPhotosBinding binding;
+
+    protected LocationManager locationManager;
+    protected LocationListener locationListener;
+    protected boolean gps_enabled, network_enabled;
     private List<Uri> selectedImages = new ArrayList<>();
     List<ImageView> imageViewList;
     private TinyDB tinyDB;
@@ -43,8 +55,10 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
 
     private User userData;
 
-    private String latitude = "";
-    private String longitude = "";
+    private String latitude;
+    private String longitude;
+    private final int MY_PERMISSIONS_REQUEST_LOCATION = 123;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +72,19 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
 
 
         userViewModel.getLiveData().observe(this, user -> userData = user);
+
+        // Check for runtime permissions
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted, request it
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
+        } else {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+
+        }
 
         getImagesToViews();
 
@@ -132,24 +159,6 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
         });
 
 
-//        fupViewModel.ge(userData.getUserId()).observe(this, aBoolean -> {
-//
-//
-//
-//            if (aBoolean) {
-//
-//                binding.lottieLoading.setVisibility(View.GONE);
-//                binding.lottieLoading.cancelAnimation();
-//                Utils.showSnackBar(this,"Profile created successfully");
-//                startActivity(new Intent(PickPhotosActivity.this, SetPreferencesActivity.class));
-//            }else{
-//                binding.lottieLoading.setVisibility(View.GONE);
-//                binding.lottieLoading.cancelAnimation();
-//                Utils.showSnackBar(this,"Something went wrong");
-//            }
-//
-//
-//        });
     }
 
 
@@ -212,5 +221,31 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
 
 
         Log.d("PickPhotosActivity", "onProfileCompletion: " + isProfileComplete);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+
+        latitude = String.valueOf(location.getLatitude());
+        longitude = String.valueOf(location.getLongitude());
+
+        fupViewModel.updateLocation(latitude, longitude);
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Log.d("Latitude", "disable");
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Log.d("Latitude", "enable");
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.d("Latitude", "status");
     }
 }

@@ -44,7 +44,7 @@ public class FirebaseUserProfileRepository {
         userProfileLiveData = new MutableLiveData<>();
         this.application = application;
         isProfileCompleted = new MutableLiveData<>();
-        isPreferencesAdded= new MutableLiveData<>();
+        isPreferencesAdded = new MutableLiveData<>();
     }
 
     public MutableLiveData<Boolean> getIsProfileCompleted() {
@@ -160,26 +160,35 @@ public class FirebaseUserProfileRepository {
     public MutableLiveData<UserProfile> getUserProfileLiveData() {
         return userProfileLiveData;
     }
-public void updatePreferences(Preferences preferences,String userId){
 
-    DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
+    public void updatePreferences(Preferences preferences, String userId) {
 
-            userProfileRef.child(userId)
-            .child("preferences")
-            .setValue(preferences)
-            .addOnCompleteListener(task -> {
+        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
-                if (task.isComplete()&& task.isSuccessful()) {
+        userProfileRef.child(userId)
+                .child("preferences")
+                .setValue(preferences)
+                .addOnCompleteListener(task -> {
 
-                    isPreferencesAdded.setValue(true);
+                    if (task.isComplete() && task.isSuccessful()) {
 
-                }else{
+                        isPreferencesAdded.setValue(true);
+
+                    } else {
+                        isPreferencesAdded.setValue(false);
+                    }
+                }).addOnFailureListener(e -> {
                     isPreferencesAdded.setValue(false);
-                }
-            }).addOnFailureListener(e -> {
-                isPreferencesAdded.setValue(false);
-            });
-}
+                });
+    }
+
+    public void updateLocation(String lat, String lon) {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userProfiles") .child(FirebaseAuth.getInstance().getUid());
+        ref.child("latitude").setValue(lat);
+        ref.child("longitude").setValue(lon);
+    }
+
     public void uploadImagesToFirebase(List<Uri> images, UserProfile userProfile, StorageUploadCallback callback) {
         int totalImages = images.size();
 
@@ -231,8 +240,6 @@ public void updatePreferences(Preferences preferences,String userId){
 
         void onError(String errorMessage);
     }
-
-
 
 
     public MutableLiveData<Boolean> isProfileComplete(String userId) {
