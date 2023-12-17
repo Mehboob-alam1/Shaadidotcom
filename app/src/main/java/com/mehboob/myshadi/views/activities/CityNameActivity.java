@@ -54,7 +54,7 @@ public class CityNameActivity extends AppCompatActivity {
             public void run() {
                 binding.progressBar.setVisibility(View.GONE);
             }
-        },1500);
+        },5000);
         Toast.makeText(this, ""+sessionManager.fetchStateCode(), Toast.LENGTH_SHORT).show();
         citiesViewModel.getCities(sessionManager.fetchStateCode());
         citiesViewModel.getMutableLiveData().observe(this,cities -> {

@@ -33,40 +33,7 @@ public class MartialStatusActivity extends AppCompatActivity {
     private ActivityMartialStatusBinding binding;
     private String[] maritalStatus = {"Select", "Never Married", "Divorced", "Widowed", "Awaiting Divorce", "Annulled"};
     private String[] children = {"Select", "No", "Yes,Living together", "Yes,Not Living together"};
-    String[] heights = {"Select",
-            "4ft 5in - 134cm",
-            "4ft 6in - 137cm",
-            "4ft 7in - 140cm",
-            "4ft 8in - 142cm",
-            "4ft 9in - 145cm",
-            "4ft 10in - 147cm",
-            "4ft 11in - 150cm",
-            "5ft - 152cm",
-            "5ft 1in - 155cm",
-            "5ft 2in - 157cm",
-            "5ft 3in - 160cm",
-            "5ft 4in - 163cm",
-            "5ft 5in - 165cm",
-            "5ft 6in - 168cm",
-            "5ft 7in - 170cm",
-            "5ft 8in - 173cm",
-            "5ft 9in - 175cm",
-            "5ft 10in - 178cm",
-            "5ft 11in - 180cm",
-            "6ft - 183cm",
-            "6ft 1in - 185cm",
-            "6ft 2in - 188cm",
-            "6ft 3in - 191cm",
-            "6ft 4in - 193cm",
-            "6ft 5in - 196cm",
-            "6ft 6in - 198cm",
-            "6ft 7in - 201cm",
-            "6ft 8in - 203cm",
-            "6ft 9in - 206cm",
-            "6ft 10in - 208cm",
-            "6ft 11in - 211cm",
-            "7ft - 213cm"
-    };
+
 
     private String[] diet = {"Select", "Veg", "Non-Veg", "Occasionally Non-Veg", "Eggetarian", "Jain", "Vegan"};
 
@@ -78,7 +45,6 @@ public class MartialStatusActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
 
-
         setMaritalStatus();
         setChildrenSpinner();
         setHeightSpinner();
@@ -87,12 +53,12 @@ public class MartialStatusActivity extends AppCompatActivity {
         binding.btnContinue.setOnClickListener(view -> {
             if (binding.spinnerMaritalStatus.getSelectedItem().equals("Select")) {
                 Utils.showSnackBar(this, "Select a valid marital status");
-            } else if (binding.spinnerChildren.getSelectedItem().equals("Select")) {
-                Utils.showSnackBar(this, "Please select a valid one");
-            } else if (binding.spinnerHeight.getSelectedItem().equals("Select")) {
+            } else if (binding.spinnerHeight.getSelectedItem().equals("Select height")) {
                 Utils.showSnackBar(this, "Select a valid height");
-            } else if (binding.spinnerHeight.getSelectedItem().equals("Select")) {
+            } else if (binding.spinnerDiet.getSelectedItem().equals("Select")) {
                 Utils.showSnackBar(this, "Add a valid diet");
+            } else if (!binding.spinnerMaritalStatus.getSelectedItem().equals("Never Married") && binding.spinnerChildren.getSelectedItem().equals("Select")) {
+                Utils.showSnackBar(this, "Do you have children?");
             } else {
                 startActivity(new Intent(MartialStatusActivity.this, QualificationActivity.class));
             }
@@ -100,6 +66,9 @@ public class MartialStatusActivity extends AppCompatActivity {
 
     }
 
+    //else if (binding.spinnerChildren.getSelectedItem().equals("Select")) {
+//        Utils.showSnackBar(this, "Please select a valid one");
+//    }
     private void setDietSpinner() {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, diet);
