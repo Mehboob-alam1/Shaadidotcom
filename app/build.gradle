@@ -96,6 +96,7 @@ dependencies {
     implementation 'com.etebarian:meow-bottom-navigation:1.2.0'
 
     // design tablyout
+    implementation 'io.github.farimarwat:simpleprogressbar:1.1'
 
 
 }

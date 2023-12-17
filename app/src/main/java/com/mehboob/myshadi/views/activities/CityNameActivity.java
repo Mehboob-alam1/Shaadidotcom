@@ -49,12 +49,14 @@ public class CityNameActivity extends AppCompatActivity {
             finish();
         });
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+
+
+        citiesViewModel.isLoading.observe(this,aBoolean -> {
+
+            if (!aBoolean){
                 binding.progressBar.setVisibility(View.GONE);
             }
-        },5000);
+        });
         Toast.makeText(this, ""+sessionManager.fetchStateCode(), Toast.LENGTH_SHORT).show();
         citiesViewModel.getCities(sessionManager.fetchStateCode());
         citiesViewModel.getMutableLiveData().observe(this,cities -> {

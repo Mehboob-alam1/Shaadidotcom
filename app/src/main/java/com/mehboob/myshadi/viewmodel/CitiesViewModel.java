@@ -16,14 +16,21 @@ public class CitiesViewModel extends AndroidViewModel {
     private CitiesRepository citiesRepository;
 
     private MutableLiveData<List<Cities>> mutableLiveData = new MutableLiveData<>();
+
+    public MutableLiveData<Boolean> isLoading= new MutableLiveData<>();
     public CitiesViewModel(@NonNull Application application) {
         super(application);
 
         citiesRepository= new CitiesRepository();
+        isLoading.setValue(true);
     }
 
     public MutableLiveData<List<Cities>> getMutableLiveData() {
         return mutableLiveData;
+    }
+
+    public MutableLiveData<Boolean> getIsLoading() {
+        return isLoading;
     }
 
     public void getCities(String stateCode){
@@ -33,6 +40,7 @@ public class CitiesViewModel extends AndroidViewModel {
             @Override
             public void onSuccess(List<Cities> cities) {
                 mutableLiveData.setValue(cities);
+                isLoading.setValue(false);
             }
 
             @Override

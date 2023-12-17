@@ -158,6 +158,7 @@ public class MartialStatusActivity extends AppCompatActivity {
 
                 if (!adapterView.getSelectedItem().equals("Never Married")) {
                     binding.lineChildren.setVisibility(View.VISIBLE);
+                    binding.spinnerChildren.setSelection(0);
 
                 } else {
                     binding.lineChildren.setVisibility(View.GONE);
