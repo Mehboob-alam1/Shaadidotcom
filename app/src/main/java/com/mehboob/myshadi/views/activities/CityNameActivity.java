@@ -10,35 +10,38 @@ import android.view.View;
 import android.widget.SearchView;
 
 import com.mehboob.myshadi.R;
+import com.mehboob.myshadi.adapters.CitiesAdapter;
 import com.mehboob.myshadi.adapters.CountriesAdapter;
-import com.mehboob.myshadi.adapters.StateAdapter;
-import com.mehboob.myshadi.databinding.ActivityStateNameBinding;
+import com.mehboob.myshadi.databinding.ActivityCityNameBinding;
+import com.mehboob.myshadi.databinding.ActivityCountryNamesBinding;
 import com.mehboob.myshadi.json.Countries;
-import com.mehboob.myshadi.json.States;
 import com.mehboob.myshadi.utils.SessionManager;
+import com.mehboob.myshadi.viewmodel.CitiesViewModel;
 import com.mehboob.myshadi.viewmodel.CountriesViewModel;
-import com.mehboob.myshadi.viewmodel.StatesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StateNameActivity extends AppCompatActivity {
-private ActivityStateNameBinding binding;
-private StatesViewModel statesViewModel;
-private SessionManager sessionManager;
-    private StateAdapter adapter;
-    private List<States> statesList;
+public class CityNameActivity extends AppCompatActivity {
+    private ActivityCityNameBinding binding;
+
+    private CitiesViewModel citiesViewModel;
+
+    private CitiesAdapter adapter;
+    private List<CitiesAdapter> citiesList;
+
+    private SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding=ActivityStateNameBinding.inflate(getLayoutInflater());
+        binding=ActivityCityNameBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        statesViewModel = new ViewModelProvider(this).get(StatesViewModel.class);
+        citiesViewModel = new ViewModelProvider(this).get(CitiesViewModel.class);
         sessionManager= new SessionManager(this);
 
-        statesList= new ArrayList<>();
-        adapter = new StateAdapter();
+        citiesList= new ArrayList<>();
+        adapter = new CitiesAdapter();
 
 
         binding.imgCancel.setOnClickListener(view -> {
@@ -52,21 +55,22 @@ private SessionManager sessionManager;
             }
         },1500);
 
-        statesViewModel.loadStates(sessionManager.fetchCountryCode());
-        statesViewModel.getMutableLiveData().observe(this, states -> {
-            adapter.setStates(states);
+        citiesViewModel.getCities(sessionManager.fetchStateCode());
+        citiesViewModel.getMutableLiveData().observe(this,cities -> {
+            adapter.setCities(cities);
 
-            adapter.setOnItemClickListener((state, position) -> {
+            adapter.setOnItemClickListener((city, position) -> {
 
 
-                sessionManager.saveStateName(state.getName());
-                sessionManager.saveStateCode(state.getCode());
+                sessionManager.saveCityName(city.getName());
+
                 finish();
             });
         });
 
-        binding.recyclerViewState.setLayoutManager(new LinearLayoutManager(this));
-        binding.recyclerViewState.setAdapter(adapter);
+
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerView.setAdapter(adapter);
 
 
 

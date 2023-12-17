@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activities.StateNameActivity">
+    tools:context=".views.activities.CityNameActivity">
 
 
 
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto"
         android:id="@+id/txtTitle"
-        android:text="Select a state"
+        android:text="Select a country"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewState"
+        android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"

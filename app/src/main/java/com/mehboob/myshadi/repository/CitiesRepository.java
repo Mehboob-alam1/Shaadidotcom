@@ -8,48 +8,55 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.mehboob.myshadi.json.Countries;
+import com.mehboob.myshadi.json.Cities;
 import com.mehboob.myshadi.json.States;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StateRepository {
+public class CitiesRepository {
+
 
     private DatabaseReference databaseReference;
 
+    public CitiesRepository(){
 
 
-    public StateRepository(){
+        databaseReference= FirebaseDatabase.getInstance().getReference("cities").child("Data");
 
-        databaseReference= FirebaseDatabase.getInstance().getReference("states").child("Data");
     }
 
-    public void getStates(String countryCode, StatesCallback callback) {
-        Query query = databaseReference.orderByChild("country").equalTo(countryCode);
+
+
+    public void getCities(String stateCode,CitiesCallBack citiesCallBack){
+
+        Query query = databaseReference.orderByChild("state_code").equalTo(stateCode);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<States> states = new ArrayList<>();
+                List<Cities> cities = new ArrayList<>();
                 for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-                    States state = childSnapshot.getValue(States.class);
-                    if (state != null) {
-                        states.add(state);
+                    Cities city = childSnapshot.getValue(Cities.class);
+                    if (city != null) {
+                        cities.add(city);
                     }
                 }
-                callback.onSuccess(states);
+                citiesCallBack.onSuccess(cities);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                callback.onError(error.getMessage());
+                citiesCallBack.onFailure(error.getMessage());
             }
         });
+
     }
 
-    public interface StatesCallback {
-        void onSuccess(List<States> states);
-        void onError(String errorMessage);
+
+    public interface CitiesCallBack{
+        void onSuccess(List<Cities> cities);
+
+        void onFailure(String errorMessage);
     }
 }

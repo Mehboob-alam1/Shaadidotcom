@@ -1,116 +1,125 @@
 package com.mehboob.myshadi.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.mehboob.myshadi.json.Country;
-import com.mehboob.myshadi.json.State;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.mehboob.myshadi.R;
+import com.mehboob.myshadi.json.States;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StateAdapter extends BaseAdapter implements Filterable {
-    private List<State> countryList;
-    private LayoutInflater inflater;
-    private CountryFilter countryFilter;
+public class StateAdapter extends RecyclerView.Adapter<StateAdapter.StateViewHolder> implements Filterable {
 
-    private List<State> filteredList;
-
-    public StateAdapter(Context context, List<State> countryList) {
-        this.countryList = countryList;
-        this.filteredList = countryList;
-        this.inflater = LayoutInflater.from(context);
-    }
-
-    @Override
-    public int getCount() {
-        return filteredList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return filteredList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-
-        if (convertView == null) {
-            convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-
-            holder = new ViewHolder();
-            holder.countryNameTextView = convertView.findViewById(android.R.id.text1);
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        State country = countryList.get(position);
-        holder.countryNameTextView.setText(country.getName());
-
-        return convertView;
-    }
+    public StateAdapter.OnItemClickListener onItemClickListener;
+    private List<States> statesList; // Original list
+    private List<States> stateListFull; // Full list to support filtering
+    private final Object lock = new Object(); // Lock to avoid issues with concurrent modification
 
     @Override
     public Filter getFilter() {
-        if (countryFilter == null) {
-            countryFilter = new CountryFilter();
-        }
         return countryFilter;
     }
 
-    private static class ViewHolder {
-        TextView countryNameTextView;
+    public interface OnItemClickListener {
+        void onItemClick(States states, int position);
     }
 
-    private class CountryFilter extends Filter {
+    public void setOnItemClickListener(StateAdapter.OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+
+    public StateAdapter() {
+        statesList = new ArrayList<>();
+        stateListFull = new ArrayList<>();
+    }
+
+    @NonNull
+    @Override
+    public StateAdapter.StateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_layout, parent, false);
+        return new StateAdapter.StateViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull StateAdapter.StateViewHolder holder, int position) {
+        States currentState = statesList.get(position);
+        holder.bind(currentState);
+    }
+
+    @Override
+    public int getItemCount() {
+        return statesList.size();
+    }
+
+
+
+    public void setStates(List<States> states) {
+        synchronized (lock) {
+            statesList = new ArrayList<>(states);
+            stateListFull = new ArrayList<>(states);
+            notifyDataSetChanged(); // Notify adapter of the change
+        }
+    }
+
+    private final Filter countryFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-            List<State> filteredCountries = new ArrayList<>();
+            List<States> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
-                // If the search bar is empty, show the original list
-                filteredCountries.addAll(countryList);
+                synchronized (lock) {
+                    filteredList.addAll(stateListFull);
+                }
             } else {
-                // Filter the list based on the constraint
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (State country : countryList) {
-                    if (country.getName().toLowerCase().contains(filterPattern)) {
-                        filteredCountries.add(country);
+
+                synchronized (lock) {
+                    for (States state : stateListFull) {
+                        if (state.getName().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(state);
+                        }
                     }
                 }
             }
 
-            results.values = filteredCountries;
-            results.count = filteredCountries.size();
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
             return results;
         }
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            // Clear the current filtered list
-            filteredList.clear();
+            statesList = (List<States>) results.values;
+            notifyDataSetChanged(); // Notify adapter of the change
+        }
+    };
 
-            // Add the filtered results to the filtered list
-            filteredList.addAll((List<State>) results.values);
+    public class StateViewHolder extends RecyclerView.ViewHolder {
+        private final TextView stateTextName;
 
-            // Notify the adapter
-            notifyDataSetChanged();
+        StateViewHolder(View itemView) {
+            super(itemView);
+            stateTextName = itemView.findViewById(R.id.countryNameTextView);
+
+            // Set click listener for the item
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
+                    onItemClickListener.onItemClick(statesList.get(position), position);
+                }
+            });
+        }
+
+        void bind(States state) {
+            stateTextName.setText(state.getName());
         }
     }
-
 }

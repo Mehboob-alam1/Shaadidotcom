@@ -1,46 +1,22 @@
 package com.mehboob.myshadi.views.activities;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.mehboob.myshadi.R;
-import com.mehboob.myshadi.adapters.ListAdapter;
 import com.mehboob.myshadi.databinding.ActivityRelgionBinding;
-import com.mehboob.myshadi.json.Country;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ReligionCastActivity extends AppCompatActivity {
     private ActivityRelgionBinding binding;
     private SessionManager sessionManager;
-    ListAdapter adapter;
+
     private String[] religion = {"Select Religion", "Hindu", "Muslim", "Christian", "Jain", "Sikh", "Buddhist", "Parsi", "Jewish", "Other", "No religion", "Spiritual - not religious"};
     private String[] community = {"Select Community", "Hindi", "Marathi", "Punjabi", "Bengali", "Urdu", "Gujrati", "Telugu", "Kannada", "English", "Tamil", "Odia", "Marwari", "Aka", "Arabic", "Arunachali", "Assamese", "Awadhi"
             , "Baluchi", "Bhojpuri", "Bhutia", "Brahui", "Brij", "Burmese", "Chattisgarhi", "Chinese", "Coorgi", "Dogri", "French", "Gharwali", "Garo", "Haryanavi",
@@ -48,7 +24,7 @@ public class ReligionCastActivity extends AppCompatActivity {
             "Other"};
 
 
-    List<Country> countryList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

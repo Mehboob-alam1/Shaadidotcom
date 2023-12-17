@@ -11,80 +11,81 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mehboob.myshadi.R;
-import com.mehboob.myshadi.json.Countries;
+import com.mehboob.myshadi.json.Cities;
+import com.mehboob.myshadi.json.States;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.CountryViewHolder> implements Filterable {
+public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CityViewHolder> implements Filterable {
 
-    public OnItemClickListener onItemClickListener;
-    private List<Countries> countryList; // Original list
-    private List<Countries> countryListFull; // Full list to support filtering
+    public CitiesAdapter.OnItemClickListener onItemClickListener;
+    private List<Cities> citiesList; // Original list
+    private List<Cities> citiesListFull; // Full list to support filtering
     private final Object lock = new Object(); // Lock to avoid issues with concurrent modification
 
     @Override
     public Filter getFilter() {
-        return countryFilter;
+        return citiesFilter;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Countries country, int position);
+        void onItemClick(Cities states, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(CitiesAdapter.OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
 
-    public CountriesAdapter() {
-        countryList = new ArrayList<>();
-        countryListFull = new ArrayList<>();
+    public CitiesAdapter() {
+        citiesList = new ArrayList<>();
+        citiesListFull = new ArrayList<>();
     }
 
     @NonNull
     @Override
-    public CountryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CitiesAdapter.CityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_layout, parent, false);
-        return new CountryViewHolder(itemView);
+        return new CitiesAdapter.CityViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CountryViewHolder holder, int position) {
-        Countries currentCountry = countryList.get(position);
-        holder.bind(currentCountry);
+    public void onBindViewHolder(@NonNull CitiesAdapter.CityViewHolder holder, int position) {
+        Cities currentCity = citiesList.get(position);
+        holder.bind(currentCity);
     }
 
     @Override
     public int getItemCount() {
-        return countryList.size();
+        return citiesList.size();
     }
 
 
 
-    public void setCountries(List<Countries> countries) {
+    public void setCities(List<Cities> cities) {
         synchronized (lock) {
-            countryList = new ArrayList<>(countries);
-            countryListFull = new ArrayList<>(countries);
+            citiesList = new ArrayList<>(cities);
+            citiesListFull = new ArrayList<>(cities);
             notifyDataSetChanged(); // Notify adapter of the change
         }
     }
 
-    private final Filter countryFilter = new Filter() {
+    private final Filter citiesFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Countries> filteredList = new ArrayList<>();
+            List<Cities> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
                 synchronized (lock) {
-                    filteredList.addAll(countryListFull);
+                    filteredList.addAll(citiesListFull);
                 }
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 synchronized (lock) {
-                    for (Countries country : countryListFull) {
-                        if (country.getName().toLowerCase().contains(filterPattern)) {
-                            filteredList.add(country);
+                    for (Cities city : citiesListFull) {
+                        if (city.getName().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(city);
                         }
                     }
                 }
@@ -97,30 +98,29 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            countryList = (List<Countries>) results.values;
+            citiesList = (List<Cities>) results.values;
             notifyDataSetChanged(); // Notify adapter of the change
         }
     };
 
-    public class CountryViewHolder extends RecyclerView.ViewHolder {
-        private final TextView countryNameTextView;
+    public class CityViewHolder extends RecyclerView.ViewHolder {
+        private final TextView cityTextName;
 
-        CountryViewHolder(View itemView) {
+        CityViewHolder(View itemView) {
             super(itemView);
-            countryNameTextView = itemView.findViewById(R.id.countryNameTextView);
+            cityTextName = itemView.findViewById(R.id.countryNameTextView);
 
             // Set click listener for the item
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
-                    onItemClickListener.onItemClick(countryList.get(position), position);
+                    onItemClickListener.onItemClick(citiesList.get(position), position);
                 }
             });
         }
 
-        void bind(Countries country) {
-            countryNameTextView.setText(country.getName());
+        void bind(Cities city) {
+            cityTextName.setText(city.getName());
         }
     }
 }
-

@@ -4,35 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.mehboob.myshadi.R;
-import com.mehboob.myshadi.adapters.StateAdapter;
 import com.mehboob.myshadi.databinding.ActivityStateCityBinding;
-import com.mehboob.myshadi.databinding.BottomSheetStateBinding;
-import com.mehboob.myshadi.json.State;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 public class StateCityActivity extends AppCompatActivity {
     private ActivityStateCityBinding binding;
@@ -107,18 +85,25 @@ public class StateCityActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
 
-        loadStates(sessionManager.fetchCountryCode());
+//        loadStates(sessionManager.fetchCountryCode());
 
         setSubCommunities();
 
+        binding.txtState.setOnClickListener(view -> {
+
+            startActivity(new Intent(StateCityActivity.this, StateNameActivity.class));
+        });
+        binding.etCity.setOnClickListener(view -> {
+            startActivity(new Intent(StateCityActivity.this,CityNameActivity.class));
+        });
         binding.btnContinue.setOnClickListener(view -> {
-            if (binding.txtState.getSelectedItem() == null) {
+            if (binding.txtState.getText().toString().equals("Select a state") ) {
 
                 Utils.showSnackBar(this, "Add your state");
 
             } else if (binding.txtCommunity.getSelectedItem() == null) {
                 Utils.showSnackBar(this, "Add your community");
-            } else if (binding.etCity.getText().toString().isEmpty()) {
+            } else if (binding.etCity.getText().toString().equals("Select a city")) {
                 Utils.showSnackBar(this, "Add your city");
             } else {
                 // start activity
@@ -155,60 +140,73 @@ public class StateCityActivity extends AppCompatActivity {
     }
 
 
-    private void loadStates(String selectedCountryCode) {
-        List<State> stateList = new ArrayList<>();
+//    private void loadStates(String selectedCountryCode) {
+//        List<State> stateList = new ArrayList<>();
+//
+//
+//        try {
+//            // Load JSON file from assets
+//            InputStream is = getAssets().open("states.json");
+//            int size = is.available();
+//            byte[] buffer = new byte[size];
+//            is.read(buffer);
+//            is.close();
+//            String json = new String(buffer, StandardCharsets.UTF_8);
+//
+//            // Parse JSON array
+//            JSONObject jsonObject = new JSONObject(json);
+//            JSONArray dataArray = jsonObject.getJSONArray("Data");
+//
+//            for (int i = 0; i < dataArray.length(); i++) {
+//                JSONObject state = dataArray.getJSONObject(i);
+//                String countryCode = state.getString("country");
+//                if (selectedCountryCode.equals(countryCode)) {
+//                    String stateName = state.getString("name");
+//                    String stateCode = state.getString("code");
+//                    Log.d(TAG, "loadStates: " + stateName);
+//                    stateList.add(new State(stateName, stateCode));
+//                }
+//            }
+//
+//            // Display states in ListView
+//            StateAdapter stateAdapter = new StateAdapter(this, stateList);
+//
+//
+//            binding.txtState.setAdapter(stateAdapter);
+//
+//            binding.txtState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                @Override
+//                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                    sessionManager.saveStateName(stateList.get(i).getName());
+//                    sessionManager.saveStateCode(stateList.get(i).getCode());
+//
+//
+//                }
+//
+//                @Override
+//                public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//                }
+//            });
+//
+//
+//        } catch (IOException | JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
-        try {
-            // Load JSON file from assets
-            InputStream is = getAssets().open("states.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            String json = new String(buffer, StandardCharsets.UTF_8);
-
-            // Parse JSON array
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray dataArray = jsonObject.getJSONArray("Data");
-
-            for (int i = 0; i < dataArray.length(); i++) {
-                JSONObject state = dataArray.getJSONObject(i);
-                String countryCode = state.getString("country");
-                if (selectedCountryCode.equals(countryCode)) {
-                    String stateName = state.getString("name");
-                    String stateCode = state.getString("code");
-                    Log.d(TAG, "loadStates: " + stateName);
-                    stateList.add(new State(stateName, stateCode));
-                }
-            }
-
-            // Display states in ListView
-            StateAdapter stateAdapter = new StateAdapter(this, stateList);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
 
-            binding.txtState.setAdapter(stateAdapter);
+        if (!sessionManager.fetchStateName().equals("null")){
+            binding.txtState.setText(sessionManager.fetchStateName());
+        }
 
-            binding.txtState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    sessionManager.saveStateName(stateList.get(i).getName());
-                    sessionManager.saveStateCode(stateList.get(i).getCode());
-
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
-
-
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
+        if (!sessionManager.fetchCityName().equals("null")){
+            binding.etCity.setText(sessionManager.fetchCityName());
         }
     }
-
-
 }
