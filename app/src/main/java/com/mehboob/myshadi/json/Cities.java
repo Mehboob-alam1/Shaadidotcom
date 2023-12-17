@@ -5,9 +5,9 @@ public class Cities {
     private String country_code;
     private int id;
 
-    private String latitude;
+    private double latitude;
 
-    private String longitude;
+    private double longitude;
 
     private String name;
 
@@ -18,7 +18,7 @@ public class Cities {
     }
 
 
-    public Cities(String country_code, int id, String latitude, String longitude, String name, String state_code) {
+    public Cities(String country_code, int id, double latitude, double longitude, String name, String state_code) {
         this.country_code = country_code;
         this.id = id;
         this.latitude = latitude;
@@ -43,19 +43,19 @@ public class Cities {
         this.id = id;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

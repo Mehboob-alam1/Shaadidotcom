@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.adapters.CitiesAdapter;
@@ -54,7 +55,7 @@ public class CityNameActivity extends AppCompatActivity {
                 binding.progressBar.setVisibility(View.GONE);
             }
         },1500);
-
+        Toast.makeText(this, ""+sessionManager.fetchStateCode(), Toast.LENGTH_SHORT).show();
         citiesViewModel.getCities(sessionManager.fetchStateCode());
         citiesViewModel.getMutableLiveData().observe(this,cities -> {
             adapter.setCities(cities);
