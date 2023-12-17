@@ -184,7 +184,7 @@ public class FirebaseUserProfileRepository {
 
     public void updateLocation(String lat, String lon) {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userProfiles") .child(FirebaseAuth.getInstance().getUid());
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userProfiles").child(FirebaseAuth.getInstance().getUid());
         ref.child("latitude").setValue(lat);
         ref.child("longitude").setValue(lon);
     }

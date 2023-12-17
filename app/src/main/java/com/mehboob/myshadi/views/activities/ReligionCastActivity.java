@@ -1,5 +1,6 @@
 package com.mehboob.myshadi.views.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
@@ -23,6 +24,7 @@ import com.mehboob.myshadi.adapters.ListAdapter;
 import com.mehboob.myshadi.databinding.ActivityRelgionBinding;
 import com.mehboob.myshadi.json.Country;
 import com.mehboob.myshadi.utils.SessionManager;
+import com.mehboob.myshadi.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,8 +41,8 @@ public class ReligionCastActivity extends AppCompatActivity {
     private ActivityRelgionBinding binding;
     private SessionManager sessionManager;
     ListAdapter adapter;
-    private String[] religion = {"Select Religion","Hindu", "Muslim", "Christian", "Jain", "Sikh", "Buddhist", "Parsi", "Jewish", "Other", "No religion", "Spiritual - not religious"};
-    private String[] community = {"Select Community","Hindi", "Marathi", "Punjabi", "Bengali", "Urdu", "Gujrati", "Telugu", "Kannada", "English", "Tamil", "Odia", "Marwari", "Aka", "Arabic", "Arunachali", "Assamese", "Awadhi"
+    private String[] religion = {"Select Religion", "Hindu", "Muslim", "Christian", "Jain", "Sikh", "Buddhist", "Parsi", "Jewish", "Other", "No religion", "Spiritual - not religious"};
+    private String[] community = {"Select Community", "Hindi", "Marathi", "Punjabi", "Bengali", "Urdu", "Gujrati", "Telugu", "Kannada", "English", "Tamil", "Odia", "Marwari", "Aka", "Arabic", "Arunachali", "Assamese", "Awadhi"
             , "Baluchi", "Bhojpuri", "Bhutia", "Brahui", "Brij", "Burmese", "Chattisgarhi", "Chinese", "Coorgi", "Dogri", "French", "Gharwali", "Garo", "Haryanavi",
             "Himachli/Pahari", "Hindko", "Kakbarak", "Kanauji", "Kashmiri", "Khandesi", "Khasi", "Konkani", "Koshali", "Pashto", "Sindhi", "Balochi", "Shina", "Brushuski", "Khawar", "Wakhi", "Seraiki",
             "Other"};
@@ -59,10 +61,16 @@ public class ReligionCastActivity extends AppCompatActivity {
         binding.imgBack.setOnClickListener(view -> {
             finish();
         });
-        countryList = loadCountries();
+//        countryList = loadCountries();
         setReligionSpinner();
         setCommunitySpinner();
-        setSpinnerLivingIn();
+//        setSpinnerLivingIn();
+
+
+        binding.txtCountry.setOnClickListener(view -> {
+            Intent intent = new Intent(ReligionCastActivity.this, CountryNamesActivity.class);
+            startActivity(intent);
+        });
 
 
         binding.spinnerReligion.setOnItemSelectedListener(new CustomOnItemSelectedListener());
@@ -77,18 +85,19 @@ public class ReligionCastActivity extends AppCompatActivity {
 
         binding.btnContinue.setOnClickListener(view -> {
 
-            if (binding.spinnerComunity.getSelectedItem().equals("Select Community")){
-                binding.spinnerComunity.setPrompt("Choose a valid community");
-            }else if (binding.spinnerReligion.getSelectedItem().equals("Select Religion")){
-                binding.spinnerReligion.setPrompt("Choose a valid religion");
-            }else {
+            if (binding.spinnerComunity.getSelectedItem().equals("Select Community")) {
+                Utils.showSnackBar(this, "Select a community");
+            } else if (binding.spinnerReligion.getSelectedItem().equals("Select Religion")) {
+                Utils.showSnackBar(this, "Select a religion");
+            } else if (binding.txtCountry.getText().toString().equals("Select a country")) {
+                Utils.showSnackBar(this, "Select a country");
+            } else {
 
                 String religion = binding.spinnerReligion.getSelectedItem().toString();
                 String community = binding.spinnerComunity.getSelectedItem().toString();
 
                 sessionManager.saveReligion(religion);
                 sessionManager.saveCommunity(community);
-
 
 
                 startActivity(new Intent(ReligionCastActivity.this, EmailPhoneNumberActivity.class));
@@ -98,7 +107,6 @@ public class ReligionCastActivity extends AppCompatActivity {
         });
 
     }
-
 
 
     private class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
@@ -119,7 +127,7 @@ public class ReligionCastActivity extends AppCompatActivity {
 
         if (binding.spinnerReligion.getSelectedItem() != null &&
                 binding.spinnerComunity.getSelectedItem() != null &&
-                binding.spinnerLivingIn.getSelectedItem() != null) {
+                binding.txtCountry.getText() != "Select a country") {
             binding.btnContinue.setEnabled(true);
 
             updateButtonState(true);
@@ -142,29 +150,30 @@ public class ReligionCastActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         binding.spinnerComunity.setAdapter(adapter);
     }
-    private void setSpinnerLivingIn() {
 
-
-        ListAdapter adapter = new ListAdapter(this,countryList);
-
-        binding.spinnerLivingIn.setAdapter(adapter);
-
-
-        binding.spinnerLivingIn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Log.d("ItemCode",countryList.get(i).getCode());
-                sessionManager.saveLivingIn(countryList.get(i).getName());
-                sessionManager.saveCountryCode(countryList.get(i).getCode());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
+    //    private void setSpinnerLivingIn() {
+//
+//
+//        ListAdapter adapter = new ListAdapter(this,countryList);
+//
+//        binding.spinnerLivingIn.setAdapter(adapter);
+//
+//
+//        binding.spinnerLivingIn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                Log.d("ItemCode",countryList.get(i).getCode());
+//                sessionManager.saveLivingIn(countryList.get(i).getName());
+//                sessionManager.saveCountryCode(countryList.get(i).getCode());
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+//    }
     private void setReligionSpinner() {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, religion);
@@ -188,36 +197,15 @@ public class ReligionCastActivity extends AppCompatActivity {
         }
     }
 
-    private List<Country> loadCountries() {
-        List<Country> countryList = new ArrayList<>();
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        try {
-            // Load JSON file from assets
-            InputStream is = getAssets().open("countries.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            String json = new String(buffer, StandardCharsets.UTF_8);
+        if (sessionManager.fetchLivingIn().equals("null")) {
+            binding.txtCountry.setText("Select a country");
+        } else {
 
-            // Parse JSON array
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray dataArray = jsonObject.getJSONArray("Data");
-
-            for (int i = 0; i < dataArray.length(); i++) {
-                JSONObject country = dataArray.getJSONObject(i);
-                String countryName = country.getString("name");
-                String countryCode = country.getString("code");
-                countryList.add(new Country(countryName, countryCode));
-            }
-
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
+            binding.txtCountry.setText(sessionManager.fetchLivingIn());
         }
-
-        return countryList;
     }
-
-
-
 }

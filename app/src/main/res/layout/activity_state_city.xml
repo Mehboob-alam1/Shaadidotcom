@@ -73,14 +73,15 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/edit_text_back">
 
-                <Spinner
+                <TextView
                     android:id="@+id/txtState"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:fontFamily="@font/roboto_medium"
+
                     android:gravity="center_vertical"
                     android:padding="8dp"
-                    android:textColor="@color/black" />
+                    android:text="Select a state"
+                />
             </LinearLayout>
 
 
