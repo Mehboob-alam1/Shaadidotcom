@@ -91,6 +91,8 @@ public class NameDateBirthActivity extends AppCompatActivity {
         String fullName=firstName + " "+lastName;
 
        // String dateOfBirth = "2000-12-31";
+
+        // TODO add two digits for day month string
         String dob=yearStr +"-"+monthStr+ "-"+dayStr;
        String date= String.valueOf(Utils.calculateAge(dob));
         sessionManager.saveFullName(fullName);

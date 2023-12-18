@@ -44,13 +44,6 @@ public class MatchesFragment extends Fragment {
 
     private void settingTabLayout() {
 
-
-//        binding.tabLayout.addTab(new TabLayout.Tab().setText("My Matches"));
-//        binding.tabLayout.addTab(new TabLayout.Tab().setText("Near me") .setIcon(R.drawable.baseline_location_on_24));
-//        binding.tabLayout.addTab(new TabLayout.Tab().setText("Shortlisted"));
-//        binding.tabLayout.addTab(new TabLayout.Tab().setText("Search").setIcon(R.drawable.baseline_search_24));
-//        binding.tabLayout.addTab(new TabLayout.Tab().setText("New"));
-//        binding.tabLayout.addTab(new TabLayout.Tab().setText("Daily"));
         binding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final MatchesTabAdapter adapter = new MatchesTabAdapter(requireActivity(),requireActivity().getSupportFragmentManager(), binding.tabLayout.getTabCount());

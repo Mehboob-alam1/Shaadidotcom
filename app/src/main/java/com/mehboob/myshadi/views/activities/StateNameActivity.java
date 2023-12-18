@@ -45,12 +45,7 @@ private SessionManager sessionManager;
             finish();
         });
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                binding.progressBar.setVisibility(View.GONE);
-            }
-        },1500);
+        new Handler().postDelayed(() -> binding.progressBar.setVisibility(View.GONE),1500);
 
         statesViewModel.loadStates(sessionManager.fetchCountryCode());
         statesViewModel.getMutableLiveData().observe(this, states -> {

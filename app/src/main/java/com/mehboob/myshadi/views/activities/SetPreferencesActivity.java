@@ -27,7 +27,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
     private ActivitySetPreferencesBinding binding;
     private MatchPref matchPref;
     private FUPViewModel fupViewModel;
-
+    private String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +37,8 @@ public class SetPreferencesActivity extends AppCompatActivity {
 
         matchPref = new MatchPref(this);
 
+
+        fupViewModel.getUserProfileLiveData().observe(this,userProfile -> userId=userProfile.getUserId());
 
         binding.btnSkip.setOnClickListener(view -> {
             updateUi();
@@ -79,7 +81,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
                         binding.spinnerSubCommunity.getSelectedItem().toString(),
                         binding.spinnerMaritalStatus.getSelectedItem().toString());
 
-                fupViewModel.updatePreferences(preferences, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                fupViewModel.updatePreferences(preferences, userId);
                 matchPref.savePref(preferences);
                 fupViewModel.getIsPreferencesAdded().observe(this, aBoolean -> {
                     if (aBoolean) {
@@ -245,6 +247,8 @@ public class SetPreferencesActivity extends AppCompatActivity {
         super.onResume();
 
         fupViewModel.getUserProfileLiveData().observe(this, userProfile -> {
+
+
 
             binding.spinnerCity.setText(userProfile.getCityName());
 

@@ -124,12 +124,12 @@ public class FirebaseUserProfileRepository {
 
 
     // Method to fetch user profile data from Firebase
-    public void getProfileData(UserProfile profile) {
+    public void getProfileData(String userId) {
 
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
 
-                .child(profile.getUserId());
+                .child(userId);
 
         userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -182,9 +182,9 @@ public class FirebaseUserProfileRepository {
                 });
     }
 
-    public void updateLocation(String lat, String lon) {
+    public void updateLocation(String lat, String lon,String userId) {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userProfiles").child(FirebaseAuth.getInstance().getUid());
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userProfiles").child(userId);
         ref.child("latitude").setValue(lat);
         ref.child("longitude").setValue(lon);
     }
@@ -199,7 +199,7 @@ public class FirebaseUserProfileRepository {
             String filename = System.currentTimeMillis() + ".jpg";
 
             // Get a reference to the storage location
-            StorageReference imageRef = storageReference.child(FirebaseAuth.getInstance().getUid()).child(filename);
+            StorageReference imageRef = storageReference.child(userProfile.getUserId()).child(filename);
 
             // Upload the image to Firebase Storage
             imageRef.putFile(imageUri)

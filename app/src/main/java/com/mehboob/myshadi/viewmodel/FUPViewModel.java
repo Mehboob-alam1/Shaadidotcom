@@ -57,10 +57,10 @@ checkIfUpload=repository.getIsProfileCompleted();
 
 
 
-    public void getProfile(UserProfile userProfile){
+    public void getProfile(String userID){
 
 
-        repository.getProfileData(userProfile);
+        repository.getProfileData(userID);
     }
 
 
@@ -68,9 +68,9 @@ checkIfUpload=repository.getIsProfileCompleted();
         repository.updatePreferences(preferences,userId);
     }
 
-    public void updateLocation(String lat,String lon){
+    public void updateLocation(String lat,String lon,String userId){
 
-        repository.updateLocation(lat,lon);
+        repository.updateLocation(lat,lon,userId);
 
     }
 

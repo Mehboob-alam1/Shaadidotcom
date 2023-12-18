@@ -116,6 +116,8 @@ public class HomeFragment extends Fragment {
 
 
                 binding.lineNewMatches.setVisibility(View.VISIBLE);
+                binding.txtNewMatchesCount.setVisibility(View.VISIBLE);
+                binding.txtNewMatchesCount.setText("(" +userProfiles.size() +")");
 
                 newMatchesAdapter.setNewMatches(userProfiles);
             }

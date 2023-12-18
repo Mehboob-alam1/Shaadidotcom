@@ -21,6 +21,7 @@ import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
+import com.mehboob.myshadi.viewmodel.UserViewModel;
 import com.mehboob.myshadi.views.dashboard.frags.ChatFragment;
 import com.mehboob.myshadi.views.dashboard.frags.HomeFragment;
 import com.mehboob.myshadi.views.dashboard.frags.InboxFragment;
@@ -36,21 +37,30 @@ public class DashBoardActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private FUPViewModel fupViewModel;
 
+private UserViewModel userViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDashBoardBinding.inflate(getLayoutInflater());
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
+        userViewModel= new ViewModelProvider(this).get(UserViewModel.class);
         setContentView(binding.getRoot());
         sessionManager = new SessionManager(this);
 
         setBottomBar();
 
 
-        getProfileUpdates();
+        userViewModel.getLiveData().observe(this, user -> {
+
+            getProfileUpdates(user.getUserId());
+        });
 
 
-        fupViewModel.getUserProfileLiveData().observe(this, userProfile -> Utils.showSnackBar(DashBoardActivity.this, userProfile.toString()));
+
+
+
+
+
 
 
     }
@@ -68,17 +78,10 @@ public class DashBoardActivity extends AppCompatActivity {
 
     }
 
-    private void getProfileUpdates() {
+    private void getProfileUpdates(String userId) {
 
 
-        UserProfile profile = new UserProfile(sessionManager.fetchGender(),
-                sessionManager.fetchLivingIn(),
-                sessionManager.fetchReligion(),
-                sessionManager.fetchCommunity(),
-                sessionManager.fetchSubCommunity(),
-                sessionManager.fetchMaritalStatus(),
-                FirebaseAuth.getInstance().getCurrentUser().getUid());
-        fupViewModel.getProfile(profile);
+        fupViewModel.getProfile(userId);
     }
 
 

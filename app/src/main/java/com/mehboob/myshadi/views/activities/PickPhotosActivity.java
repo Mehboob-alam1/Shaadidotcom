@@ -232,7 +232,7 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
         latitude = String.valueOf(location.getLatitude());
         longitude = String.valueOf(location.getLongitude());
 
-        fupViewModel.updateLocation(latitude, longitude);
+        fupViewModel.updateLocation(latitude, longitude,userData.getUserId());
 
     }
 
