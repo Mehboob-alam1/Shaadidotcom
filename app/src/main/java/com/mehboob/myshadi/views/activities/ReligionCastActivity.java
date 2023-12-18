@@ -37,10 +37,9 @@ public class ReligionCastActivity extends AppCompatActivity {
         binding.imgBack.setOnClickListener(view -> {
             finish();
         });
-//        countryList = loadCountries();
+
         setReligionSpinner();
         setCommunitySpinner();
-//        setSpinnerLivingIn();
 
 
         binding.txtCountry.setOnClickListener(view -> {
@@ -49,14 +48,8 @@ public class ReligionCastActivity extends AppCompatActivity {
         });
 
 
-        binding.spinnerReligion.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-        binding.spinnerComunity.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-        binding.spinnerComunity.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 
-//        binding.spinnerLivingIn.setOnClickListener(view -> {
-//            showBottomDialog(countryList, binding.spinnerLivingIn, "Select a Country");
-//        });
-//        binding.spinnerLivingIn.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+
 
 
         binding.btnContinue.setOnClickListener(view -> {
@@ -85,34 +78,7 @@ public class ReligionCastActivity extends AppCompatActivity {
     }
 
 
-    private class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            checkButtonStatus(); // Check button status whenever a spinner item is selected
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-            // Do nothing
-        }
-    }
-
-    private void checkButtonStatus() {
-
-        if (binding.spinnerReligion.getSelectedItem() != null &&
-                binding.spinnerComunity.getSelectedItem() != null &&
-                binding.txtCountry.getText() != "Select a country") {
-            binding.btnContinue.setEnabled(true);
-
-            updateButtonState(true);
-        } else {
-            //     btnContinue.setEnabled(false);
-
-            updateButtonState(false);
-        }
-    }
 
 
     private void setCommunitySpinner() {
@@ -162,16 +128,7 @@ public class ReligionCastActivity extends AppCompatActivity {
     }
 
 
-    private void updateButtonState(boolean isChecked) {
-        binding.btnContinue.setEnabled(isChecked);
 
-        // You can also customize the button appearance here
-        if (isChecked) {
-            binding.btnContinue.setBackground(getResources().getDrawable(R.drawable.btn_back_clicked));
-        } else {
-            binding.btnContinue.setBackground(getResources().getDrawable(R.drawable.btn_back_unclicked));
-        }
-    }
 
     @Override
     protected void onResume() {

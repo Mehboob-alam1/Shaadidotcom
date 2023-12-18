@@ -105,7 +105,7 @@ public class NameDateBirthActivity extends AppCompatActivity {
             dateFormat.setLenient(false);
             dateFormat.parse(day + "/" + month + "/" + year);
             return true;
-        } catch (ParseException e) {
+        } catch (Exception e) {
             return false;
         }
     }
