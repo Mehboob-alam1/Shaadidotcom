@@ -57,6 +57,9 @@ public class UserProfile {
 
     private String longitude;
 
+    private String aboutMe;
+
+
 
     public String getLatitude() {
         return latitude;
@@ -75,6 +78,15 @@ public class UserProfile {
     }
 
     public UserProfile() {
+    }
+
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
     }
 
     public String getAccountType() {
@@ -129,7 +141,8 @@ public class UserProfile {
                        ArrayList<String> images,boolean isProfileComplete,String accountType,boolean isVerified,String time,
                        Preferences preferences,
                        String latitude,
-                       String longitude) {
+                       String longitude,
+                       String aboutMe) {
         this.profileFor = profileFor;
         this.gender = gender;
         this.fullName = fullName;
@@ -166,6 +179,7 @@ public class UserProfile {
 
         this.latitude=latitude;
         this.longitude=longitude;
+        this.aboutMe=aboutMe;
     }
 
     public UserProfile(String gender,String livingIn,String religion,String community,String subCommunity,String maritalStatus,String userId){

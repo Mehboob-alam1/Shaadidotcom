@@ -41,6 +41,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.databinding.FragmentSignUpBinding;
 import com.mehboob.myshadi.model.profilemodel.UserAuth;
@@ -73,12 +74,14 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
     private boolean ifProfileComplete;
 
     private ProgressDialog dialog;
+    private SessionManager sessionManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
+        sessionManager= new SessionManager(requireActivity());
 
         authViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(AuthViewModel.class);
 
@@ -199,6 +202,8 @@ dialog.setCancelable(false);
             if (user != null && user.isAuthenticated()) {
                 // User is added to the Room database and authenticated, proceed with your app logic
                 // For example, navigate to the main activity
+
+                sessionManager.saveUserID(user.getUserId());
 
                 Toast.makeText(requireActivity(), "User is already authenticated", Toast.LENGTH_SHORT).show();
 

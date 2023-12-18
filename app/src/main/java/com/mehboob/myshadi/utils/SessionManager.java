@@ -42,6 +42,7 @@ public class SessionManager {
     private String ABOUT_ME = "about_me";
 
 
+    private String USER_ID="user_id";
     public SessionManager(Context context) {
 
         sharedPreferences = context.getSharedPreferences(PROFILE_FOR, Context.MODE_PRIVATE);
@@ -69,10 +70,21 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(CITY_NAME, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(SUB_COMMUNITY, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(ABOUT_ME, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(USER_ID, Context.MODE_PRIVATE);
 
 
     }
 
+    public void saveUserID(String userId){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(USER_ID,userId);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String fetchUserId(){
+        return sharedPreferences.getString(USER_ID,"null");
+    }
     public void saveIncome(String income) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(INCOME, income);

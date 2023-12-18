@@ -31,6 +31,7 @@ public class FUPViewModel extends AndroidViewModel {
 
 
 private MutableLiveData<Boolean> isPreferencesAdded;
+private MutableLiveData<Boolean> isBioUpdated;
     private FirebaseUserProfileRepository repository;
 
     public FUPViewModel(@NonNull Application application) {
@@ -39,6 +40,7 @@ private MutableLiveData<Boolean> isPreferencesAdded;
 checkIfUpload=repository.getIsProfileCompleted();
         userProfileLiveData=repository.getUserProfileLiveData();
         isPreferencesAdded=repository.getIsPreferencesAdded();
+        isBioUpdated=repository.getIsBioUpdated();
 
     }
 
@@ -55,7 +57,9 @@ checkIfUpload=repository.getIsProfileCompleted();
         return userProfileLiveData;
     }
 
-
+    public MutableLiveData<Boolean> getIsBioUpdated() {
+        return isBioUpdated;
+    }
 
     public void getProfile(String userID){
 
@@ -74,6 +78,9 @@ checkIfUpload=repository.getIsProfileCompleted();
 
     }
 
+    public void updateAboutMe(String aboutMe,String userId){
+        repository.updateAboutMe(aboutMe,userId);
+    }
     public void uploadUserProfile(List<Uri> images, UserProfile userProfile) {
 
         repository.uploadImagesToFirebase(images, userProfile, new FirebaseUserProfileRepository.StorageUploadCallback() {

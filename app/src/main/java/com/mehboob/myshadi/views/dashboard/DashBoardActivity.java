@@ -37,13 +37,14 @@ public class DashBoardActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private FUPViewModel fupViewModel;
 
-private UserViewModel userViewModel;
+    private UserViewModel userViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDashBoardBinding.inflate(getLayoutInflater());
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
-        userViewModel= new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         setContentView(binding.getRoot());
         sessionManager = new SessionManager(this);
 
@@ -52,15 +53,10 @@ private UserViewModel userViewModel;
 
         userViewModel.getLiveData().observe(this, user -> {
 
+            sessionManager.saveUserID(user.getUserId());
+
             getProfileUpdates(user.getUserId());
         });
-
-
-
-
-
-
-
 
 
     }

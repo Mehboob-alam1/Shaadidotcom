@@ -20,6 +20,7 @@ import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
+import com.mehboob.myshadi.views.activities.AddBioActivity;
 import com.mehboob.myshadi.views.dashboard.EditProfileActivity;
 import com.mehboob.myshadi.views.dashboard.premium.UpgradePremiumActivity;
 
@@ -52,6 +53,11 @@ public class HomeFragment extends Fragment {
 
         setNewMatchesRecyclerView();
 
+
+        binding.lineAboutYourSelf.setOnClickListener(view -> {
+
+            startActivity(new Intent(requireActivity(), AddBioActivity.class));
+        });
 
         return binding.getRoot();
     }

@@ -37,6 +37,7 @@ public class FirebaseUserProfileRepository {
     private Application application;
     private MutableLiveData<Boolean> isProfileCompleted;
     private MutableLiveData<Boolean> isPreferencesAdded;
+    private MutableLiveData<Boolean> isBioUpdated;
 
     public FirebaseUserProfileRepository(Application application) {
         this.storageReference = FirebaseStorage.getInstance().getReference("userProfiles").child("images");
@@ -45,6 +46,7 @@ public class FirebaseUserProfileRepository {
         this.application = application;
         isProfileCompleted = new MutableLiveData<>();
         isPreferencesAdded = new MutableLiveData<>();
+        isBioUpdated = new MutableLiveData<>();
     }
 
     public MutableLiveData<Boolean> getIsProfileCompleted() {
@@ -53,6 +55,10 @@ public class FirebaseUserProfileRepository {
 
     public MutableLiveData<Boolean> getIsPreferencesAdded() {
         return isPreferencesAdded;
+    }
+
+    public MutableLiveData<Boolean> getIsBioUpdated() {
+        return isBioUpdated;
     }
 
     public void uploadProfile(UserProfile userProfile, ArrayList<String> imageUrls) {
@@ -89,7 +95,8 @@ public class FirebaseUserProfileRepository {
                 , userProfile.getTime(),
                 userProfile.getPreferences(),
                 userProfile.getLatitude(),
-                userProfile.getLongitude());
+                userProfile.getLongitude(),
+                userProfile.getAboutMe());
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
@@ -182,7 +189,26 @@ public class FirebaseUserProfileRepository {
                 });
     }
 
-    public void updateLocation(String lat, String lon,String userId) {
+
+    public void updateAboutMe(String aboutMe, String userId) {
+
+        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
+
+        userProfileRef.child(userId)
+                .child("aboutMe")
+                .setValue(aboutMe).addOnCompleteListener(task -> {
+
+                    if (task.isComplete() && task.isSuccessful()) {
+                        isBioUpdated.setValue(true);
+                    } else {
+                        isBioUpdated.setValue(false);
+                    }
+                }).addOnFailureListener(e -> {
+                    isBioUpdated.setValue(false);
+                });
+    }
+
+    public void updateLocation(String lat, String lon, String userId) {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userProfiles").child(userId);
         ref.child("latitude").setValue(lat);
