@@ -1,9 +1,10 @@
 package com.mehboob.myshadi.views.activities;
 
-import static androidx.constraintlayout.motion.widget.Debug.getLocation;
+
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -37,13 +38,13 @@ import com.mehboob.myshadi.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PickPhotosActivity extends AppCompatActivity implements FUPViewModel.ProfileCompletionCallback, LocationListener {
     private ActivityPickPhotosBinding binding;
 
     protected LocationManager locationManager;
-    protected LocationListener locationListener;
-    protected boolean gps_enabled, network_enabled;
+
     private List<Uri> selectedImages = new ArrayList<>();
     List<ImageView> imageViewList;
     private TinyDB tinyDB;
@@ -57,7 +58,6 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
 
     private String latitude;
     private String longitude;
-    private final int MY_PERMISSIONS_REQUEST_LOCATION = 123;
 
 
     @Override
@@ -77,6 +77,7 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted, request it
+            int MY_PERMISSIONS_REQUEST_LOCATION = 123;
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST_LOCATION);
@@ -101,6 +102,7 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
                 Utils.showSnackBar(this, "Add at least one photo");
             }
         });
+        binding.imgBack.setOnClickListener(view -> finish());
 
 
     }
@@ -189,7 +191,7 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     // Handle the selected image
-                    Uri selectedImageUri = result.getData().getData();
+                    Uri selectedImageUri = Objects.requireNonNull(result.getData()).getData();
 
                     // Update ViewModel with selected image
                     selectedImages.add(selectedImageUri);
@@ -235,12 +237,12 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
     }
 
     @Override
-    public void onProviderDisabled(String provider) {
+    public void onProviderDisabled(@NonNull String provider) {
         Log.d("Latitude", "disable");
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
+    public void onProviderEnabled(@NonNull String provider) {
         Log.d("Latitude", "enable");
     }
 

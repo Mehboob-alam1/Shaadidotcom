@@ -114,6 +114,7 @@ public class StateCityActivity extends AppCompatActivity {
             }
         });
 
+        binding.imgBack.setOnClickListener(view -> finish());
 
     }
 

@@ -49,6 +49,7 @@ public class MartialStatusActivity extends AppCompatActivity {
         setChildrenSpinner();
         setHeightSpinner();
         setDietSpinner();
+        binding.imgBack.setOnClickListener(view -> finish());
 
         binding.btnContinue.setOnClickListener(view -> {
             if (binding.spinnerMaritalStatus.getSelectedItem().equals("Select")) {

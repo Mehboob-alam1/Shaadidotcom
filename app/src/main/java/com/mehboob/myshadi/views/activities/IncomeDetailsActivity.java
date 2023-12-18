@@ -46,13 +46,9 @@ public class IncomeDetailsActivity extends AppCompatActivity {
 
         setWorkWithSpinner();
 
+        binding.imgBack.setOnClickListener(view -> finish());
 
-        userViewModel.getLiveData().observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                userData = user;
-            }
-        });
+        userViewModel.getLiveData().observe(this, user -> userData = user);
         binding.btnContinue.setOnClickListener(view -> {
 
             if (binding.spinnerWorkWith.getSelectedItem().equals("Select")) {

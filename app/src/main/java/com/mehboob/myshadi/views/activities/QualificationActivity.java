@@ -100,6 +100,9 @@ public class QualificationActivity extends AppCompatActivity {
                 startActivity(new Intent(QualificationActivity.this, IncomeDetailsActivity.class));
             }
         });
+
+        binding.imgBack.setOnClickListener(view -> finish());
+
     }
 
     private void setSpinnerQualifications() {

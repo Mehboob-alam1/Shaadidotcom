@@ -74,6 +74,9 @@ public class ReligionCastActivity extends AppCompatActivity {
 
 
         });
+        binding.imgBack.setOnClickListener(view -> finish());
+
+
 
     }
 
