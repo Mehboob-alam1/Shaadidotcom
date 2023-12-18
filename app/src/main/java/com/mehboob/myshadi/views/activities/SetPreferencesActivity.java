@@ -28,6 +28,8 @@ public class SetPreferencesActivity extends AppCompatActivity {
     private MatchPref matchPref;
     private FUPViewModel fupViewModel;
     private String userId;
+    private boolean isSkipHide;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +39,11 @@ public class SetPreferencesActivity extends AppCompatActivity {
 
         matchPref = new MatchPref(this);
 
-
-        fupViewModel.getUserProfileLiveData().observe(this,userProfile -> userId=userProfile.getUserId());
+        isSkipHide = getIntent().getBooleanExtra("skip", false);
+        if (isSkipHide) {
+            binding.btnSkip.setVisibility(View.GONE);
+        }
+        fupViewModel.getUserProfileLiveData().observe(this, userProfile -> userId = userProfile.getUserId());
 
         binding.btnSkip.setOnClickListener(view -> {
             updateUi();
@@ -87,13 +92,13 @@ public class SetPreferencesActivity extends AppCompatActivity {
                     if (aBoolean) {
                         Utils.showSnackBar(this, "Preferences update successfully");
                         updateUi();
-                    }else{
-                        Utils.showSnackBar(this,"Something went wrong");
+                    } else {
+                        Utils.showSnackBar(this, "Something went wrong");
                     }
                 });
 
 
-              //  Utils.showSnackBar(this, matchPref.fetchPref().toString());
+                //  Utils.showSnackBar(this, matchPref.fetchPref().toString());
 
 
             }
@@ -247,7 +252,6 @@ public class SetPreferencesActivity extends AppCompatActivity {
         super.onResume();
 
         fupViewModel.getUserProfileLiveData().observe(this, userProfile -> {
-
 
 
             binding.spinnerCity.setText(userProfile.getCityName());

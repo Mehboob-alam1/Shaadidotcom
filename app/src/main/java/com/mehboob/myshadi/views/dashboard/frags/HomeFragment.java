@@ -16,11 +16,13 @@ import com.mehboob.myshadi.R;
 
 import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
 import com.mehboob.myshadi.databinding.FragmentHomeBinding;
+import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 import com.mehboob.myshadi.views.activities.AddBioActivity;
+import com.mehboob.myshadi.views.activities.SetPreferencesActivity;
 import com.mehboob.myshadi.views.dashboard.EditProfileActivity;
 import com.mehboob.myshadi.views.dashboard.premium.UpgradePremiumActivity;
 
@@ -57,6 +59,14 @@ public class HomeFragment extends Fragment {
         binding.lineAboutYourSelf.setOnClickListener(view -> {
 
             startActivity(new Intent(requireActivity(), AddBioActivity.class));
+        });
+
+        binding.linePartnerPref.setOnClickListener(view -> {
+
+            Intent i = new Intent(requireActivity(),SetPreferencesActivity.class);
+            i.putExtra("skip",true);
+            startActivity(i);
+
         });
 
         return binding.getRoot();
