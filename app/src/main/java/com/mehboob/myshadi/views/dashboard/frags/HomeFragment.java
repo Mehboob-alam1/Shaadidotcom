@@ -64,6 +64,21 @@ public class HomeFragment extends Fragment {
             startActivity(new Intent(requireActivity(), AddBioActivity.class));
         });
 
+        matchMakingViewModel.getBestRecentMatchedProfiles().observe(getViewLifecycleOwner(), userProfiles -> {
+
+            if (userProfiles != null) {
+
+
+                binding.lineNewMatches.setVisibility(View.VISIBLE);
+                binding.txtNewMatchesCount.setVisibility(View.VISIBLE);
+                binding.txtNewMatchesCount.setText("(" + userProfiles.size() + ")");
+
+                newMatchesAdapter.setNewMatches(userProfiles);
+            }
+
+
+        });
+
         binding.linePartnerPref.setOnClickListener(view -> {
 
             Intent i = new Intent(requireActivity(), SetPreferencesActivity.class);
@@ -133,20 +148,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
 
 
-        matchMakingViewModel.getBestRecentMatchedProfiles().observe(getViewLifecycleOwner(), userProfiles -> {
 
-            if (userProfiles != null) {
-
-
-                binding.lineNewMatches.setVisibility(View.VISIBLE);
-                binding.txtNewMatchesCount.setVisibility(View.VISIBLE);
-                binding.txtNewMatchesCount.setText("(" + userProfiles.size() + ")");
-
-                newMatchesAdapter.setNewMatches(userProfiles);
-            }
-
-
-        });
     }
 
     @Override

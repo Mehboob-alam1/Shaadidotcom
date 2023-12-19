@@ -2,6 +2,8 @@ package com.mehboob.myshadi.repository;
 
 import android.app.Application;
 import android.os.PerformanceHintManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -44,12 +46,12 @@ public class MatchMakingRepository {
 
         this.application = application;
 
-        bestMatchRecentUsers= new MutableLiveData<>();
-        bestMatchRecentProfiles= new ArrayList<>();
-        myProfileMatches= new ArrayList<>();
+        bestMatchRecentUsers = new MutableLiveData<>();
+        bestMatchRecentProfiles = new ArrayList<>();
+        myProfileMatches = new ArrayList<>();
 
-        sessionManager= new SessionManager(application);
-myProfileMatchesMutable= new MutableLiveData<>();
+        sessionManager = new SessionManager(application);
+        myProfileMatchesMutable = new MutableLiveData<>();
 
     }
 
@@ -61,16 +63,16 @@ myProfileMatchesMutable= new MutableLiveData<>();
         return myProfileMatchesMutable;
     }
 
-    public void checkMyProfileMatches(UserProfile currentUserProfile){
+    public void checkMyProfileMatches(UserProfile currentUserProfile) {
         DatabaseReference profilesRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
-        String gender= sessionManager.fetchGender();
-        String starts="";
+        String gender = sessionManager.fetchGender();
+        String starts = "";
 
         if (gender.equals("Male"))
-            starts="Female";
+            starts = "Female";
         else
-            starts="Male";
+            starts = "Male";
 
         profilesRef.orderByChild("gender").startAt(starts)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -87,15 +89,17 @@ myProfileMatchesMutable= new MutableLiveData<>();
                                 myProfileMatches.add(userProfile);
 
                                 myProfileMatchesMutable.setValue(bestMatchRecentProfiles);
-                            }
+                            } else {
 
+                                Log.d("Matches", userProfile.getUserId() + " does not matches");
+                            }
                         }
 
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        Log.d("Matches", error.getMessage());
                     }
                 });
 
@@ -125,6 +129,8 @@ myProfileMatchesMutable= new MutableLiveData<>();
                         bestMatchRecentProfiles.add(userProfile);
 
                         bestMatchRecentUsers.setValue(bestMatchRecentProfiles);
+                    } else {
+                        Log.d("Matches", userProfile.getUserId() + " does not matches");
                     }
 
                 }
@@ -133,7 +139,9 @@ myProfileMatchesMutable= new MutableLiveData<>();
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle errors
+                Log.d("Matches", databaseError.getMessage());
             }
+
         });
     }
 
@@ -142,32 +150,48 @@ myProfileMatchesMutable= new MutableLiveData<>();
         int age1 = Integer.parseInt(currentUserProfile.getDob());
         int age2 = Integer.parseInt(otherUserProfile.getDob());
 
-        int height1 = Integer.parseInt(currentUserProfile.getHeight());
-        int height2 = Integer.parseInt(otherUserProfile.getHeight());
-        String gender1= currentUserProfile.getGender();
-        String gender2= otherUserProfile.getGender();
+//        int height1 = Integer.parseInt(currentUserProfile.getHeight());
+//        int height2 = Integer.parseInt(otherUserProfile.getHeight());
+        String gender1 = currentUserProfile.getGender();
+        String gender2 = otherUserProfile.getGender();
+
+        boolean isMatching;
 
 
-        int minHeight = Math.min(Integer.parseInt(currentUserProfile.getPreferences().getMinHeight()), Integer.parseInt(otherUserProfile.getPreferences().getMinHeight()));
-        int maxHeight = Math.max(Integer.parseInt(currentUserProfile.getPreferences().getMaxHeight()), Integer.parseInt(otherUserProfile.getPreferences().getMaxHeight()));
+//        int minHeight = Math.min(Integer.parseInt(currentUserProfile.getPreferences().getMinHeight()), Integer.parseInt(otherUserProfile.getPreferences().getMinHeight()));
+//        int maxHeight = Math.max(Integer.parseInt(currentUserProfile.getPreferences().getMaxHeight()), Integer.parseInt(otherUserProfile.getPreferences().getMaxHeight()));
         //TODO
         // Profile matchmaking
         int minAge = Math.min(Integer.parseInt(currentUserProfile.getPreferences().getMinAge()), Integer.parseInt(otherUserProfile.getPreferences().getMinAge()));
         int maxAge = Math.max(Integer.parseInt(currentUserProfile.getPreferences().getMaxAge()), Integer.parseInt(otherUserProfile.getPreferences().getMaxAge()));
 
         // Check if ages and other preferences are within the specified range
-        return age1 >= minAge && age1 <= maxAge &&
-                age2 >= minAge && age2 <= maxAge &&
-                height1>=minHeight && height1<=maxHeight &&
-                height2>=minHeight && height2 <=maxHeight &&
-                !gender1.equals(gender2) &&
-                currentUserProfile.getPreferences().getCity().equals(otherUserProfile.getPreferences().getCity()) &&
-                currentUserProfile.getPreferences().getCommunity().equals(otherUserProfile.getCommunity()) &&
-                currentUserProfile.getPreferences().getSubCommunity().equals(otherUserProfile.getSubCommunity()) &&
-                currentUserProfile.getPreferences().getMaritalStatus().equals(otherUserProfile.getPreferences().getMaritalStatus())&&
-                currentUserProfile.getPreferences().getReligion().equals(otherUserProfile.getPreferences().getReligion());
+        if (
+                age1 >= minAge && age1 <= maxAge &&
+                        age2 >= minAge && age2 <= maxAge &&
 
-        // Implement logic to compare preferences (e.g., age range, religion, etc.)
-        // Return true if preferences match, otherwise false
+                        !gender1.equals(gender2) &&
+                        currentUserProfile.getPreferences().getCity().equals(otherUserProfile.getPreferences().getCity()) &&
+                        currentUserProfile.getPreferences().getCommunity().equals(otherUserProfile.getCommunity()) &&
+                        currentUserProfile.getPreferences().getSubCommunity().equals(otherUserProfile.getSubCommunity()) &&
+                        currentUserProfile.getPreferences().getMaritalStatus().equals(otherUserProfile.getPreferences().getMaritalStatus()) &&
+                        currentUserProfile.getPreferences().getReligion().equals(otherUserProfile.getPreferences().getReligion())) {
+
+
+            isMatching=true;
+
+        }
+//&& currentUserProfile.getPreferences().getCity().equals(otherUserProfile.getPreferences().getCity()) &&
+//                currentUserProfile.getPreferences().getCommunity().equals(otherUserProfile.getCommunity()) &&
+//                currentUserProfile.getPreferences().getSubCommunity().equals(otherUserProfile.getSubCommunity()) &&
+//                currentUserProfile.getPreferences().getMaritalStatus().equals(otherUserProfile.getPreferences().getMaritalStatus()) &&
+//                currentUserProfile.getPreferences().getReligion().equals(otherUserProfile.getPreferences().getReligion())
+
+        if (!gender1.equals(gender2) ) {
+            return true;
+        }
+
+
+        return false;
     }
 }

@@ -140,7 +140,8 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
                 false,
                 String.valueOf(System.currentTimeMillis()),
                 new Preferences(),
-                latitude, longitude);
+                latitude, longitude,
+                sessionManager.fetchAboutMe());
         fupViewModel.uploadUserProfile(selectedImages, profile);
 
         fupViewModel.getCheckIfUpload().observe(this, aBoolean -> {
