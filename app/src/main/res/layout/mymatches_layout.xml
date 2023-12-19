@@ -13,7 +13,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/imgProfileImageM"
             android:layout_width="match_parent"
             android:layout_height="500dp"
             android:alpha="0.8"
@@ -83,6 +83,7 @@
                 <ImageView
                     android:id="@+id/imgVerifiedM"
                     android:layout_width="wrap_content"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:src="@drawable/baseline_verified_user_24"
                     app:tint="@color/green_A700" />
@@ -100,6 +101,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/txtYouAndPersonM"
                     android:layout_marginStart="8dp"
                     android:background="@drawable/bg_round_match"
                     android:drawableStart="@drawable/baseline_supervisor_account_24"

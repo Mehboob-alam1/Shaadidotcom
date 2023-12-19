@@ -2,10 +2,12 @@ package com.mehboob.myshadi.views.dashboard.frags;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,13 +44,14 @@ public class HomeFragment extends Fragment {
     private NewMatchesAdapter newMatchesAdapter;
     private LinearLayoutManager layoutManager;
 
+    private UserProfile userProfileData;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-
 
 
         setProfileData();
@@ -63,19 +66,21 @@ public class HomeFragment extends Fragment {
 
         binding.linePartnerPref.setOnClickListener(view -> {
 
-            Intent i = new Intent(requireActivity(),SetPreferencesActivity.class);
-            i.putExtra("skip",true);
+            Intent i = new Intent(requireActivity(), SetPreferencesActivity.class);
+            i.putExtra("skip", true);
             startActivity(i);
 
         });
+        if (userProfileData != null)
+            matchMakingViewModel.checkRecentBestMatchesProfiles(userProfileData);
 
         return binding.getRoot();
     }
 
     private void setNewMatchesRecyclerView() {
 
-        newMatchesAdapter = new NewMatchesAdapter( new ArrayList<>(),getActivity().getApplication());
-        layoutManager = new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,true);
+        newMatchesAdapter = new NewMatchesAdapter(new ArrayList<>(), getActivity().getApplication());
+        layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true);
 
 
         layoutManager.setStackFromEnd(true);
@@ -86,6 +91,9 @@ public class HomeFragment extends Fragment {
 
 
         fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), userProfile -> {
+
+            userProfileData = userProfile;
+
             Toast.makeText(requireContext(), userProfile.getUserId(), Toast.LENGTH_SHORT).show();
 
             Glide.with(requireContext()).load(userProfile.getImageUrl())
@@ -114,7 +122,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         fupViewModel = new ViewModelProvider(requireActivity()).get(FUPViewModel.class);
 
-        matchMakingViewModel= new ViewModelProvider(requireActivity()).get(MatchMakingViewModel.class);
+        matchMakingViewModel = new ViewModelProvider(requireActivity()).get(MatchMakingViewModel.class);
 
 
     }
@@ -127,18 +135,15 @@ public class HomeFragment extends Fragment {
 
         matchMakingViewModel.getBestRecentMatchedProfiles().observe(getViewLifecycleOwner(), userProfiles -> {
 
-            if (userProfiles!=null){
-
+            if (userProfiles != null) {
 
 
                 binding.lineNewMatches.setVisibility(View.VISIBLE);
                 binding.txtNewMatchesCount.setVisibility(View.VISIBLE);
-                binding.txtNewMatchesCount.setText("(" +userProfiles.size() +")");
+                binding.txtNewMatchesCount.setText("(" + userProfiles.size() + ")");
 
                 newMatchesAdapter.setNewMatches(userProfiles);
             }
-
-
 
 
         });

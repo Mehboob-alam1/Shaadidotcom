@@ -10,10 +10,15 @@
  <include
      android:id="@+id/lineNoData"
      layout="@layout/layout_no_data"
-   android:visibility="gone"/>
+   android:visibility="visible"/>
 
 
 
-
+ <androidx.recyclerview.widget.RecyclerView
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:visibility="gone"
+tools:listitem="@layout/mymatches_layout"
+  android:id="@+id/myMatchesRecyclerView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

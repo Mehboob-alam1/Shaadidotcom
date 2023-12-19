@@ -53,10 +53,7 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
         holder.btnSendConnects.setOnClickListener( view -> {
 
 
-            // Have to notify the user that this person is interested in you
 
-            // add to invited list
-            //
 
         });
     }

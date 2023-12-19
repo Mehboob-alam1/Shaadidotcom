@@ -1,6 +1,7 @@
 package com.mehboob.myshadi.repository;
 
 import android.app.Application;
+import android.os.PerformanceHintManager;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -13,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.MatchPref;
+import com.mehboob.myshadi.utils.SessionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,8 +31,12 @@ public class MatchMakingRepository {
     private MatchPref matchPref;
 
     private List<UserProfile> bestMatchRecentProfiles;
+    private List<UserProfile> myProfileMatches;
 
     private MutableLiveData<List<UserProfile>> bestMatchRecentUsers;
+    private MutableLiveData<List<UserProfile>> myProfileMatchesMutable;
+
+    private SessionManager sessionManager;
 
     public MatchMakingRepository(Application application) {
 
@@ -40,12 +46,59 @@ public class MatchMakingRepository {
 
         bestMatchRecentUsers= new MutableLiveData<>();
         bestMatchRecentProfiles= new ArrayList<>();
+        myProfileMatches= new ArrayList<>();
 
+        sessionManager= new SessionManager(application);
+myProfileMatchesMutable= new MutableLiveData<>();
 
     }
 
     public MutableLiveData<List<UserProfile>> getBestMatchRecentUsers() {
         return bestMatchRecentUsers;
+    }
+
+    public MutableLiveData<List<UserProfile>> getMyProfileMatchesMutable() {
+        return myProfileMatchesMutable;
+    }
+
+    public void checkMyProfileMatches(UserProfile currentUserProfile){
+        DatabaseReference profilesRef = FirebaseDatabase.getInstance().getReference("userProfiles");
+
+        String gender= sessionManager.fetchGender();
+        String starts="";
+
+        if (gender.equals("Male"))
+            starts="Female";
+        else
+            starts="Male";
+
+        profilesRef.orderByChild("gender").startAt(starts)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot profileSnapshot : snapshot.getChildren()) {
+                            UserProfile userProfile = profileSnapshot.getValue(UserProfile.class);
+
+                            // Check if the profile matches preferences
+                            if (arePreferencesMatching(currentUserProfile, userProfile)) {
+                                // This profile is a potential match
+
+                                myProfileMatches.add(userProfile);
+
+                                myProfileMatchesMutable.setValue(bestMatchRecentProfiles);
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
     }
 
     public void checkRecentBestMatchesProfiles(UserProfile currentUserProfile) {
@@ -91,6 +144,8 @@ public class MatchMakingRepository {
 
         int height1 = Integer.parseInt(currentUserProfile.getHeight());
         int height2 = Integer.parseInt(otherUserProfile.getHeight());
+        String gender1= currentUserProfile.getGender();
+        String gender2= otherUserProfile.getGender();
 
 
         int minHeight = Math.min(Integer.parseInt(currentUserProfile.getPreferences().getMinHeight()), Integer.parseInt(otherUserProfile.getPreferences().getMinHeight()));
@@ -105,6 +160,7 @@ public class MatchMakingRepository {
                 age2 >= minAge && age2 <= maxAge &&
                 height1>=minHeight && height1<=maxHeight &&
                 height2>=minHeight && height2 <=maxHeight &&
+                !gender1.equals(gender2) &&
                 currentUserProfile.getPreferences().getCity().equals(otherUserProfile.getPreferences().getCity()) &&
                 currentUserProfile.getPreferences().getCommunity().equals(otherUserProfile.getCommunity()) &&
                 currentUserProfile.getPreferences().getSubCommunity().equals(otherUserProfile.getSubCommunity()) &&
