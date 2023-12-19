@@ -13,15 +13,18 @@
 
 
         <ImageView
+            android:id="@+id/imageView4"
             android:layout_width="match_parent"
             android:layout_height="500dp"
+            android:alpha="0.8"
+            android:scaleType="centerCrop"
+            android:src="@drawable/fiverr"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/fiverr"
-            android:scaleType="centerCrop"
-            android:alpha="0.8"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
 
         </ImageView>
@@ -31,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:id="@+id/btnImages"
+            android:id="@+id/btnImagesM"
             android:gravity="center_horizontal"
             android:background="@drawable/bg_round_match"
             android:orientation="horizontal"
@@ -59,41 +62,165 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:background="#816F6F"
+            android:padding="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                >
+
+                <ImageView
+                    android:id="@+id/imgVerifiedM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_verified_user_24"
+                    app:tint="@color/green_A700" />
+
+                <TextView
+                    android:id="@+id/txtProfileNameM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Mehboob Alam"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_round_match"
+                    android:drawableStart="@drawable/baseline_supervisor_account_24"
+                    android:gravity="center_vertical"
+                    android:padding="4dp"
+                    android:text="You &amp; her"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/txtProfileAgeHeightM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="21 yrs,5'4"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="•"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtProfileProfessionM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Software Engineer"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/txtCommunitySubCommunityM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Urdu,Pakistan"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="•"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtCityCountryM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Gilgit,Gilgit Baltistan"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
         <LinearLayout
+            android:id="@+id/linearLayout8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:background="#816F6F"
             android:gravity="center_horizontal"
-            android:background="@color/grey_300"
-            android:alpha="0.6"
-            android:padding="5dp"
             android:orientation="horizontal"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Like this profile?"
-/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_height="wrap_content"
-                android:text="Connect Now"
-                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:text="Like this profile?" />
 
-                android:id="@+id/btnConnectNow"
+            <TextView
+                android:id="@+id/btnConnectNowM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/roboto_bold"
-                android:textColor="@color/blue_A700"/>
+
+                android:text="Connect Now"
+                android:textColor="@color/blue_A700"
+                android:textSize="18sp" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/baseline_check_24"
                 android:layout_marginStart="8dp"
+                android:background="@drawable/bg_round_match"
                 android:backgroundTint="@color/green_A700"
-                android:background="@drawable/bg_round_match"/>
+                android:src="@drawable/baseline_check_24" />
 
 
         </LinearLayout>
