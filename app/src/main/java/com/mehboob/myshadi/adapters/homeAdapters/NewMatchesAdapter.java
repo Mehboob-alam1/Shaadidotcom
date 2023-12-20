@@ -15,14 +15,15 @@ import com.bumptech.glide.Glide;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.MatchesSampleBinding;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.entities.UserMatches;
 
 import java.util.List;
 
 public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Holder> {
-    private List<UserProfile> newMatches;
+    private List<UserMatches> newMatches;
     private Context context;
 
-    public NewMatchesAdapter(List<UserProfile> newMatches, Context context) {
+    public NewMatchesAdapter(List<UserMatches> newMatches, Context context) {
         this.newMatches = newMatches;
         this.context = context;
     }
@@ -38,7 +39,7 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
 
-        UserProfile userProfile = newMatches.get(position);
+        UserMatches userProfile = newMatches.get(position);
         Glide.with(context)
                 .load(userProfile.getImageUrl())
                 .placeholder(R.drawable.profile_1)
@@ -71,13 +72,13 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
         return newMatches.size();
     }
 
-    public void setNewMatches(List<UserProfile> newMatches) {
+    public void setNewMatches(List<UserMatches> newMatches) {
 
         this.newMatches.addAll(newMatches);
         notifyDataSetChanged();
     }
 
-    public List<UserProfile> getNewMatches() {
+    public List<UserMatches> getNewMatches() {
         return newMatches;
     }
 

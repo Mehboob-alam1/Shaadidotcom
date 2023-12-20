@@ -118,45 +118,14 @@ public class MatchMakingRepository {
 
     }
 
-    private boolean arMyPrefMatching(UserProfile currentUserProfile, UserProfile otherUserProfile) {
-
-        String gender1 = currentUserProfile.getGender();
-        String gender2 = otherUserProfile.getGender();
-        return !gender1.equals(gender2) &&
-                currentUserProfile.getPreferences().getCity().equals(otherUserProfile.getPreferences().getCity()) &&
-                currentUserProfile.getPreferences().getCommunity().equals(otherUserProfile.getCommunity()) &&
-                currentUserProfile.getPreferences().getSubCommunity().equals(otherUserProfile.getSubCommunity()) &&
-                currentUserProfile.getPreferences().getMaritalStatus().equals(otherUserProfile.getPreferences().getMaritalStatus()) &&
-                currentUserProfile.getPreferences().getReligion().equals(otherUserProfile.getPreferences().getReligion());
+    public LiveData<List<UserMatches>> getUserProfilesCreatedLastWeek() {
+        long weekAgoTimestamp = getWeekAgoTimestamp();
+        return userProfileDao.getUserProfilesCreatedLastWeek(weekAgoTimestamp);
     }
 
-
-    private boolean arePreferencesMatching(UserProfile currentUserProfile, UserProfile otherUserProfile) {
-
-        int age1 = Integer.parseInt(currentUserProfile.getDob());
-        int age2 = Integer.parseInt(otherUserProfile.getDob());
-
-
-        String gender1 = currentUserProfile.getGender();
-        String gender2 = otherUserProfile.getGender();
-
-
-        //TODO
-        // Profile matchmaking
-        int minAge = Math.min(Integer.parseInt(currentUserProfile.getPreferences().getMinAge()), Integer.parseInt(otherUserProfile.getPreferences().getMinAge()));
-        int maxAge = Math.max(Integer.parseInt(currentUserProfile.getPreferences().getMaxAge()), Integer.parseInt(otherUserProfile.getPreferences().getMaxAge()));
-
-        return
-                age1 >= minAge && age1 <= maxAge &&
-                        age2 >= minAge && age2 <= maxAge &&
-
-                        !gender1.equals(gender2) &&
-                        currentUserProfile.getPreferences().getCity().equals(otherUserProfile.getPreferences().getCity()) &&
-                        currentUserProfile.getPreferences().getCommunity().equals(otherUserProfile.getCommunity()) &&
-                        currentUserProfile.getPreferences().getSubCommunity().equals(otherUserProfile.getSubCommunity()) &&
-                        currentUserProfile.getPreferences().getMaritalStatus().equals(otherUserProfile.getPreferences().getMaritalStatus()) &&
-                        currentUserProfile.getPreferences().getReligion().equals(otherUserProfile.getPreferences().getReligion());
-
-
+    private long getWeekAgoTimestamp() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -7); // 7 days ago
+        return calendar.getTimeInMillis();
     }
 }

@@ -350,8 +350,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="(9)"
-                    android:visibility="gone"
+                    android:text="(0)"
+                    android:visibility="visible"
                     android:id="@+id/txtNewMatchesCount"
                     android:fontFamily="@font/roboto_bold"
                     android:textColor="@color/black"/>

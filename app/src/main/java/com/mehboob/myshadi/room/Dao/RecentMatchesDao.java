@@ -25,5 +25,6 @@ public interface RecentMatchesDao {
     @Query("SELECT * FROM userMatches")
     LiveData<List<UserMatches>> getAllUserProfiles();
 
-
+    @Query("SELECT * FROM userMatches WHERE time > :weekAgoTimestamp ORDER BY time DESC")
+    LiveData<List<UserMatches>> getUserProfilesCreatedLastWeek(long weekAgoTimestamp);
 }

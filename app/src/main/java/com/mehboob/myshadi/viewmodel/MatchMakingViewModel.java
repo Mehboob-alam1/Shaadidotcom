@@ -20,23 +20,27 @@ public class MatchMakingViewModel extends AndroidViewModel {
     private LiveData<List<UserMatches>> bestRecentMatchedProfiles;
 
 
-    public MatchMakingViewModel(Application application){
+    public MatchMakingViewModel(Application application) {
         super(application);
 
 
-        repository= new MatchMakingRepository(application);
+        repository = new MatchMakingRepository(application);
 
-        bestRecentMatchedProfiles=repository.getAllUserProfiles();
+        bestRecentMatchedProfiles = repository.getAllUserProfiles();
 
 
     }
 
 
+    public LiveData<List<UserMatches>> getUserProfilesCreatedLastWeek() {
 
-   public void getUserProfiles(){
+        return repository.getUserProfilesCreatedLastWeek();
+    }
+
+    public void getUserProfiles() {
 
         repository.checkMyProfileMatches();
-   }
+    }
 
     public LiveData<List<UserMatches>> getBestRecentMatchedProfiles() {
         return bestRecentMatchedProfiles;

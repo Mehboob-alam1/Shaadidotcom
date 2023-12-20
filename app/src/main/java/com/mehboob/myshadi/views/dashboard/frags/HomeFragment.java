@@ -48,30 +48,27 @@ public class HomeFragment extends Fragment {
     private UserProfile userProfileData;
 
     private SessionManager sessionManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-sessionManager= new SessionManager(requireActivity());
-
+        sessionManager = new SessionManager(requireActivity());
 
 
         getProfileUpdates(sessionManager.fetchUserId());
 
+
+
         setProfileData();
-
-
-
+        setRecyclerView();
 
         binding.lineAboutYourSelf.setOnClickListener(view -> {
 
             startActivity(new Intent(requireActivity(), AddBioActivity.class));
         });
-
-
-
 
 
         binding.linePartnerPref.setOnClickListener(view -> {
@@ -85,12 +82,20 @@ sessionManager= new SessionManager(requireActivity());
         return binding.getRoot();
     }
 
+    private void setRecyclerView() {
+
+        newMatchesAdapter= new NewMatchesAdapter(new ArrayList<>(),requireActivity());
+        binding.recyclerNewMatches.setAdapter(newMatchesAdapter);
+        binding.recyclerNewMatches.setLayoutManager(new LinearLayoutManager(requireActivity()));
+    }
+
 
     private void getProfileUpdates(String userId) {
 
 
         fupViewModel.getProfile(userId);
     }
+
     private void setProfileData() {
 
 
@@ -136,7 +141,12 @@ sessionManager= new SessionManager(requireActivity());
     public void onResume() {
         super.onResume();
 
+        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(this, userMatches -> {
 
+            newMatchesAdapter.setNewMatches(userMatches);
+
+            binding.txtNewMatchesCount.setText("(" + userMatches.size() + ")");
+        });
 
     }
 
