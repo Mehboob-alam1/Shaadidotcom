@@ -16,6 +16,7 @@ import com.mehboob.myshadi.databinding.ActivitySetPreferencesBinding;
 
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.utils.MatchPref;
+import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.views.dashboard.DashBoardActivity;
@@ -29,6 +30,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
     private FUPViewModel fupViewModel;
     private String userId;
     private boolean isSkipHide;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
         binding = ActivitySetPreferencesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sessionManager=new SessionManager(this);
 
         matchPref = new MatchPref(this);
 
@@ -86,7 +89,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
                         binding.spinnerSubCommunity.getSelectedItem().toString(),
                         binding.spinnerMaritalStatus.getSelectedItem().toString());
 
-                fupViewModel.updatePreferences(preferences, userId);
+                fupViewModel.updatePreferences(preferences,sessionManager.fetchUserId() );
                 matchPref.savePref(preferences);
                 fupViewModel.getIsPreferencesAdded().observe(this, aBoolean -> {
                     if (aBoolean) {

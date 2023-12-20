@@ -197,7 +197,7 @@ public class FirebaseUserProfileRepository {
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
-        userProfileRef.child(userId)
+        userProfileRef.child(sessionManager.fetchGender()).child(userId)
                 .child("aboutMe")
                 .setValue(aboutMe).addOnCompleteListener(task -> {
 
