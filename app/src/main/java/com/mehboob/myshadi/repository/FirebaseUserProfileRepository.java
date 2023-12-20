@@ -20,6 +20,7 @@ import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.models.User;
+import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.TinyDB;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class FirebaseUserProfileRepository {
     private MutableLiveData<Boolean> isProfileCompleted;
     private MutableLiveData<Boolean> isPreferencesAdded;
     private MutableLiveData<Boolean> isBioUpdated;
+    private SessionManager sessionManager;
 
     public FirebaseUserProfileRepository(Application application) {
         this.storageReference = FirebaseStorage.getInstance().getReference("userProfiles").child("images");
@@ -46,6 +48,7 @@ public class FirebaseUserProfileRepository {
         this.application = application;
         isProfileCompleted = new MutableLiveData<>();
         isPreferencesAdded = new MutableLiveData<>();
+        sessionManager= new SessionManager(application);
         isBioUpdated = new MutableLiveData<>();
     }
 
@@ -100,7 +103,7 @@ public class FirebaseUserProfileRepository {
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
-        userProfileRef
+        userProfileRef.child(userProfile.getGender())
 
                 .child(profile.getUserId())
                 .setValue(profile)
@@ -135,7 +138,7 @@ public class FirebaseUserProfileRepository {
 
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
-
+                .child(sessionManager.fetchGender())
                 .child(userId);
 
         userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -172,7 +175,7 @@ public class FirebaseUserProfileRepository {
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
-        userProfileRef.child(userId)
+        userProfileRef.child(sessionManager.fetchGender()).child(userId)
                 .child("preferences")
                 .setValue(preferences)
                 .addOnCompleteListener(task -> {
@@ -210,7 +213,7 @@ public class FirebaseUserProfileRepository {
 
     public void updateLocation(String lat, String lon, String userId) {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userProfiles").child(userId);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userProfiles").child(sessionManager.fetchGender()).child(userId);
         ref.child("latitude").setValue(lat);
         ref.child("longitude").setValue(lon);
     }
@@ -272,6 +275,7 @@ public class FirebaseUserProfileRepository {
         MutableLiveData<Boolean> isProfileCompleteLiveData = new MutableLiveData<>();
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
+                .child(sessionManager.fetchGender())
                 .child(userId)
                 .child("profileComplete");
 

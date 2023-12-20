@@ -81,7 +81,7 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
         super.onCreate(savedInstanceState);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
-        sessionManager= new SessionManager(requireActivity());
+        sessionManager = new SessionManager(requireActivity());
 
         authViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(AuthViewModel.class);
 
@@ -97,9 +97,9 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-dialog= new ProgressDialog(requireActivity());
-dialog.setMessage("Please wait");
-dialog.setCancelable(false);
+        dialog = new ProgressDialog(requireActivity());
+        dialog.setMessage("Please wait");
+        dialog.setCancelable(false);
         // Initialize sign in client
         googleSignInClient = GoogleSignIn.getClient(getActivity().getApplication(), googleSignInOptions);
 
@@ -114,6 +114,7 @@ dialog.setCancelable(false);
 
         return binding.getRoot();
     }
+
     private void checkProfile(String userId) {
         fupViewModel.checkProfileCompletion(userId, this);
     }
@@ -187,7 +188,6 @@ dialog.setCancelable(false);
                 , userAuth.getUserId(), true));
 
 
-
     }
 
     public void navigate(Bundle savedInstanceState) {
@@ -208,7 +208,7 @@ dialog.setCancelable(false);
                 Toast.makeText(requireActivity(), "User is already authenticated", Toast.LENGTH_SHORT).show();
 
                 Toast.makeText(requireActivity(), "" + user.getEmail(), Toast.LENGTH_SHORT).show();
-     checkProfile(user.getUserId());
+                checkProfile(user.getUserId());
 
 
             } else {
@@ -221,29 +221,26 @@ dialog.setCancelable(false);
         });
 
 
-
     }
-
 
 
     @Override
     public void onProfileCompletion(boolean isProfileComplete) {
 
 
+        Log.d("ProfileCompletion", "onProfileCompletion: " + isProfileComplete);
+        if (isProfileComplete) {
+            startActivity(new Intent(requireActivity(), DashBoardActivity.class));
+            requireActivity().finishAffinity();
 
-            Log.d("ProfileCompletion", "onProfileCompletion: "+ isProfileComplete);
-            if (isProfileComplete){
-                startActivity(new Intent(requireActivity(),DashBoardActivity.class));
-                requireActivity().finishAffinity();
 
+        } else {
 
-            }else{
+            startActivity(new Intent(requireActivity(), ProfileForActivity.class));
+            requireActivity().finishAffinity();
+        }
 
-                startActivity(new Intent(requireActivity(),ProfileForActivity.class));
-                requireActivity().finishAffinity();
-            }
-
-            dialog.dismiss();
+        dialog.dismiss();
 
     }
 

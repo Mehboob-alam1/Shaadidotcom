@@ -59,43 +59,17 @@ public class MyMatchesFragment extends Fragment {
         });
 
 
-        setMatchesRecyclerView();
 
-        if (userProfileData != null)
-            matchMakingViewModel.checkMyProfileMatches(userProfileData);
 
         return binding.getRoot();
     }
 
-    private void setMatchesRecyclerView() {
 
-        myMatchesAdapter = new MyMatchesAdapter(new ArrayList<>(), getActivity().getApplication());
-        layoutManager = new LinearLayoutManager(requireContext());
-
-
-        layoutManager.setStackFromEnd(true);
-        binding.myMatchesRecyclerView.setLayoutManager(layoutManager);
-    }
 
     @Override
     public void onResume() {
         super.onResume();
 
 
-        matchMakingViewModel.getMyProfileMatches().observe(getViewLifecycleOwner(), userProfiles -> {
-
-            if (userProfiles != null) {
-
-
-                myMatchesAdapter.setMyMatches(userProfiles);
-                binding.myMatchesRecyclerView.setVisibility(View.VISIBLE);
-                binding.lineNoData.getRoot().setVisibility(View.GONE);
-            }else{
-                binding.myMatchesRecyclerView.setVisibility(View.GONE);
-                binding.lineNoData.getRoot().setVisibility(View.VISIBLE);
-            }
-
-
-        });
     }
 }

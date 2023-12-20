@@ -7,18 +7,29 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.google.common.collect.HashBasedTable;
+import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.Dao.RecentMatchesDao;
 import com.mehboob.myshadi.room.Dao.UserDao;
+import com.mehboob.myshadi.room.entities.PreferencesConverter;
+import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.room.models.User;
 
-@Database(entities = {User.class}, version = 1)
+import java.util.List;
+
+@Database(entities = {User.class, UserMatches.class}, version = 1 ,exportSchema = false)
+@TypeConverters({PreferencesConverter.class})
+
 public abstract class DataDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "UserData";
 
     public abstract UserDao userDao();
 
+    public abstract RecentMatchesDao recentMatchesDao();
 
     private static volatile DataDatabase instance = null;
 
@@ -42,6 +53,7 @@ public abstract class DataDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             new PopulateAsyncTask(instance);
+            new InserUserAsyncTask(instance);
         }
     };
 
@@ -49,7 +61,7 @@ public abstract class DataDatabase extends RoomDatabase {
     static class PopulateAsyncTask extends AsyncTask<Void, Void, Void> {
         private UserDao userDao;
 
-        private UserDao dao;
+
         public PopulateAsyncTask(DataDatabase dataDatabase) {
             userDao = dataDatabase.userDao();
         }
@@ -58,6 +70,22 @@ public abstract class DataDatabase extends RoomDatabase {
         protected Void doInBackground(Void... voids) {
 
             userDao.deleteUserData();
+            return null;
+        }
+    }
+
+
+    static class InserUserAsyncTask extends AsyncTask<List<UserProfile>, Void, Void> {
+        private RecentMatchesDao recentMatchesDao;
+
+
+        public InserUserAsyncTask(DataDatabase dataDatabase){
+            recentMatchesDao=dataDatabase.recentMatchesDao();
+        }
+        @Override
+        protected Void doInBackground(List<UserProfile>... lists) {
+
+
             return null;
         }
     }

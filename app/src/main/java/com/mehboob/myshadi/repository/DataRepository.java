@@ -26,15 +26,16 @@ public class DataRepository {
     }
 
 
-    public long checkIfInserted(){
-        if (getUserMutableLiveData().getValue() !=null &&getUserMutableLiveData().getValue().isCreated() ){
+    public long checkIfInserted() {
+        if (getUserMutableLiveData().getValue() != null && getUserMutableLiveData().getValue().isCreated()) {
             return 1;
-        }else {
+        } else {
             return 0;
         }
     }
+
     public void insertData(User userMutableLiveData) {
-new InsertAsyncTask(dataDatabase).execute(userMutableLiveData);
+        new InsertAsyncTask(dataDatabase).execute(userMutableLiveData);
     }
 
     public LiveData<User> getUserMutableLiveData() {
@@ -47,7 +48,6 @@ new InsertAsyncTask(dataDatabase).execute(userMutableLiveData);
         InsertAsyncTask(DataDatabase dataDatabase) {
             userDao = dataDatabase.userDao();
         }
-
 
 
         @Override

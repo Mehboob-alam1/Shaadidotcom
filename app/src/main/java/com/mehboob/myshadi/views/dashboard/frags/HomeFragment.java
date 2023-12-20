@@ -20,6 +20,7 @@ import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
 import com.mehboob.myshadi.databinding.FragmentHomeBinding;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
@@ -46,17 +47,22 @@ public class HomeFragment extends Fragment {
 
     private UserProfile userProfileData;
 
+    private SessionManager sessionManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+sessionManager= new SessionManager(requireActivity());
 
+
+
+        getProfileUpdates(sessionManager.fetchUserId());
 
         setProfileData();
 
-        setNewMatchesRecyclerView();
+
 
 
         binding.lineAboutYourSelf.setOnClickListener(view -> {
@@ -64,20 +70,9 @@ public class HomeFragment extends Fragment {
             startActivity(new Intent(requireActivity(), AddBioActivity.class));
         });
 
-        matchMakingViewModel.getBestRecentMatchedProfiles().observe(getViewLifecycleOwner(), userProfiles -> {
-
-            if (userProfiles != null) {
 
 
-                binding.lineNewMatches.setVisibility(View.VISIBLE);
-                binding.txtNewMatchesCount.setVisibility(View.VISIBLE);
-                binding.txtNewMatchesCount.setText("(" + userProfiles.size() + ")");
 
-                newMatchesAdapter.setNewMatches(userProfiles);
-            }
-
-
-        });
 
         binding.linePartnerPref.setOnClickListener(view -> {
 
@@ -86,22 +81,16 @@ public class HomeFragment extends Fragment {
             startActivity(i);
 
         });
-        if (userProfileData != null)
-            matchMakingViewModel.checkRecentBestMatchesProfiles(userProfileData);
 
         return binding.getRoot();
     }
 
-    private void setNewMatchesRecyclerView() {
 
-        newMatchesAdapter = new NewMatchesAdapter(new ArrayList<>(), getActivity().getApplication());
-        layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true);
+    private void getProfileUpdates(String userId) {
 
 
-        layoutManager.setStackFromEnd(true);
-        binding.recyclerNewMatches.setLayoutManager(layoutManager);
+        fupViewModel.getProfile(userId);
     }
-
     private void setProfileData() {
 
 
@@ -109,7 +98,7 @@ public class HomeFragment extends Fragment {
 
             userProfileData = userProfile;
 
-            Toast.makeText(requireContext(), userProfile.getUserId(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(requireContext(), userProfile.getUserId(), Toast.LENGTH_SHORT).show();
 
             Glide.with(requireContext()).load(userProfile.getImageUrl())
                     .placeholder(R.drawable.profile_1)

@@ -15,10 +15,11 @@ import com.mehboob.myshadi.room.models.User;
 public interface UserDao {
 
 
-//    @Insert
+    //    @Insert
 //    void  insert(LiveData<User> userMutableLiveData);
-@Insert
-void insert(User userLiveData);
+    @Insert
+    void insert(User userLiveData);
+
     @Query("Delete from UserData")
     void deleteUserData();
 

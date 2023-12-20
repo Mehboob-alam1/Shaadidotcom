@@ -1,11 +1,13 @@
 package com.mehboob.myshadi.repository;
 
 import android.app.Application;
+import android.os.AsyncTask;
 import android.os.PerformanceHintManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.database.DataSnapshot;
@@ -15,6 +17,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.Dao.RecentMatchesDao;
+import com.mehboob.myshadi.room.database.DataDatabase;
+import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.utils.SessionManager;
 
@@ -30,40 +35,52 @@ public class MatchMakingRepository {
 
     private Application application;
 
-    private MatchPref matchPref;
-
-    private List<UserProfile> bestMatchRecentProfiles;
-    private List<UserProfile> myProfileMatches;
-
-    private MutableLiveData<List<UserProfile>> bestMatchRecentUsers;
-    private MutableLiveData<List<UserProfile>> myProfileMatchesMutable;
 
     private SessionManager sessionManager;
 
+    // new objects
+    private RecentMatchesDao userProfileDao;
+
+    DataDatabase dataDatabase;
+    private LiveData<List<UserMatches>> allUserProfiles;
+    private List<UserMatches> allUserProfilesData;
+
     public MatchMakingRepository(Application application) {
 
-        matchPref = new MatchPref(application.getApplicationContext());
-
+        dataDatabase = DataDatabase.getInstance(application);
+        userProfileDao = dataDatabase.recentMatchesDao();
+        allUserProfiles = userProfileDao.getAllUserProfiles();
         this.application = application;
-
-        bestMatchRecentUsers = new MutableLiveData<>();
-        bestMatchRecentProfiles = new ArrayList<>();
-        myProfileMatches = new ArrayList<>();
-
-        sessionManager = new SessionManager(application);
-        myProfileMatchesMutable = new MutableLiveData<>();
+        sessionManager= new SessionManager(application);
+        allUserProfilesData = new ArrayList<>();
 
     }
 
-    public MutableLiveData<List<UserProfile>> getBestMatchRecentUsers() {
-        return bestMatchRecentUsers;
+    public void insertUserProfile(List<UserMatches> userProfileEntity) {
+        // You may want to perform this operation in a background thread.
+        new InsertAsyncTask(dataDatabase).execute(userProfileEntity);
     }
 
-    public MutableLiveData<List<UserProfile>> getMyProfileMatchesMutable() {
-        return myProfileMatchesMutable;
+    public LiveData<List<UserMatches>> getAllUserProfiles() {
+        return allUserProfiles;
     }
 
-    public void checkMyProfileMatches(UserProfile currentUserProfile) {
+    private static class InsertAsyncTask extends AsyncTask<List<UserMatches>, Void, Void> {
+        private RecentMatchesDao recentMatchesDao;
+
+        InsertAsyncTask(DataDatabase dataDatabase) {
+            recentMatchesDao = dataDatabase.recentMatchesDao();
+        }
+
+        @Override
+        protected Void doInBackground(List<UserMatches>... lists) {
+            recentMatchesDao.insertRecentMatches(lists[0]);
+
+            return null;
+        }
+    }
+
+    public void checkMyProfileMatches() {
         DatabaseReference profilesRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
         String gender = sessionManager.fetchGender();
@@ -74,26 +91,22 @@ public class MatchMakingRepository {
         else
             starts = "Male";
 
-        profilesRef.orderByChild("gender").startAt(starts)
+        profilesRef.child(starts)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                         for (DataSnapshot profileSnapshot : snapshot.getChildren()) {
-                            UserProfile userProfile = profileSnapshot.getValue(UserProfile.class);
+                            UserMatches userProfile = profileSnapshot.getValue(UserMatches.class);
+
+
+                            allUserProfilesData.add(userProfile);
+
 
                             // Check if the profile matches preferences
-                            if (arePreferencesMatching(currentUserProfile, userProfile)) {
-                                // This profile is a potential match
 
-                                myProfileMatches.add(userProfile);
-
-                                myProfileMatchesMutable.setValue(bestMatchRecentProfiles);
-                            } else {
-
-                                Log.d("Matches", userProfile.getUserId() + " does not matches");
-                            }
                         }
+                        insertUserProfile(allUserProfilesData);
 
                     }
 
@@ -105,68 +118,35 @@ public class MatchMakingRepository {
 
     }
 
-    public void checkRecentBestMatchesProfiles(UserProfile currentUserProfile) {
+    private boolean arMyPrefMatching(UserProfile currentUserProfile, UserProfile otherUserProfile) {
 
-        DatabaseReference profilesRef = FirebaseDatabase.getInstance().getReference("userProfiles");
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -7);
-        Date startDate = calendar.getTime();
-
-        // Format dates for display
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        String formattedStartDate = sdf.format(startDate);
-        String formattedCurrentDate = sdf.format(new Date());
-        profilesRef.orderByChild("time").startAt(startDate.getTime()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot profileSnapshot : dataSnapshot.getChildren()) {
-                    UserProfile userProfile = profileSnapshot.getValue(UserProfile.class);
-
-                    // Check if the profile matches preferences
-                    if (arePreferencesMatching(currentUserProfile, userProfile)) {
-                        // This profile is a potential match
-
-                        bestMatchRecentProfiles.add(userProfile);
-
-                        bestMatchRecentUsers.setValue(bestMatchRecentProfiles);
-                    } else {
-                        Log.d("Matches", userProfile.getUserId() + " does not matches");
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors
-                Log.d("Matches", databaseError.getMessage());
-            }
-
-        });
+        String gender1 = currentUserProfile.getGender();
+        String gender2 = otherUserProfile.getGender();
+        return !gender1.equals(gender2) &&
+                currentUserProfile.getPreferences().getCity().equals(otherUserProfile.getPreferences().getCity()) &&
+                currentUserProfile.getPreferences().getCommunity().equals(otherUserProfile.getCommunity()) &&
+                currentUserProfile.getPreferences().getSubCommunity().equals(otherUserProfile.getSubCommunity()) &&
+                currentUserProfile.getPreferences().getMaritalStatus().equals(otherUserProfile.getPreferences().getMaritalStatus()) &&
+                currentUserProfile.getPreferences().getReligion().equals(otherUserProfile.getPreferences().getReligion());
     }
+
 
     private boolean arePreferencesMatching(UserProfile currentUserProfile, UserProfile otherUserProfile) {
 
         int age1 = Integer.parseInt(currentUserProfile.getDob());
         int age2 = Integer.parseInt(otherUserProfile.getDob());
 
-//        int height1 = Integer.parseInt(currentUserProfile.getHeight());
-//        int height2 = Integer.parseInt(otherUserProfile.getHeight());
+
         String gender1 = currentUserProfile.getGender();
         String gender2 = otherUserProfile.getGender();
 
-        boolean isMatching;
 
-
-//        int minHeight = Math.min(Integer.parseInt(currentUserProfile.getPreferences().getMinHeight()), Integer.parseInt(otherUserProfile.getPreferences().getMinHeight()));
-//        int maxHeight = Math.max(Integer.parseInt(currentUserProfile.getPreferences().getMaxHeight()), Integer.parseInt(otherUserProfile.getPreferences().getMaxHeight()));
         //TODO
         // Profile matchmaking
         int minAge = Math.min(Integer.parseInt(currentUserProfile.getPreferences().getMinAge()), Integer.parseInt(otherUserProfile.getPreferences().getMinAge()));
         int maxAge = Math.max(Integer.parseInt(currentUserProfile.getPreferences().getMaxAge()), Integer.parseInt(otherUserProfile.getPreferences().getMaxAge()));
 
-        // Check if ages and other preferences are within the specified range
-        if (
+        return
                 age1 >= minAge && age1 <= maxAge &&
                         age2 >= minAge && age2 <= maxAge &&
 
@@ -175,23 +155,8 @@ public class MatchMakingRepository {
                         currentUserProfile.getPreferences().getCommunity().equals(otherUserProfile.getCommunity()) &&
                         currentUserProfile.getPreferences().getSubCommunity().equals(otherUserProfile.getSubCommunity()) &&
                         currentUserProfile.getPreferences().getMaritalStatus().equals(otherUserProfile.getPreferences().getMaritalStatus()) &&
-                        currentUserProfile.getPreferences().getReligion().equals(otherUserProfile.getPreferences().getReligion())) {
+                        currentUserProfile.getPreferences().getReligion().equals(otherUserProfile.getPreferences().getReligion());
 
 
-            isMatching=true;
-
-        }
-//&& currentUserProfile.getPreferences().getCity().equals(otherUserProfile.getPreferences().getCity()) &&
-//                currentUserProfile.getPreferences().getCommunity().equals(otherUserProfile.getCommunity()) &&
-//                currentUserProfile.getPreferences().getSubCommunity().equals(otherUserProfile.getSubCommunity()) &&
-//                currentUserProfile.getPreferences().getMaritalStatus().equals(otherUserProfile.getPreferences().getMaritalStatus()) &&
-//                currentUserProfile.getPreferences().getReligion().equals(otherUserProfile.getPreferences().getReligion())
-
-        if (!gender1.equals(gender2) ) {
-            return true;
-        }
-
-
-        return false;
     }
 }

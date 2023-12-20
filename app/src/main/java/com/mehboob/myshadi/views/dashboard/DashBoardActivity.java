@@ -11,6 +11,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,6 +23,7 @@ import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
+import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 import com.mehboob.myshadi.viewmodel.UserViewModel;
 import com.mehboob.myshadi.views.dashboard.frags.ChatFragment;
 import com.mehboob.myshadi.views.dashboard.frags.HomeFragment;
@@ -39,12 +42,14 @@ public class DashBoardActivity extends AppCompatActivity {
 
     private UserViewModel userViewModel;
 
+    private MatchMakingViewModel matchMakingViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDashBoardBinding.inflate(getLayoutInflater());
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        matchMakingViewModel= new ViewModelProvider(this).get(MatchMakingViewModel.class);
         setContentView(binding.getRoot());
         sessionManager = new SessionManager(this);
 
@@ -58,6 +63,7 @@ public class DashBoardActivity extends AppCompatActivity {
             getProfileUpdates(user.getUserId());
         });
 
+        matchMakingViewModel.getUserProfiles();
 
     }
 
@@ -80,5 +86,15 @@ public class DashBoardActivity extends AppCompatActivity {
         fupViewModel.getProfile(userId);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+
+        matchMakingViewModel.getBestRecentMatchedProfiles().observe(this,userMatches -> {
+
+            Log.d("Profiles",userMatches.toString());
+        });
+
+    }
 }
