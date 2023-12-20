@@ -61,7 +61,6 @@ public class HomeFragment extends Fragment {
         getProfileUpdates(sessionManager.fetchUserId());
 
 
-
         setProfileData();
         setRecyclerView();
 
@@ -84,7 +83,7 @@ public class HomeFragment extends Fragment {
 
     private void setRecyclerView() {
 
-        newMatchesAdapter= new NewMatchesAdapter(new ArrayList<>(),requireActivity());
+        newMatchesAdapter = new NewMatchesAdapter(new ArrayList<>(), requireActivity());
         binding.recyclerNewMatches.setAdapter(newMatchesAdapter);
         binding.recyclerNewMatches.setLayoutManager(new LinearLayoutManager(requireActivity()));
     }

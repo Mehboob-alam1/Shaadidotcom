@@ -27,4 +27,15 @@ public interface RecentMatchesDao {
 
     @Query("SELECT * FROM userMatches WHERE time > :weekAgoTimestamp ORDER BY time DESC")
     LiveData<List<UserMatches>> getUserProfilesCreatedLastWeek(long weekAgoTimestamp);
+
+    @Query("SELECT * FROM userMatches " +
+            "WHERE gender = :gender AND religion = :religion AND marital_status = :maritalStatus " +
+            "AND stateName = :stateName AND cityName = :cityName")
+    LiveData<List<UserProfileEntity>> getUserProfilesWithPreferences(String gender, String religion, String maritalStatus, String stateName, String cityName);
+
+
+    /// latest profile in order
+    @Query("SELECT * FROM userMatches WHERE dob BETWEEN :minDob AND :maxDob ORDER BY time DESC")
+    LiveData<List<UserProfileEntity>> getUserProfilesByAgeRange(Date minDob, Date maxDob);
+
 }
