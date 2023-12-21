@@ -43,6 +43,8 @@ public class SessionManager {
 
 
     private String USER_ID="user_id";
+
+
     public SessionManager(Context context) {
 
         sharedPreferences = context.getSharedPreferences(PROFILE_FOR, Context.MODE_PRIVATE);

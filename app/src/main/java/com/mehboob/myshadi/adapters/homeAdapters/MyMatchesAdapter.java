@@ -20,22 +20,23 @@ import com.mehboob.myshadi.adapters.CountriesAdapter;
 import com.mehboob.myshadi.databinding.MymatchesLayoutBinding;
 import com.mehboob.myshadi.json.Countries;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.entities.UserMatches;
 
 import java.util.List;
 
 public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Holder> {
-    private List<UserProfile> myMatches;
+    private List<UserMatches> myMatches;
     private Context context;
     public OnItemClickListener onItemClickListener;
 
 
-    public MyMatchesAdapter(List<UserProfile> newMatches, Context context) {
+    public MyMatchesAdapter(List<UserMatches> newMatches, Context context) {
         this.myMatches = newMatches;
         this.context = context;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(UserProfile userProfile, int position);
+        void onItemClick(UserMatches userProfile, int position);
     }
 
     public void setOnItemClickListener(MyMatchesAdapter.OnItemClickListener listener) {
@@ -52,7 +53,7 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
 
-        UserProfile userProfile = myMatches.get(position);
+        UserMatches userProfile = myMatches.get(position);
         holder.bind(userProfile);
     }
 
@@ -61,7 +62,7 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
         return myMatches.size();
     }
 
-    public void setMyMatches(List<UserProfile> myMatches) {
+    public void setMyMatches(List<UserMatches> myMatches) {
 
         this.myMatches.addAll(myMatches);
         notifyDataSetChanged();
@@ -99,9 +100,9 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
         }
 
         @SuppressLint("SetTextI18n")
-        void bind(UserProfile userProfile) {
+        void bind(UserMatches userProfile) {
 //            countryNameTextView.setText(country.getName());
-            if (userProfile.getIsVerified()) {
+            if (userProfile.isVerified()) {
                 imgVerifiedM.setVisibility(View.VISIBLE);
                 try {
                     Glide.with(context).load(userProfile.getImageUrl())

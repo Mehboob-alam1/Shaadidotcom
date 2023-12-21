@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.adapters.homeAdapters.MyMatchesAdapter;
@@ -16,7 +17,9 @@ import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
 import com.mehboob.myshadi.databinding.ActivityDashBoardBinding;
 import com.mehboob.myshadi.databinding.FragmentHomeBinding;
 import com.mehboob.myshadi.databinding.FragmentMyMatchesBinding;
+import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 
@@ -37,6 +40,7 @@ public class MyMatchesFragment extends Fragment {
     private LinearLayoutManager layoutManager;
 
     private UserProfile userProfileData;
+    MatchPref matchPref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class MyMatchesFragment extends Fragment {
         fupViewModel = new ViewModelProvider(requireActivity()).get(FUPViewModel.class);
 
         matchMakingViewModel = new ViewModelProvider(requireActivity()).get(MatchMakingViewModel.class);
+        matchPref=new MatchPref(requireActivity());
     }
 
     @Override
@@ -58,18 +63,32 @@ public class MyMatchesFragment extends Fragment {
             userProfileData = userProfile;
         });
 
+        setRecyclerView();
 
 
 
+        myMatchesAdapter.setOnItemClickListener((userProfile, position) -> {
+            //
+        });
         return binding.getRoot();
     }
 
+    private void setRecyclerView() {
 
+        myMatchesAdapter = new MyMatchesAdapter(new ArrayList<>(), requireActivity());
+        binding.myMatchesRecyclerView.setAdapter(myMatchesAdapter);
+        binding.myMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+    }
 
     @Override
     public void onResume() {
         super.onResume();
 
+        matchMakingViewModel.getBestMatchesPref(Integer.parseInt(matchPref.fetchPref().getMinAge()),Integer.parseInt(matchPref.fetchPref().getMaxAge())).observe(this, userMatches -> {
 
+            myMatchesAdapter.setMyMatches(userMatches);
+
+
+        });
     }
 }

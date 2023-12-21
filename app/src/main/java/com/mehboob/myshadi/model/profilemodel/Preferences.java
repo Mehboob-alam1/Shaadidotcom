@@ -2,8 +2,8 @@ package com.mehboob.myshadi.model.profilemodel;
 
 public class Preferences {
 
-    private String minAge;
-    private String maxAge;
+    private String minAge="21";
+    private String maxAge="28";
     private String minHeight;
     private String maxHeight;
     private String city;

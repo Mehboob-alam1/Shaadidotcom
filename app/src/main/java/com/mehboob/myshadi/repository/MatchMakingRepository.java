@@ -39,7 +39,7 @@ public class MatchMakingRepository {
     private SessionManager sessionManager;
 
     // new objects
-    private RecentMatchesDao userProfileDao;
+    private RecentMatchesDao recentMatchesDao;
 
     DataDatabase dataDatabase;
     private LiveData<List<UserMatches>> allUserProfiles;
@@ -48,8 +48,8 @@ public class MatchMakingRepository {
     public MatchMakingRepository(Application application) {
 
         dataDatabase = DataDatabase.getInstance(application);
-        userProfileDao = dataDatabase.recentMatchesDao();
-        allUserProfiles = userProfileDao.getAllUserProfiles();
+        recentMatchesDao = dataDatabase.recentMatchesDao();
+        allUserProfiles = recentMatchesDao.getAllUserProfiles();
         this.application = application;
         sessionManager= new SessionManager(application);
         allUserProfilesData = new ArrayList<>();
@@ -120,12 +120,25 @@ public class MatchMakingRepository {
 
     public LiveData<List<UserMatches>> getUserProfilesCreatedLastWeek() {
         long weekAgoTimestamp = getWeekAgoTimestamp();
-        return userProfileDao.getUserProfilesCreatedLastWeek(weekAgoTimestamp);
+        return recentMatchesDao.getUserProfilesCreatedLastWeek(weekAgoTimestamp);
+    }
+
+    public LiveData<List<UserMatches>> getBestMatchesPref(int minAge,int maxAge){
+
+        Date minDob = calculateDateForAge(minAge);
+        Date maxDob = calculateDateForAge(maxAge);
+        return recentMatchesDao.getBestMatchesPref(sessionManager.fetchGender(), sessionManager.fetchCityName(), sessionManager.fetchCommunity(),
+               sessionManager.fetchSubCommunity(),sessionManager.fetchMaritalStatus(),minDob,maxDob );
     }
 
     private long getWeekAgoTimestamp() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -7); // 7 days ago
         return calendar.getTimeInMillis();
+    }
+    private Date calculateDateForAge(int age) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, -age);
+        return calendar.getTime();
     }
 }

@@ -42,6 +42,10 @@ public class MatchMakingViewModel extends AndroidViewModel {
         repository.checkMyProfileMatches();
     }
 
+    public LiveData<List<UserMatches>> getBestMatchesPref(int minAge,int maxAge){
+
+        return repository.getBestMatchesPref(minAge,maxAge);
+    }
     public LiveData<List<UserMatches>> getBestRecentMatchedProfiles() {
         return bestRecentMatchedProfiles;
     }
