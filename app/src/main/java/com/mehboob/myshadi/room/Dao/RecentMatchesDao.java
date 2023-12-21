@@ -32,7 +32,7 @@ public interface RecentMatchesDao {
 
     @Query("SELECT * from userMatches where gender != :gender and city_name =:city and community =:community and sub_community =:subCommunity and marital_status =:maritalStatus and dob between :minDob and :maxDob order by time desc")
 
-    LiveData<List<UserMatches>> getBestMatchesPref(String gender, String city, String community, String subCommunity, String maritalStatus, Date minDob, Date maxDob);
+    LiveData<List<UserMatches>> getBestMatchesPref(String gender, String city, String community, String subCommunity, String maritalStatus, long minDob, long maxDob);
 
     /// latest profile in order
 

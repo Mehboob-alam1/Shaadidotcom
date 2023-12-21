@@ -125,10 +125,13 @@ public class MatchMakingRepository {
 
     public LiveData<List<UserMatches>> getBestMatchesPref(int minAge,int maxAge){
 
-        Date minDob = calculateDateForAge(minAge);
-        Date maxDob = calculateDateForAge(maxAge);
+        long currentDate = Calendar.getInstance().getTimeInMillis();
+        long minDobMillis = calculateMillisForAge(minAge);
+        long maxDobMillis = calculateMillisForAge(maxAge);
+
+
         return recentMatchesDao.getBestMatchesPref(sessionManager.fetchGender(), sessionManager.fetchCityName(), sessionManager.fetchCommunity(),
-               sessionManager.fetchSubCommunity(),sessionManager.fetchMaritalStatus(),minDob,maxDob );
+               sessionManager.fetchSubCommunity(),sessionManager.fetchMaritalStatus(),minDobMillis,maxDobMillis );
     }
 
     private long getWeekAgoTimestamp() {
@@ -136,9 +139,9 @@ public class MatchMakingRepository {
         calendar.add(Calendar.DAY_OF_YEAR, -7); // 7 days ago
         return calendar.getTimeInMillis();
     }
-    private Date calculateDateForAge(int age) {
+    private long calculateMillisForAge(int age) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.YEAR, -age);
-        return calendar.getTime();
+        return calendar.getTimeInMillis();
     }
 }

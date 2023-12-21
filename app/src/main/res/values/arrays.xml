@@ -229,4 +229,9 @@
         <item>Awaiting Divorce</item>
         <item>Annulled</item>
     </string-array>
+
+    <string-array name="arrayRangeAge">
+        <item>21</item>
+        <item>55</item>
+    </string-array>
 </resources>

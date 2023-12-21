@@ -14,6 +14,7 @@ import com.google.common.collect.HashBasedTable;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.Dao.RecentMatchesDao;
 import com.mehboob.myshadi.room.Dao.UserDao;
+import com.mehboob.myshadi.room.entities.ArrayListConverter;
 import com.mehboob.myshadi.room.entities.PreferencesConverter;
 import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.room.models.User;
@@ -21,7 +22,7 @@ import com.mehboob.myshadi.room.models.User;
 import java.util.List;
 
 @Database(entities = {User.class, UserMatches.class}, version = 1 ,exportSchema = false)
-@TypeConverters({PreferencesConverter.class})
+@TypeConverters({PreferencesConverter.class, ArrayListConverter.class,})
 
 public abstract class DataDatabase extends RoomDatabase {
 

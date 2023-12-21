@@ -17,6 +17,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.slider.RangeSlider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:valueFrom="21"
+        android:valueTo="55"
+        android:stepSize="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:values="@array/arrayRangeAge"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -57,6 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imgBack" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -265,10 +278,10 @@
                     <EditText
                         android:id="@+id/spinnerCity"
                         android:layout_width="match_parent"
-                        android:hint="Enter city name"
+                        android:layout_height="60dp"
                         android:background="@null"
-                        android:padding="8dp"
-                        android:layout_height="60dp" />
+                        android:hint="Enter city name"
+                        android:padding="8dp" />
 
                 </LinearLayout>
 
@@ -432,15 +445,14 @@
             </LinearLayout>
 
 
-
             <Button
                 android:id="@+id/btnContinue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="24dp"
                 android:background="@drawable/btn_back_clicked"
                 android:enabled="true"
                 android:fontFamily="@font/roboto_medium"
