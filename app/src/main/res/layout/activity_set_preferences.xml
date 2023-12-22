@@ -17,16 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.slider.RangeSlider
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:valueFrom="21"
-        android:valueTo="55"
-        android:stepSize="1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:values="@array/arrayRangeAge"
-        tools:ignore="SpeakableTextPresentCheck" />
+
 
 
     <TextView
@@ -99,66 +90,17 @@
                     android:text="@string/age_should_be_in_between"
                     android:textColor="@color/black" />
 
-                <LinearLayout
+                <com.google.android.material.slider.RangeSlider
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/ageRangeSlider"
                     android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
-                            android:text="MIN" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/edit_text_back">
-
-                            <Spinner
-                                android:id="@+id/spinnerAgeMin"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
-                            android:text="MAX" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/edit_text_back">
-
-                            <Spinner
-                                android:id="@+id/spinnerAgeMax"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
+                    android:valueFrom="21"
+                    android:valueTo="55"
+                    android:stepSize="1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:values="@array/arrayRangeAge"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </LinearLayout>
 
             <View
@@ -167,84 +109,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/grey" />
 
-            <LinearLayout
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="vertical"
-                android:padding="2dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:text="@string/height_should_be_between"
-                    android:textColor="@color/black" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
-                            android:text="MIN" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/edit_text_back">
-
-                            <Spinner
-                                android:id="@+id/spinnerHeightMin"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
-                            android:text="MAX" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/edit_text_back">
-
-                            <Spinner
-                                android:id="@+id/spinnerHeightMax"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

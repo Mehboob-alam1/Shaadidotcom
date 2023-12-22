@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.mehboob.myshadi.R;
@@ -52,9 +53,9 @@ public class SetPreferencesActivity extends AppCompatActivity {
             updateUi();
         });
 
-        setSpinnerAges();
 
-        setSpinnerHeights();
+
+
 
         setReligionsAdapter();
 
@@ -65,12 +66,21 @@ public class SetPreferencesActivity extends AppCompatActivity {
         setMaritalStatus();
 
 
+        binding.ageRangeSlider.addOnChangeListener((slider, value, fromUser) -> {
+            List<Float> vals = slider.getValues();
+
+         float firstThumb=vals.get(0);
+         float secondThumb=vals.get(1);
+
+
+            Utils.showSnackBar(this,"values are " + firstThumb + " " +secondThumb);
+        });
+
+
+
         binding.btnContinue.setOnClickListener(view -> {
 
-            if (binding.spinnerAgeMin.getSelectedItemPosition() == 0 ||
-                    binding.spinnerAgeMax.getSelectedItemPosition() == 0
-                    || binding.spinnerHeightMin.getSelectedItemPosition() == 0 ||
-                    binding.spinnerHeightMax.getSelectedItemPosition() == 0 ||
+            if (
                     binding.spinnerReligion.getSelectedItemPosition() == 0 ||
                     binding.spinnerComunity.getSelectedItemPosition() == 0 ||
                     binding.spinnerSubCommunity.getSelectedItemPosition() == 0 ||
@@ -79,10 +89,10 @@ public class SetPreferencesActivity extends AppCompatActivity {
             } else {
 
 
-                Preferences preferences = new Preferences(binding.spinnerAgeMin.getSelectedItem().toString(),
-                        binding.spinnerAgeMax.getSelectedItem().toString(),
-                        binding.spinnerHeightMin.getSelectedItem().toString(),
-                        binding.spinnerHeightMax.getSelectedItem().toString(),
+                Preferences preferences = new Preferences(String.valueOf(binding.ageRangeSlider.getValues().get(0)),
+                        String.valueOf(binding.ageRangeSlider.getValues().get(1)),
+                  "Any",
+                        "Any",
                         binding.spinnerCity.getText().toString(),
                         binding.spinnerReligion.getSelectedItem().toString(),
                         binding.spinnerComunity.getSelectedItem().toString(),
@@ -167,58 +177,10 @@ public class SetPreferencesActivity extends AppCompatActivity {
         binding.spinnerReligion.setAdapter(religionAdapter);
     }
 
-    private void setSpinnerHeights() {
-
-        ArrayAdapter<CharSequence> heightsAdapter = ArrayAdapter.createFromResource(this,
-                R.array.heights,
-                android.R.layout.simple_spinner_item
-        );
-
-        heightsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.spinnerHeightMin.setAdapter(heightsAdapter);
-        binding.spinnerHeightMax.setAdapter(heightsAdapter);
-
-        binding.spinnerHeightMin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateSpinnerHeightMax(i, binding.spinnerHeightMax);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
 
 
-    private void setSpinnerAges() {
-        ArrayAdapter<CharSequence> ageAdapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.ages,
-                android.R.layout.simple_spinner_item
-        );
-        ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Set the ArrayAdapter to both spinners
-        binding.spinnerAgeMin.setAdapter(ageAdapter);
-        binding.spinnerAgeMax.setAdapter(ageAdapter);
 
 
-        binding.spinnerAgeMin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateSpinnerAgeMax(i, binding.spinnerAgeMax);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
-    }
 
     private void updateSpinnerAgeMax(int minAgePosition, Spinner maxAgeSpinner) {
 
