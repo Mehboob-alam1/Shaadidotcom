@@ -89,8 +89,8 @@ public class SetPreferencesActivity extends AppCompatActivity {
             } else {
 
 
-                Preferences preferences = new Preferences(String.valueOf(binding.ageRangeSlider.getValues().get(0)),
-                        String.valueOf(binding.ageRangeSlider.getValues().get(1)),
+                Preferences preferences = new Preferences(String.valueOf(binding.ageRangeSlider.getValues().get(0).intValue()),
+                        String.valueOf((binding.ageRangeSlider.getValues().get(1).intValue())),
                   "Any",
                         "Any",
                         binding.spinnerCity.getText().toString(),
