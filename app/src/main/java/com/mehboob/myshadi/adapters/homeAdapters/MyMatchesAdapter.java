@@ -62,7 +62,7 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
         holder.btnImagesM.setOnClickListener(view -> {
             Intent i = new Intent(context, ImagesFullActivity.class);
 
-            i.putExtra("private_list",new Gson().toJson(userProfile.getImages()));
+            i.putExtra("private_list", new Gson().toJson(userProfile.getImages()));
             context.startActivity(i);
 
         });
@@ -116,33 +116,32 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
             if (userProfile.isVerified()) {
                 imgVerifiedM.setVisibility(View.VISIBLE);
             }
-                imgVerifiedM.setVisibility(View.VISIBLE);
-                try {
-                    Glide.with(context).load(userProfile.getImageUrl())
-                            .placeholder(R.drawable.profile)
-                            .into(imgProfileImageM);
-                } catch (Exception e) {
-                    Log.d("imageNotFound", "imageNotFound" + e.getLocalizedMessage());
-                }
-                txtProfileNameM.setText(userProfile.getFullName());
-                if (userProfile.getGender().equals("Female")) {
-                    txtYouAndPersonM.setText("You and her");
-                }
-                if (userProfile.getGender().equals("Male")) {
-                    txtYouAndPersonM.setText("You and him");
-                }
+            imgVerifiedM.setVisibility(View.VISIBLE);
+            try {
+                Glide.with(context).load(userProfile.getImageUrl())
+                        .placeholder(R.drawable.profile)
+                        .into(imgProfileImageM);
+            } catch (Exception e) {
+                Log.d("imageNotFound", "imageNotFound" + e.getLocalizedMessage());
+            }
+            txtProfileNameM.setText(userProfile.getFullName());
+            if (userProfile.getGender().equals("Female")) {
+                txtYouAndPersonM.setText("You and her");
+            }
+            if (userProfile.getGender().equals("Male")) {
+                txtYouAndPersonM.setText("You and him");
+            }
 
-                txtProfileAgeHeightM.setText(userProfile.getDob() + " yrs," + userProfile.getHeight());
-                txtProfileProfessionM.setText(userProfile.getWorkAs());
+            txtProfileAgeHeightM.setText(userProfile.getDob() + " yrs," + userProfile.getHeight());
+            txtProfileProfessionM.setText(userProfile.getWorkAs());
 
-                txtCommunitySubCommunityM.setText(userProfile.getCommunity() + "," + userProfile.getSubCommunity());
-                txtCityCountryM.setText(userProfile.getCityName() + "," + userProfile.getLivingIn());
+            txtCommunitySubCommunityM.setText(userProfile.getCommunity() + "," + userProfile.getSubCommunity());
+            txtCityCountryM.setText(userProfile.getCityName() + "," + userProfile.getLivingIn());
 
 
-                btnImagesM.setOnClickListener(view -> {
-                    Toast.makeText(context, "" + userProfile.getImages().size(), Toast.LENGTH_SHORT).show();
-                });
-
+            btnImagesM.setOnClickListener(view -> {
+                Toast.makeText(context, "" + userProfile.getImages().size(), Toast.LENGTH_SHORT).show();
+            });
 
 
         }

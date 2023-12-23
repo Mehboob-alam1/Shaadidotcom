@@ -18,6 +18,9 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".views.activities.ProfileDetailedActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.ImagesFullActivity"
             android:exported="false" />
         <activity
@@ -46,7 +49,7 @@
             android:exported="false" />
         <activity
             android:name=".views.activities.SetPreferencesActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".views.activities.IncomeDetailsActivity"
             android:exported="false" />
