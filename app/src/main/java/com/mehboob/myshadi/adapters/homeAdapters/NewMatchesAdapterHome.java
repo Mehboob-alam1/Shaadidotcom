@@ -99,8 +99,11 @@ public class NewMatchesAdapterHome extends RecyclerView.Adapter<NewMatchesAdapte
         @SuppressLint("SetTextI18n")
         void bind(UserMatches userProfile) {
 //            countryNameTextView.setText(country.getName());
+
+
             if (userProfile.isVerified()) {
                 imgVerifiedM.setVisibility(View.VISIBLE);
+            }
                 try {
                     Glide.with(context).load(userProfile.getImageUrl())
                             .placeholder(R.drawable.profile)
@@ -131,6 +134,6 @@ public class NewMatchesAdapterHome extends RecyclerView.Adapter<NewMatchesAdapte
                     Toast.makeText(context, "Upgrade to premium to get connected", Toast.LENGTH_SHORT).show();
                 });
             }
-        }
+
     }
 }

@@ -2,6 +2,7 @@ package com.mehboob.myshadi.adapters.homeAdapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.adapters.CountriesAdapter;
 import com.mehboob.myshadi.databinding.MymatchesLayoutBinding;
 import com.mehboob.myshadi.json.Countries;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.entities.UserMatches;
+import com.mehboob.myshadi.views.activities.ImagesFullActivity;
 
 import java.util.List;
 
@@ -55,6 +58,14 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
 
         UserMatches userProfile = myMatches.get(position);
         holder.bind(userProfile);
+
+        holder.btnImagesM.setOnClickListener(view -> {
+            Intent i = new Intent(context, ImagesFullActivity.class);
+
+            i.putExtra("private_list",new Gson().toJson(userProfile.getImages()));
+            context.startActivity(i);
+
+        });
     }
 
     @Override
@@ -97,13 +108,14 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
                 }
             });
 
-
         }
 
         @SuppressLint("SetTextI18n")
         void bind(UserMatches userProfile) {
 //            countryNameTextView.setText(country.getName());
             if (userProfile.isVerified()) {
+                imgVerifiedM.setVisibility(View.VISIBLE);
+            }
                 imgVerifiedM.setVisibility(View.VISIBLE);
                 try {
                     Glide.with(context).load(userProfile.getImageUrl())
@@ -131,10 +143,8 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
                     Toast.makeText(context, "" + userProfile.getImages().size(), Toast.LENGTH_SHORT).show();
                 });
 
-                btnConnectNowM.setOnClickListener(view -> {
-                    Toast.makeText(context, "Upgrade to premium to get connected", Toast.LENGTH_SHORT).show();
-                });
-            }
+
+
         }
     }
 }

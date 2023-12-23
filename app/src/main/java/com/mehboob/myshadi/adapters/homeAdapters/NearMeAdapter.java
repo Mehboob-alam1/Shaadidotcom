@@ -96,6 +96,8 @@ public class NearMeAdapter extends RecyclerView.Adapter<NearMeAdapter.Holder> {
 //            countryNameTextView.setText(country.getName());
             if (userProfile.isVerified()) {
                 imgVerifiedM.setVisibility(View.VISIBLE);
+            }
+                imgVerifiedM.setVisibility(View.VISIBLE);
                 try {
                     Glide.with(context).load(userProfile.getImageUrl())
                             .placeholder(R.drawable.profile)
@@ -126,6 +128,6 @@ public class NearMeAdapter extends RecyclerView.Adapter<NearMeAdapter.Holder> {
                     Toast.makeText(context, "Upgrade to premium to get connected", Toast.LENGTH_SHORT).show();
                 });
             }
-        }
+
     }
 }

@@ -18,7 +18,7 @@
             android:layout_height="500dp"
             android:alpha="0.8"
             android:scaleType="centerCrop"
-            android:src="@drawable/fiverr"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
