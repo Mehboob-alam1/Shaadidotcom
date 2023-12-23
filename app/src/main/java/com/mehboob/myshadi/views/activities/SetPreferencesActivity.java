@@ -39,7 +39,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
         binding = ActivitySetPreferencesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        sessionManager=new SessionManager(this);
+        sessionManager = new SessionManager(this);
 
         matchPref = new MatchPref(this);
 
@@ -54,9 +54,6 @@ public class SetPreferencesActivity extends AppCompatActivity {
         });
 
 
-
-
-
         setReligionsAdapter();
 
         setCommunityAdapter();
@@ -69,29 +66,28 @@ public class SetPreferencesActivity extends AppCompatActivity {
         binding.ageRangeSlider.addOnChangeListener((slider, value, fromUser) -> {
             List<Float> vals = slider.getValues();
 
-         float firstThumb=vals.get(0);
-         float secondThumb=vals.get(1);
+            float firstThumb = vals.get(0);
+            float secondThumb = vals.get(1);
 
 
-            Utils.showSnackBar(this,"values are " + firstThumb + " " +secondThumb);
+            Utils.showSnackBar(this, "values are " + firstThumb + " " + secondThumb);
         });
-
 
 
         binding.btnContinue.setOnClickListener(view -> {
 
             if (
                     binding.spinnerReligion.getSelectedItemPosition() == 0 ||
-                    binding.spinnerComunity.getSelectedItemPosition() == 0 ||
-                    binding.spinnerSubCommunity.getSelectedItemPosition() == 0 ||
-                    binding.spinnerMaritalStatus.getSelectedItemPosition() == 0) {
+                            binding.spinnerComunity.getSelectedItemPosition() == 0 ||
+                            binding.spinnerSubCommunity.getSelectedItemPosition() == 0 ||
+                            binding.spinnerMaritalStatus.getSelectedItemPosition() == 0) {
                 Utils.showSnackBar(this, "Select valid option");
             } else {
 
 
                 Preferences preferences = new Preferences(String.valueOf(binding.ageRangeSlider.getValues().get(0).intValue()),
                         String.valueOf((binding.ageRangeSlider.getValues().get(1).intValue())),
-                  "Any",
+                        "Any",
                         "Any",
                         binding.spinnerCity.getText().toString(),
                         binding.spinnerReligion.getSelectedItem().toString(),
@@ -99,7 +95,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
                         binding.spinnerSubCommunity.getSelectedItem().toString(),
                         binding.spinnerMaritalStatus.getSelectedItem().toString());
 
-                fupViewModel.updatePreferences(preferences,sessionManager.fetchUserId() );
+                fupViewModel.updatePreferences(preferences, sessionManager.fetchUserId());
                 matchPref.savePref(preferences);
                 fupViewModel.getIsPreferencesAdded().observe(this, aBoolean -> {
                     if (aBoolean) {
@@ -178,39 +174,6 @@ public class SetPreferencesActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-    private void updateSpinnerAgeMax(int minAgePosition, Spinner maxAgeSpinner) {
-
-        List<CharSequence> maxAgeList = new ArrayList<>();
-        ArrayAdapter<CharSequence> ageAdapter = (ArrayAdapter<CharSequence>) maxAgeSpinner.getAdapter();
-
-        for (int i = minAgePosition + 1; i < ageAdapter.getCount(); i++) {
-            maxAgeList.add(ageAdapter.getItem(i));
-        }
-
-        // Clear and update the max age spinner adapter
-
-
-        ageAdapter.notifyDataSetChanged();
-    }
-
-    private void updateSpinnerHeightMax(int minHeightPosition, Spinner spinnerHeightMax) {
-        List<CharSequence> maxHeightList = new ArrayList<>();
-        ArrayAdapter<CharSequence> heightAdapter = (ArrayAdapter<CharSequence>) spinnerHeightMax.getAdapter();
-
-        for (int i = minHeightPosition + 1; i < heightAdapter.getCount(); i++) {
-            maxHeightList.add(heightAdapter.getItem(i));
-        }
-
-        // Clear and update the max height spinner adapter
-
-
-        heightAdapter.notifyDataSetChanged();
-
-    }
 
     @Override
     protected void onResume() {

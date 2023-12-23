@@ -130,8 +130,13 @@ public class MatchMakingRepository {
         long maxDobMillis = calculateMillisForAge(maxAge);
 
 
-        return recentMatchesDao.getBestMatchesPref(sessionManager.fetchGender(), sessionManager.fetchCityName(), sessionManager.fetchCommunity(),
+        return recentMatchesDao.getBestMatchesPref( sessionManager.fetchCityName(), sessionManager.fetchCommunity(),
                sessionManager.fetchSubCommunity(),sessionManager.fetchMaritalStatus(),minDobMillis,maxDobMillis );
+    }
+
+    public LiveData<List<UserMatches>> getNearestProfiles(double userLatitude, double userLongitude, double radius, int limit) {
+        double radiusSquared = Math.pow(radius, 2);
+        return recentMatchesDao.getNearestProfiles(userLatitude, userLongitude, radiusSquared, limit);
     }
 
     private long getWeekAgoTimestamp() {

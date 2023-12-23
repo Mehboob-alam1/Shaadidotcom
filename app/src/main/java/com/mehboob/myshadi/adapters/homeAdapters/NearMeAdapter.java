@@ -1,5 +1,4 @@
 package com.mehboob.myshadi.adapters.homeAdapters;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
@@ -10,27 +9,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.mehboob.myshadi.R;
-import com.mehboob.myshadi.adapters.CountriesAdapter;
-import com.mehboob.myshadi.databinding.MymatchesLayoutBinding;
-import com.mehboob.myshadi.json.Countries;
-import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.entities.UserMatches;
-
 import java.util.List;
-
-public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Holder> {
+public class NearMeAdapter extends RecyclerView.Adapter<NearMeAdapter.Holder> {
     private List<UserMatches> myMatches;
     private Context context;
     public OnItemClickListener onItemClickListener;
 
 
-    public MyMatchesAdapter(List<UserMatches> newMatches, Context context) {
+    public NearMeAdapter(List<UserMatches> newMatches, Context context) {
         this.myMatches = newMatches;
         this.context = context;
     }
@@ -39,19 +30,19 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
         void onItemClick(UserMatches userProfile, int position);
     }
 
-    public void setOnItemClickListener(MyMatchesAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
 
     @NonNull
     @Override
-    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NearMeAdapter.Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.mymatches_layout, parent, false);
-        return new Holder(view);
+        return new NearMeAdapter.Holder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, int position) {
+    public void onBindViewHolder(@NonNull NearMeAdapter.Holder holder, int position) {
 
         UserMatches userProfile = myMatches.get(position);
         holder.bind(userProfile);

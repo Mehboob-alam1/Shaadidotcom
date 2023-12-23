@@ -29,12 +29,20 @@ public interface RecentMatchesDao {
     @Query("SELECT * FROM userMatches WHERE time > :weekAgoTimestamp ORDER BY time DESC")
     LiveData<List<UserMatches>> getUserProfilesCreatedLastWeek(long weekAgoTimestamp);
 
+    @Query("SELECT * from userMatches where city_name =:city and community =:community and sub_community =:subCommunity and marital_status =:maritalStatus and dob between :minDob and :maxDob order by time desc")
 
-    @Query("SELECT * from userMatches where gender != :gender and city_name =:city and community =:community and sub_community =:subCommunity and marital_status =:maritalStatus and dob between :minDob and :maxDob order by time desc")
-
-    LiveData<List<UserMatches>> getBestMatchesPref(String gender, String city, String community, String subCommunity, String maritalStatus, long minDob, long maxDob);
+    LiveData<List<UserMatches>> getBestMatchesPref( String city, String community, String subCommunity, String maritalStatus, long minDob, long maxDob);
 
     /// latest profile in order
+
+
+    @Query("SELECT * FROM userMatches " +
+            "WHERE (:userLatitude - latitude) * (:userLatitude - latitude) + " +
+            "(:userLongitude - longitude) * (:userLongitude - longitude) <= :radiusSquared " +
+            "ORDER BY (:userLatitude - latitude) * (:userLatitude - latitude) + " +
+            "(:userLongitude - longitude) * (:userLongitude - longitude) ASC " +
+            "LIMIT :limit")
+    LiveData<List<UserMatches>> getNearestProfiles(double userLatitude, double userLongitude, double radiusSquared, int limit);
 
   
 

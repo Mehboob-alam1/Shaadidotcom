@@ -46,6 +46,10 @@ public class MatchMakingViewModel extends AndroidViewModel {
 
         return repository.getBestMatchesPref(minAge,maxAge);
     }
+
+    public LiveData<List<UserMatches>> getNearestProfiles(double userLatitude, double userLongitude, double radius, int limit) {
+        return repository.getNearestProfiles(userLatitude, userLongitude, radius, limit);
+    }
     public LiveData<List<UserMatches>> getBestRecentMatchedProfiles() {
         return bestRecentMatchedProfiles;
     }

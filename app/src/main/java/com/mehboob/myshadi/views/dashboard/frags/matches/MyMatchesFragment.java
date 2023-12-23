@@ -48,7 +48,7 @@ public class MyMatchesFragment extends Fragment {
         fupViewModel = new ViewModelProvider(requireActivity()).get(FUPViewModel.class);
 
         matchMakingViewModel = new ViewModelProvider(requireActivity()).get(MatchMakingViewModel.class);
-        matchPref=new MatchPref(requireActivity());
+        matchPref = new MatchPref(requireActivity());
     }
 
     @Override
@@ -64,7 +64,6 @@ public class MyMatchesFragment extends Fragment {
         });
 
         setRecyclerView();
-
 
 
         myMatchesAdapter.setOnItemClickListener((userProfile, position) -> {
@@ -84,10 +83,14 @@ public class MyMatchesFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        matchMakingViewModel.getBestMatchesPref(Integer.parseInt(matchPref.fetchPref().getMinAge()),Integer.parseInt(matchPref.fetchPref().getMaxAge())).observe(this, userMatches -> {
-
+        matchMakingViewModel.getBestMatchesPref(Integer.parseInt(matchPref.fetchPref().getMinAge()), Integer.parseInt(matchPref.fetchPref().getMaxAge())).observe(this, userMatches -> {
+            if (userMatches != null) {
+                binding.lineNoData.getRoot().setVisibility(View.GONE);
+                binding.myMatchesRecyclerView.setVisibility(View.VISIBLE);
+            }
             myMatchesAdapter.setMyMatches(userMatches);
 
+            Toast.makeText(requireActivity(), "" + userMatches.toString(), Toast.LENGTH_SHORT).show();
 
         });
     }

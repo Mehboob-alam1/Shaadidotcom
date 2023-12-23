@@ -3,64 +3,85 @@ package com.mehboob.myshadi.views.dashboard.frags.matches;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mehboob.myshadi.R;
+import com.mehboob.myshadi.adapters.homeAdapters.MyMatchesAdapter;
+import com.mehboob.myshadi.adapters.homeAdapters.NearMeAdapter;
+import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
+import com.mehboob.myshadi.databinding.FragmentNearMeBinding;
+import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.utils.MatchPref;
+import com.mehboob.myshadi.viewmodel.FUPViewModel;
+import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link NearMeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+
 public class NearMeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentNearMeBinding binding;
+    private FUPViewModel fupViewModel;
 
-    public NearMeFragment() {
-        // Required empty public constructor
-    }
+    private MatchMakingViewModel matchMakingViewModel;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NearMeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static NearMeFragment newInstance(String param1, String param2) {
-        NearMeFragment fragment = new NearMeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private NearMeAdapter nearMeAdapter;
+
+    MatchPref matchPref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        fupViewModel = new ViewModelProvider(requireActivity()).get(FUPViewModel.class);
+
+        matchMakingViewModel = new ViewModelProvider(requireActivity()).get(MatchMakingViewModel.class);
+        matchPref=new MatchPref(requireActivity());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_near_me, container, false);
+        binding = FragmentNearMeBinding.inflate(inflater, container, false);
+        setRecyclerView();
+
+
+
+        nearMeAdapter.setOnItemClickListener((userProfile, position) -> {
+            //
+        });
+        return binding.getRoot();
+
+
+
+    }
+
+    private void setRecyclerView() {
+
+        nearMeAdapter = new NearMeAdapter(new ArrayList<>(), requireActivity());
+        binding.nearMeRecyclerView.setAdapter(nearMeAdapter);
+        binding.nearMeRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        matchMakingViewModel.getBestMatchesPref(Integer.parseInt(matchPref.fetchPref().getMinAge()),Integer.parseInt(matchPref.fetchPref().getMaxAge())).observe(this, userMatches -> {
+            if (userMatches != null) {
+                binding.lineNoData.getRoot().setVisibility(View.GONE);
+                binding.nearMeRecyclerView.setVisibility(View.VISIBLE);
+            }
+            nearMeAdapter.setMyMatches(userMatches);
+            Toast.makeText(requireContext(), ""+userMatches.toString(), Toast.LENGTH_SHORT).show();
+
+        });
     }
 }

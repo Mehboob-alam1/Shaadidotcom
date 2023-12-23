@@ -73,6 +73,7 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
     }
 
     public void setNewMatches(List<UserMatches> newMatches) {
+        this.newMatches.clear();
 
         this.newMatches.addAll(newMatches);
         notifyDataSetChanged();
