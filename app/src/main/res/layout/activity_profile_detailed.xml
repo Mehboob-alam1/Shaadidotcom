@@ -14,6 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -236,6 +237,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             app:cardCornerRadius="4dp"
+            android:visibility="gone"
             app:cardElevation="5dp">
 
 
@@ -253,6 +255,7 @@
                     android:fontFamily="@font/roboto_bold"
                     android:padding="3dp"
                     android:text="About Mehboob Alam"
+
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -262,11 +265,343 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:lineSpacingExtra="5dp"
+                    android:fontFamily="@font/roboto"
                     android:lineSpacingMultiplier="1"
                     android:padding="3dp"
                     android:text="Heloo,here is a little bit about my realative she has completed her high school.Her optimistic personality is adored by one and all. Please get in touch in case you like my relative's profile."
                     android:textColor="@color/black" />
 
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:padding="3dp"
+                    android:text="Basic Details"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/txtCreatedBySelf"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:background="@drawable/bg_green_back"
+                        android:text="Created for self"
+                        android:padding="8dp"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:id="@+id/txtId"
+                        android:fontFamily="@font/roboto"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_green_back"
+                        android:text="ID: 345645652432"
+                        android:padding="8dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/txtAge"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_green_back"
+                        android:text="21 yrs old "
+                        android:fontFamily="@font/roboto"
+                        android:padding="8dp"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:id="@+id/txtHeight"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_green_back"
+                        android:fontFamily="@font/roboto"
+                        android:text="Height -5'9"
+                        android:padding="8dp"/>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:src="@drawable/baseline_calendar_month_24"
+                        android:background="@drawable/baseline_circle_24"
+                        android:backgroundTint="@color/green_300"/>
+                 <LinearLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:padding="8dp"
+                     android:orientation="vertical">
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Birth Date"
+                         android:fontFamily="@font/roboto"/>
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:textColor="@color/black"
+                         android:text="Born on **/**/****"
+                         android:id="@+id/txtBirthDate"
+                         android:gravity="center_vertical"
+                         android:drawableEnd="@drawable/baseline_lock_24"/>
+                 </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:src="@drawable/baseline_person_2_24"
+                        android:background="@drawable/baseline_circle_24"
+                        android:backgroundTint="@color/green_300"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Marital Status"
+                            android:fontFamily="@font/roboto"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+android:id="@+id/txtMaritalStatus"
+                            android:text="Never Married"
+                            android:gravity="center_vertical"
+                          />
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:src="@drawable/baseline_location_on_24"
+                        android:background="@drawable/baseline_circle_24"
+                        android:backgroundTint="@color/green_300"
+                        app:tint="@color/white" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lives In"
+                            android:fontFamily="@font/roboto"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:id="@+id/txtLivesCityStateCountry"
+                            android:text="Gilgit, Gilgit Baltistan. Pakistan"
+                            android:gravity="center_vertical"
+                           />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:src="@drawable/baseline_library_books_24"
+                        android:background="@drawable/baseline_circle_24"
+                        android:backgroundTint="@color/green_300"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Religion &amp; Mother Tongue"
+                            android:fontFamily="@font/roboto"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="Muslim,Urdu"
+                            android:id="@+id/txtReligionCommunity"
+                            android:gravity="center_vertical"
+                           />
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_matches"
+                        android:background="@drawable/baseline_circle_24"
+                        android:backgroundTint="@color/green_300"
+                        app:tint="@color/white" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sub Community"
+                            android:fontFamily="@font/roboto"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="Sunni"
+                            android:id="@+id/txtSubCommunity"
+                            android:gravity="center_vertical"
+                           />
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:src="@drawable/baseline_fastfood_24"
+                        android:background="@drawable/baseline_circle_24"
+                        android:backgroundTint="@color/green_300"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Diet"
+                            android:fontFamily="@font/roboto"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="Non Veg"
+                            android:id="@+id/txtDiet"
+                            android:gravity="center_vertical"
+                           />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginTop="24dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:text="To unlock Birth date"
+                    android:fontFamily="@font/roboto"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/green_A700"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="8dp"
+                    android:text="Go Premium Now"
+android:id="@+id/btnGoPremiumBasicDetails"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_green_back"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
