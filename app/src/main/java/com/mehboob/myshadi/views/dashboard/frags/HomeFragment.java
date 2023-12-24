@@ -86,6 +86,8 @@ public class HomeFragment extends Fragment {
         newMatchesAdapter = new NewMatchesAdapter(new ArrayList<>(), requireActivity());
         binding.recyclerNewMatches.setAdapter(newMatchesAdapter);
         binding.recyclerNewMatches.setLayoutManager(new LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false));
+
+
     }
 
 

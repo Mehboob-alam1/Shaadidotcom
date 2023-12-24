@@ -276,6 +276,7 @@ public class FirebaseUserProfileRepository {
         MutableLiveData<Boolean> isProfileCompleteLiveData = new MutableLiveData<>();
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
+
                 .child(sessionManager.fetchGender())
                 .child(userId)
                 .child("profileComplete");

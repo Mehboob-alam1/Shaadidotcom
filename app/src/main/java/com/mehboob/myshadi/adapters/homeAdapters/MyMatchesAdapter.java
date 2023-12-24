@@ -140,7 +140,7 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
 
 
             btnImagesM.setOnClickListener(view -> {
-                Toast.makeText(context, "" + userProfile.getImages().size(), Toast.LENGTH_SHORT).show();
+
             });
 
 
