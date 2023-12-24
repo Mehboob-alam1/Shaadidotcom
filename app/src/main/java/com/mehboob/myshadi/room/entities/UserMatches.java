@@ -126,7 +126,16 @@ public class UserMatches {
     @ColumnInfo(name="about_me")
 
     private String aboutMe;
+@ColumnInfo(name = "date_of_birth")
+    private String date_of_birth;
 
+    public String getDate_of_birth() {
+        return date_of_birth;
+    }
+
+    public void setDate_of_birth(String date_of_birth) {
+        this.date_of_birth = date_of_birth;
+    }
 
     public String getProfileFor() {
         return profileFor;

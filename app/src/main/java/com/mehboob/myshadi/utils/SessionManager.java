@@ -43,6 +43,7 @@ public class SessionManager {
 
 
     private String USER_ID="user_id";
+    private String DATE_BIRTH="date_birth";
 
 
     public SessionManager(Context context) {
@@ -73,10 +74,21 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(SUB_COMMUNITY, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(ABOUT_ME, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(USER_ID, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(DATE_BIRTH, Context.MODE_PRIVATE);
 
 
     }
 
+    public void saveDateBirth(String date_ofBirth){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(DATE_BIRTH,date_ofBirth);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String fetchDateBirth(){
+        return sharedPreferences.getString(DATE_BIRTH,"null");
+    }
     public void saveUserID(String userId){
         SharedPreferences.Editor editor= sharedPreferences.edit();
         editor.putString(USER_ID,userId);

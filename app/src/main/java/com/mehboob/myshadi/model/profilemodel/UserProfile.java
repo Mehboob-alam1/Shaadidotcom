@@ -59,7 +59,15 @@ public class UserProfile {
 
     private String aboutMe;
 
+    private String date_of_birth;
 
+    public String getDate_of_birth() {
+        return date_of_birth;
+    }
+
+    public void setDate_of_birth(String date_of_birth) {
+        this.date_of_birth = date_of_birth;
+    }
 
     public String getLatitude() {
         return latitude;
@@ -142,7 +150,8 @@ public class UserProfile {
                        Preferences preferences,
                        String latitude,
                        String longitude,
-                       String aboutMe) {
+                       String aboutMe,
+                       String date_of_birth) {
         this.profileFor = profileFor;
         this.gender = gender;
         this.fullName = fullName;
@@ -180,6 +189,7 @@ public class UserProfile {
         this.latitude=latitude;
         this.longitude=longitude;
         this.aboutMe=aboutMe;
+        this.date_of_birth=date_of_birth;
     }
 
     public UserProfile(String gender,String livingIn,String religion,String community,String subCommunity,String maritalStatus,String userId){

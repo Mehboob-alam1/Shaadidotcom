@@ -97,6 +97,7 @@ public class NameDateBirthActivity extends AppCompatActivity {
        String date= String.valueOf(Utils.calculateAge(dob));
         sessionManager.saveFullName(fullName);
         sessionManager.saveDOb(date);
+        sessionManager.saveDateBirth(dob);
         startActivity(new Intent(NameDateBirthActivity.this, ReligionCastActivity.class));
         showToast("Date is valid and age is at least 21.");
     }
