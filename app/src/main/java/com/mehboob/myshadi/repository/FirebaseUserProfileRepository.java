@@ -48,7 +48,7 @@ public class FirebaseUserProfileRepository {
         this.application = application;
         isProfileCompleted = new MutableLiveData<>();
         isPreferencesAdded = new MutableLiveData<>();
-        sessionManager= new SessionManager(application);
+        sessionManager = new SessionManager(application);
         isBioUpdated = new MutableLiveData<>();
     }
 
@@ -276,7 +276,7 @@ public class FirebaseUserProfileRepository {
         MutableLiveData<Boolean> isProfileCompleteLiveData = new MutableLiveData<>();
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
-
+//TODO have to add search if the profile already exists
                 .child(sessionManager.fetchGender())
                 .child(userId)
                 .child("profileComplete");
