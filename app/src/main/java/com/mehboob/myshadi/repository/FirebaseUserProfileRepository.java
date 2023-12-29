@@ -1,5 +1,6 @@
 package com.mehboob.myshadi.repository;
 
+import android.app.Activity;
 import android.app.Application;
 import android.net.Uri;
 
@@ -7,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -16,12 +19,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.mehboob.myshadi.model.ProfileCheck;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.models.User;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.TinyDB;
+import com.mehboob.myshadi.viewmodel.AuthViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +46,7 @@ public class FirebaseUserProfileRepository {
     private MutableLiveData<Boolean> isBioUpdated;
     private SessionManager sessionManager;
 
+
     public FirebaseUserProfileRepository(Application application) {
         this.storageReference = FirebaseStorage.getInstance().getReference("userProfiles").child("images");
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -51,6 +57,7 @@ public class FirebaseUserProfileRepository {
         sessionManager = new SessionManager(application);
         isBioUpdated = new MutableLiveData<>();
     }
+
 
     public MutableLiveData<Boolean> getIsProfileCompleted() {
         return isProfileCompleted;
@@ -119,6 +126,8 @@ public class FirebaseUserProfileRepository {
 
                         isProfileCompleted.setValue(true);
 
+//                        uploadChecks(userProfile);
+
 
                     } else {
                         userProfileLiveData.setValue(null);
@@ -131,6 +140,14 @@ public class FirebaseUserProfileRepository {
                 });
 
 
+    }
+
+    public void uploadChecks(ProfileCheck profileCheck) {
+
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("ProfileChecks");
+
+        reference.child(profileCheck.getUserId())
+                .setValue(profileCheck);
     }
 
 
@@ -275,11 +292,10 @@ public class FirebaseUserProfileRepository {
     public MutableLiveData<Boolean> isProfileComplete(String userId) {
         MutableLiveData<Boolean> isProfileCompleteLiveData = new MutableLiveData<>();
 
-        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
-//TODO have to add search if the profile already exists
-                .child(sessionManager.fetchGender())
+        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("ProfileChecks")
+
                 .child(userId)
-                .child("profileComplete");
+                .child("profileCompleted");
 
         userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

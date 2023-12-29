@@ -27,6 +27,7 @@ import android.widget.ImageView;
 
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityPickPhotosBinding;
+import com.mehboob.myshadi.model.ProfileCheck;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.models.User;
@@ -109,6 +110,7 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
 
 
     private void uploadData() {
+        String time= String.valueOf(System.currentTimeMillis());
         UserProfile profile = new UserProfile(sessionManager.fetchProfileFor(),
                 sessionManager.fetchGender(),
                 sessionManager.fetchFullName(),
@@ -138,12 +140,15 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
                 false
                 , "Free",
                 false,
-                String.valueOf(System.currentTimeMillis()),
+               time,
                 new Preferences(),
                 latitude, longitude,
                 sessionManager.fetchAboutMe(),
                 sessionManager.fetchDateBirth());
         fupViewModel.uploadUserProfile(selectedImages, profile);
+
+
+        fupViewModel.uploadChecks(new ProfileCheck(true,false,time,userData.getUserId()));
 
         fupViewModel.getCheckIfUpload().observe(this, aBoolean -> {
 

@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.mehboob.myshadi.model.ProfileCheck;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
@@ -81,6 +82,10 @@ checkIfUpload=repository.getIsProfileCompleted();
     public void updateAboutMe(String aboutMe,String userId){
         repository.updateAboutMe(aboutMe,userId);
     }
+
+    public void uploadChecks(ProfileCheck profileCheck){
+        repository.uploadChecks(profileCheck);
+    }
     public void uploadUserProfile(List<Uri> images, UserProfile userProfile) {
 
         repository.uploadImagesToFirebase(images, userProfile, new FirebaseUserProfileRepository.StorageUploadCallback() {
@@ -95,6 +100,7 @@ checkIfUpload=repository.getIsProfileCompleted();
             }
         });
     }
+
 
     public LiveData<List<Uri>> getSelectedImages() {
         return selectedImages;

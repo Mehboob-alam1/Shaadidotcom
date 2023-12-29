@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
 
     private void getProfileUpdates(String userId) {
 
-
+        Toast.makeText(requireActivity(), ""+userId, Toast.LENGTH_SHORT).show();
         fupViewModel.getProfile(userId);
     }
 
@@ -104,18 +104,18 @@ public class HomeFragment extends Fragment {
 
             userProfileData = userProfile;
 
-//            Toast.makeText(requireContext(), userProfile.getUserId(), Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(requireContext(), userProfileData.getUserId(), Toast.LENGTH_SHORT).show();
 
-            Glide.with(requireContext()).load(userProfile.getImageUrl())
-                    .placeholder(R.drawable.profile_1)
-                    .into(binding.profileImage);
-            binding.txtName.setText(userProfile.getFullName());
-            binding.txtRegNo.setText(Utils.extractFirst8Characters(userProfile.getUserId()));
-            if (userProfile.getIsVerified()) {
-                binding.imgVerified.setImageResource(R.drawable.baseline_verified_user_24);
-            }
-
-            binding.txtAccountType.setText(userProfile.getAccountType());
+//            Glide.with(requireActivity()).load(userProfile.getImageUrl())
+//                    .placeholder(R.drawable.profile_1)
+//                    .into(binding.profileImage);
+//            binding.txtName.setText(userProfile.getFullName());
+//            binding.txtRegNo.setText(Utils.extractFirst8Characters(userProfile.getUserId()));
+//            if (userProfile.getIsVerified()) {
+//                binding.imgVerified.setImageResource(R.drawable.baseline_verified_user_24);
+//            }
+//
+//            binding.txtAccountType.setText(userProfile.getAccountType());
 
             binding.btnEditProfile.setOnClickListener(view -> {
                 startActivity(new Intent(requireActivity(), EditProfileActivity.class));
