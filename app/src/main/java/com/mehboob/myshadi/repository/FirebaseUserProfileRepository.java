@@ -2,7 +2,9 @@ package com.mehboob.myshadi.repository;
 
 import android.app.Activity;
 import android.app.Application;
+import android.health.connect.datatypes.BoneMassRecord;
 import android.net.Uri;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -144,7 +146,7 @@ public class FirebaseUserProfileRepository {
 
     public void uploadChecks(ProfileCheck profileCheck) {
 
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("ProfileChecks");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("ProfileChecks");
 
         reference.child(profileCheck.getUserId())
                 .setValue(profileCheck);
@@ -187,6 +189,65 @@ public class FirebaseUserProfileRepository {
     // Getter method for the MutableLiveData
     public MutableLiveData<UserProfile> getUserProfileLiveData() {
         return userProfileLiveData;
+    }
+
+
+    public void updateSharedPreferences(String userID) {
+        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
+        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child(userID).exists()) {
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        // Retrieve user profile information
+                        String userId = userSnapshot.getKey();
+                        String name = userSnapshot.child("name").getValue(String.class);
+                        String gender = userSnapshot.child("gender").getValue(String.class);
+                        Boolean profileCompleted = userSnapshot.child("profileCompleted").getValue(Boolean.class);
+                        String profileCreatedTime = userSnapshot.child("profileCreatedTime").getValue(String.class);
+                        sessionManager.saveGender(gender);
+                        sessionManager.saveUserID(userID);
+
+
+                        Toast.makeText(application, "" + gender, Toast.LENGTH_SHORT).show();
+                        // Do something with the user profile data
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    public Preferences updateMatchPreferences(String userId) {
+        Preferences preferences = new Preferences();
+        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
+
+        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child(userId).exists()) {
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        // Retrieve user profile information
+
+                        String city = userSnapshot.child("city").getValue(String.class);
+
+                        // Do something with the user profile data
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return  preferences;
     }
 
     public void updatePreferences(Preferences preferences, String userId) {

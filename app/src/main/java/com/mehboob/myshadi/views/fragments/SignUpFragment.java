@@ -172,6 +172,11 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
                 // Use the 'credential' as needed
             } catch (ApiException e) {
                 // Handle sign-in failure
+
+                Log.d("SignInError",e.getLocalizedMessage());
+
+                Toast.makeText(requireActivity(), "Error "+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
             }
 
         }
@@ -208,8 +213,8 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
                 Toast.makeText(requireActivity(), "User is already authenticated", Toast.LENGTH_SHORT).show();
 
                 Toast.makeText(requireActivity(), "" + user.getEmail(), Toast.LENGTH_SHORT).show();
-                checkProfile(user.getUserId());
 
+                checkProfile(user.getUserId());
 
             } else {
                 // User not added or not authenticated, show the signup page
@@ -247,9 +252,8 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
     @Override
     public void onResume() {
         super.onResume();
-        dialog.show();
 
-
+dialog.show();
     }
 
     @Override
