@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.health.connect.datatypes.BoneMassRecord;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,6 +27,10 @@ import com.mehboob.myshadi.model.ProfileCheck;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.Dao.RecentMatchesDao;
+import com.mehboob.myshadi.room.Dao.UserProfileDataDao;
+import com.mehboob.myshadi.room.database.DataDatabase;
+import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.room.models.User;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.utils.SessionManager;
@@ -38,9 +43,9 @@ import java.util.List;
 public class FirebaseUserProfileRepository {
 
 
-    private MutableLiveData<UserProfile> userProfileLiveData;
+//    private MutableLiveData<UserProfile> userProfileLiveData;
 
-
+private LiveData<UserProfileData> userProfileData;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     int uploadedCount = 0;
@@ -50,16 +55,24 @@ public class FirebaseUserProfileRepository {
     private MutableLiveData<Boolean> isBioUpdated;
     private SessionManager sessionManager;
 
+    private DataDatabase dataDatabase;
+
+    private UserProfileDataDao userProfileDataDao;
+
 
     public FirebaseUserProfileRepository(Application application) {
         this.storageReference = FirebaseStorage.getInstance().getReference("userProfiles").child("images");
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        userProfileLiveData = new MutableLiveData<>();
+//        userProfileLiveData = new MutableLiveData<>();
         this.application = application;
         isProfileCompleted = new MutableLiveData<>();
+        dataDatabase = DataDatabase.getInstance(application);
         isPreferencesAdded = new MutableLiveData<>();
+        userProfileDataDao=dataDatabase.userProfileDataDao();
         sessionManager = new SessionManager(application.getApplicationContext());
         isBioUpdated = new MutableLiveData<>();
+
+        userProfileData= userProfileDataDao.getUserProfileLiveData();
     }
 
 
@@ -73,6 +86,10 @@ public class FirebaseUserProfileRepository {
 
     public MutableLiveData<Boolean> getIsBioUpdated() {
         return isBioUpdated;
+    }
+
+    public LiveData<UserProfileData> getUserProfileData() {
+        return userProfileData;
     }
 
     public void uploadProfile(UserProfile userProfile, ArrayList<String> imageUrls) {
@@ -126,24 +143,50 @@ public class FirebaseUserProfileRepository {
                     if (task.isComplete() && task.isSuccessful()) {
 
 
-                        userProfileLiveData.setValue(userProfile);
+//                        userProfileLiveData.setValue(userProfile);
 
                         isProfileCompleted.setValue(true);
+
+
+
+                        insertUserProfile( new UserProfileData(userProfile));
+
 
                         //        uploadChecks(userProfile);
 
 
                     } else {
-                        userProfileLiveData.setValue(null);
+//                        userProfileLiveData.setValue(null);
                         isProfileCompleted.setValue(false);
                     }
                 }).addOnFailureListener(e -> {
-                    userProfileLiveData.setValue(null);
+//                    userProfileLiveData.setValue(null);
                     isProfileCompleted.setValue(false);
 
                 });
 
 
+    }
+
+    private void insertUserProfile(UserProfileData userProfile) {
+
+        new InsertProfileTask(dataDatabase).execute(userProfile);
+    }
+
+
+    private static class InsertProfileTask extends AsyncTask<UserProfileData, Void, Void> {
+        private UserProfileDataDao userProfileDataDao;
+
+        InsertProfileTask(DataDatabase dataDatabase) {
+            userProfileDataDao = dataDatabase.userProfileDataDao();
+        }
+
+        @Override
+        protected Void doInBackground(UserProfileData... userProfileData) {
+
+            userProfileDataDao.insertUserProfile(userProfileData[0]);
+            return null;
+        }
     }
 
     public void uploadChecks(ProfileCheck profileCheck) {
@@ -156,44 +199,44 @@ public class FirebaseUserProfileRepository {
 
 
     // Method to fetch user profile data from Firebase
-    public void getProfileData(String userId) {
-
-
-        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
-                .child(sessionManager.fetchGender())
-                .child(userId);
-
-        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
-                    userProfileLiveData.setValue(userProfile);
-                    Log.d("userProfileCheck", userProfile.toString());
-                    Log.d("userProfileCheck", sessionManager.fetchGender());
-
-                } else {
-                    // Handle the case where the profile data doesn't exist
-                    Log.d("userProfileCheck", "No profile");
-                    userProfileLiveData.setValue(null);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle the error
-                Log.d("userProfileCheck", databaseError.getMessage());
-                userProfileLiveData.setValue(null);
-            }
-        });
-
-
-    }
+//    public void getProfileData(String userId) {
+//
+//
+//        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
+//                .child(sessionManager.fetchGender())
+//                .child(userId);
+//
+//        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
+//                    userProfileLiveData.setValue(userProfile);
+//                    Log.d("userProfileCheck", userProfile.toString());
+//                    Log.d("userProfileCheck", sessionManager.fetchGender());
+//
+//                } else {
+//                    // Handle the case where the profile data doesn't exist
+//                    Log.d("userProfileCheck", "No profile");
+//                    userProfileLiveData.setValue(null);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // Handle the error
+//                Log.d("userProfileCheck", databaseError.getMessage());
+//                userProfileLiveData.setValue(null);
+//            }
+//        });
+//
+//
+//    }
 
     // Getter method for the MutableLiveData
-    public MutableLiveData<UserProfile> getUserProfileLiveData() {
-        return userProfileLiveData;
-    }
+    //public MutableLiveData<UserProfile> getUserProfileLiveData() {
+//        return userProfileLiveData;
+//    }
 
 
     public void updateSharedPreferences(String userID) {
@@ -205,7 +248,7 @@ public class FirebaseUserProfileRepository {
 
                     // Retrieve user profile information
 
-                    for (DataSnapshot snapshot: userSnapshot.getChildren()){
+                    for (DataSnapshot snapshot : userSnapshot.getChildren()) {
                         if (snapshot.child(userID).exists()) {
                             String gender = snapshot.child(userID).child("gender").getValue(String.class);
 
@@ -217,8 +260,6 @@ public class FirebaseUserProfileRepository {
                             Log.d("sharedPreferencesUpdate", sessionManager.fetchUserId());
                         }
                     }
-
-
 
 
                 } else {

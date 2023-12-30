@@ -65,7 +65,7 @@ public class DashBoardActivity extends AppCompatActivity {
             fupViewModel.updateMatchesPreferences(user.getUserId());
             fupViewModel.updateSharedPreferences(user.getUserId());
 
-            getProfileUpdates(user.getUserId());
+
 
             if (!sessionManager.fetchGender().equals("null")) {
                 matchMakingViewModel.getUserProfiles();
@@ -90,11 +90,7 @@ public class DashBoardActivity extends AppCompatActivity {
 
     }
 
-    private void getProfileUpdates(String userId) {
 
-
-        fupViewModel.getProfile(userId);
-    }
 
     @Override
     protected void onResume() {

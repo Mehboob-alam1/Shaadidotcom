@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -21,6 +22,7 @@ import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
 import com.mehboob.myshadi.databinding.FragmentHomeBinding;
 
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
@@ -46,7 +48,7 @@ public class HomeFragment extends Fragment {
     private NewMatchesAdapter newMatchesAdapter;
     private LinearLayoutManager layoutManager;
 
-    private UserProfile userProfileData;
+    private UserProfileData userProfileData;
 
     private SessionManager sessionManager;
 
@@ -64,11 +66,9 @@ public class HomeFragment extends Fragment {
 
         Toast.makeText(requireActivity(), "" + sessionManager.fetchGender() + "  " + sessionManager.fetchUserId(), Toast.LENGTH_SHORT).show();
 
-        if (!sessionManager.fetchGender().equals("null")) {
 
-            getProfileUpdates(sessionManager.fetchUserId());
             setProfileData();
-        }
+
         setRecyclerView();
 
         binding.lineAboutYourSelf.setOnClickListener(view -> {
@@ -98,44 +98,45 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void getProfileUpdates(String userId) {
 
-        fupViewModel.getProfile(userId);
-    }
 
     private void setProfileData() {
 
 
-        fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), userProfile -> {
-
-            userProfileData = userProfile;
-
-
-            try {
+        fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), new Observer<UserProfileData>() {
+            @Override
+            public void onChanged(UserProfileData userProfile) {
 
 
-                Glide.with(requireActivity()).load(userProfile.getImageUrl())
-                        .placeholder(R.drawable.profile_1)
-                        .into(binding.profileImage);
-                binding.txtName.setText(userProfile.getFullName());
-                binding.txtRegNo.setText(Utils.extractFirst8Characters(userProfile.getUserId()));
-                if (userProfile.getIsVerified()) {
-                    binding.imgVerified.setImageResource(R.drawable.baseline_verified_user_24);
+
+                try {
+
+
+                    Glide.with(requireActivity()).load(userProfile.getImageUrl())
+                            .placeholder(R.drawable.profile_1)
+                            .into(binding.profileImage);
+                    binding.txtName.setText(userProfile.getFullName());
+                    binding.txtRegNo.setText(Utils.extractFirst8Characters(userProfile.getUserId()));
+                    if (userProfile.isVerified()) {
+                        binding.imgVerified.setImageResource(R.drawable.baseline_verified_user_24);
+                    }
+
+                    binding.txtAccountType.setText(userProfile.getAccountType());
+
+                } catch (NullPointerException e) {
+                    Log.d("ProfileReadingException", e.getLocalizedMessage());
                 }
 
-                binding.txtAccountType.setText(userProfile.getAccountType());
-
-            } catch (NullPointerException e) {
-                Log.d("ProfileReadingException", e.getLocalizedMessage());
+                binding.btnEditProfile.setOnClickListener(view -> {
+                    startActivity(new Intent(requireActivity(), EditProfileActivity.class));
+                });
+                binding.btnUpgradeNow.setOnClickListener(view -> {
+                    startActivity(new Intent(requireActivity(), UpgradePremiumActivity.class));
+                });
             }
-
-            binding.btnEditProfile.setOnClickListener(view -> {
-                startActivity(new Intent(requireActivity(), EditProfileActivity.class));
-            });
-            binding.btnUpgradeNow.setOnClickListener(view -> {
-                startActivity(new Intent(requireActivity(), UpgradePremiumActivity.class));
-            });
         });
+
+
     }
 
 

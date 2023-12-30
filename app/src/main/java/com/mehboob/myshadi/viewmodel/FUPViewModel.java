@@ -15,6 +15,7 @@ import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.repository.FirebaseUserProfileRepository;
+import com.mehboob.myshadi.room.entities.UserProfileData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class FUPViewModel extends AndroidViewModel {
 
     private final MutableLiveData<List<Uri>> selectedImages = new MutableLiveData<>();
 
-    private MutableLiveData<UserProfile> userProfileLiveData ;
+    private LiveData<UserProfileData> userProfileLiveData ;
 
     private MutableLiveData<Boolean> checkIfUpload;
 
@@ -39,7 +40,8 @@ private MutableLiveData<Boolean> isBioUpdated;
         super(application);
         repository = new FirebaseUserProfileRepository(application);
 checkIfUpload=repository.getIsProfileCompleted();
-        userProfileLiveData=repository.getUserProfileLiveData();
+userProfileLiveData=repository.getUserProfileData();
+//        userProfileLiveData=repository.getUserProfileLiveData();
         isPreferencesAdded=repository.getIsPreferencesAdded();
         isBioUpdated=repository.getIsBioUpdated();
 
@@ -54,7 +56,7 @@ checkIfUpload=repository.getIsProfileCompleted();
         return isPreferencesAdded;
     }
 
-    public MutableLiveData<UserProfile> getUserProfileLiveData() {
+    public LiveData<UserProfileData> getUserProfileLiveData() {
         return userProfileLiveData;
     }
 
@@ -62,11 +64,11 @@ checkIfUpload=repository.getIsProfileCompleted();
         return isBioUpdated;
     }
 
-    public void getProfile(String userID){
-
-
-        repository.getProfileData(userID);
-    }
+//    public void getProfile(String userID){
+//
+//
+//        repository.getProfileData(userID);
+//    }
 
 
     public void updateMatchesPreferences(String userId){

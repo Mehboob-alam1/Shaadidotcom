@@ -14,14 +14,16 @@ import com.google.common.collect.HashBasedTable;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.Dao.RecentMatchesDao;
 import com.mehboob.myshadi.room.Dao.UserDao;
+import com.mehboob.myshadi.room.Dao.UserProfileDataDao;
 import com.mehboob.myshadi.room.entities.ArrayListConverter;
 import com.mehboob.myshadi.room.entities.PreferencesConverter;
 import com.mehboob.myshadi.room.entities.UserMatches;
+import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.room.models.User;
 
 import java.util.List;
 
-@Database(entities = {User.class, UserMatches.class}, version = 1 ,exportSchema = false)
+@Database(entities = {User.class, UserMatches.class}, version = 1, exportSchema = false)
 @TypeConverters({PreferencesConverter.class, ArrayListConverter.class,})
 
 public abstract class DataDatabase extends RoomDatabase {
@@ -31,6 +33,8 @@ public abstract class DataDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
     public abstract RecentMatchesDao recentMatchesDao();
+
+    public abstract UserProfileDataDao userProfileDataDao();
 
     private static volatile DataDatabase instance = null;
 
@@ -80,13 +84,28 @@ public abstract class DataDatabase extends RoomDatabase {
         private RecentMatchesDao recentMatchesDao;
 
 
-        public InserUserAsyncTask(DataDatabase dataDatabase){
-            recentMatchesDao=dataDatabase.recentMatchesDao();
+        public InserUserAsyncTask(DataDatabase dataDatabase) {
+            recentMatchesDao = dataDatabase.recentMatchesDao();
         }
+
         @Override
         protected Void doInBackground(List<UserProfile>... lists) {
 
 
+            return null;
+        }
+    }
+
+    static class InsertProfileTask extends AsyncTask<UserProfileData, Void, Void> {
+        private UserProfileDataDao userProfileDataDao;
+
+        public InsertProfileTask(DataDatabase dataDatabase) {
+            userProfileDataDao = dataDatabase.userProfileDataDao();
+        }
+
+        @Override
+        protected Void doInBackground(UserProfileData... userProfileData) {
+            userProfileDataDao.deleteUserProfileData();
             return null;
         }
     }

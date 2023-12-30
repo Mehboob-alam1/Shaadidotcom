@@ -21,6 +21,7 @@ import com.mehboob.myshadi.databinding.FragmentHomeBinding;
 import com.mehboob.myshadi.databinding.FragmentMyMatchesBinding;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
@@ -42,7 +43,7 @@ public class MyMatchesFragment extends Fragment {
     private MyMatchesAdapter myMatchesAdapter;
     private LinearLayoutManager layoutManager;
 
-    private UserProfile userProfileData;
+    private UserProfileData userProfileData;
     MatchPref matchPref;
 
     @Override
