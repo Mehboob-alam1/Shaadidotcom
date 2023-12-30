@@ -130,7 +130,7 @@ public class FirebaseUserProfileRepository {
 
                         isProfileCompleted.setValue(true);
 
-                //        uploadChecks(userProfile);
+                        //        uploadChecks(userProfile);
 
 
                     } else {
@@ -169,12 +169,12 @@ public class FirebaseUserProfileRepository {
                 if (dataSnapshot.exists()) {
                     UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
                     userProfileLiveData.setValue(userProfile);
-                    Log.d("userProfileCheck",userProfile.toString());
-                    Log.d("userProfileCheck",sessionManager.fetchGender());
+                    Log.d("userProfileCheck", userProfile.toString());
+                    Log.d("userProfileCheck", sessionManager.fetchGender());
 
                 } else {
                     // Handle the case where the profile data doesn't exist
-                    Log.d("userProfileCheck","No profile");
+                    Log.d("userProfileCheck", "No profile");
                     userProfileLiveData.setValue(null);
                 }
             }
@@ -200,23 +200,28 @@ public class FirebaseUserProfileRepository {
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
         userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                if (userSnapshot.exists()) {
 
-                        // Retrieve user profile information
-                        String userId = userSnapshot.getKey();
-                        String name = userSnapshot.child(userID).child("name").getValue(String.class);
-                        String gender = userSnapshot.child(userID).child("gender").getValue(String.class);
-                        Boolean profileCompleted = userSnapshot.child(userID).child("profileCompleted").getValue(Boolean.class);
-                        String profileCreatedTime = userSnapshot.child(userID).child("profileCreatedTime").getValue(String.class);
-                        sessionManager.saveGender(gender);
-                        sessionManager.saveUserID(userID);
+                    // Retrieve user profile information
 
+                    for (DataSnapshot snapshot: userSnapshot.getChildren()){
+                        if (snapshot.child(userID).exists()) {
+                            String gender = snapshot.child(userID).child("gender").getValue(String.class);
 
-                        // Do something with the user profile data
+                            sessionManager.saveGender(gender);
+                            sessionManager.saveUserID(userID);
+
+                            Log.d("sharedPreferencesUpdate", "Updated preferences");
+                            Log.d("sharedPreferencesUpdate", sessionManager.fetchGender());
+                            Log.d("sharedPreferencesUpdate", sessionManager.fetchUserId());
+                        }
                     }
-                }else{
+
+
+
+
+                } else {
                     Toast.makeText(application, "SharedPreferences not updated", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -235,26 +240,22 @@ public class FirebaseUserProfileRepository {
 
         userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        // Retrieve user profile information
+            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                if (userSnapshot.exists()) {
 
-                        String city = userSnapshot.child(userId).child("city").getValue(String.class);
-                        String community = userSnapshot.child(userId).child("community").getValue(String.class);
-                        String maritalStatus = userSnapshot.child(userId).child("maritalStatus").getValue(String.class);
-                        String maxAge = userSnapshot.child(userId).child("maxAge").getValue(String.class);
-                        String maxHeight = userSnapshot.child(userId).child("maxHeight").getValue(String.class);
-                        String minAge = userSnapshot.child(userId).child("minAge").getValue(String.class);
-                        String minHeight = userSnapshot.child(userId).child("minHeight").getValue(String.class);
-                        String religion = userSnapshot.child(userId).child("religion").getValue(String.class);
-                        String subCommunity = userSnapshot.child(userId).child("subCommunity").getValue(String.class);
+                    String city = userSnapshot.child(userId).child("city").getValue(String.class);
+                    String community = userSnapshot.child(userId).child("community").getValue(String.class);
+                    String maritalStatus = userSnapshot.child(userId).child("maritalStatus").getValue(String.class);
+                    String maxAge = userSnapshot.child(userId).child("maxAge").getValue(String.class);
+                    String maxHeight = userSnapshot.child(userId).child("maxHeight").getValue(String.class);
+                    String minAge = userSnapshot.child(userId).child("minAge").getValue(String.class);
+                    String minHeight = userSnapshot.child(userId).child("minHeight").getValue(String.class);
+                    String religion = userSnapshot.child(userId).child("religion").getValue(String.class);
+                    String subCommunity = userSnapshot.child(userId).child("subCommunity").getValue(String.class);
 
-                        MatchPref pref= new MatchPref(application);
-                        pref.savePref(new Preferences(minAge,maxAge,minHeight,maxHeight,city,religion,community,subCommunity,maritalStatus));
-                        // Do something with the user profile data
-                    }
-                }else{
+                    MatchPref pref = new MatchPref(application);
+                    pref.savePref(new Preferences(minAge, maxAge, minHeight, maxHeight, city, religion, community, subCommunity, maritalStatus));
+                } else {
                     Toast.makeText(application, "MatchPreferences not updated", Toast.LENGTH_SHORT).show();
 
                 }

@@ -62,16 +62,12 @@ public class HomeFragment extends Fragment {
         //
 
 
-        fupViewModel.updateMatchesPreferences(sessionManager.fetchUserId());
-        fupViewModel.updateSharedPreferences(sessionManager.fetchUserId());
-
+        Toast.makeText(requireActivity(), "" + sessionManager.fetchGender() + "  " + sessionManager.fetchUserId(), Toast.LENGTH_SHORT).show();
 
         if (!sessionManager.fetchGender().equals("null")) {
+
             getProfileUpdates(sessionManager.fetchUserId());
             setProfileData();
-        } else {
-            fupViewModel.updateMatchesPreferences(sessionManager.fetchUserId());
-            fupViewModel.updateSharedPreferences(sessionManager.fetchUserId());
         }
         setRecyclerView();
 
@@ -104,7 +100,6 @@ public class HomeFragment extends Fragment {
 
     private void getProfileUpdates(String userId) {
 
-        Toast.makeText(requireActivity(), "Hello " + userId, Toast.LENGTH_SHORT).show();
         fupViewModel.getProfile(userId);
     }
 
@@ -131,7 +126,7 @@ public class HomeFragment extends Fragment {
                 binding.txtAccountType.setText(userProfile.getAccountType());
 
             } catch (NullPointerException e) {
-                Log.d("ProfileReadingException",e.getLocalizedMessage());
+                Log.d("ProfileReadingException", e.getLocalizedMessage());
             }
 
             binding.btnEditProfile.setOnClickListener(view -> {

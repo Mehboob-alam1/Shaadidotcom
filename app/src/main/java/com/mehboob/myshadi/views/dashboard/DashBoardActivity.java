@@ -69,9 +69,6 @@ public class DashBoardActivity extends AppCompatActivity {
 
             if (!sessionManager.fetchGender().equals("null")) {
                 matchMakingViewModel.getUserProfiles();
-            }else{
-                fupViewModel.updateMatchesPreferences(user.getUserId());
-                fupViewModel.updateSharedPreferences(user.getUserId());
             }
         });
 

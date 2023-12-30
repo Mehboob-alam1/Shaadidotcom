@@ -43,6 +43,10 @@ public class AddBioActivity extends AppCompatActivity {
             progressDialog.show();
             if (binding.etTellmeAbout.getText().toString().isEmpty()) {
                 Utils.showSnackBar(this, "Add about your self");
+            }
+            if (sessionManager.fetchGender().equals("null")) {
+
+                Utils.showSnackBar(this,"Check network and try again");
             } else {
 
                 fupViewModel.updateAboutMe(binding.etTellmeAbout.getText().toString(), sessionManager.fetchUserId());
