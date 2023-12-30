@@ -1,5 +1,6 @@
 package com.mehboob.myshadi.views.dashboard.frags.matches;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.adapters.homeAdapters.MyMatchesAdapter;
 import com.mehboob.myshadi.adapters.homeAdapters.NearMeAdapter;
@@ -22,6 +24,7 @@ import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
+import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
 
 import java.util.ArrayList;
 
@@ -45,6 +48,9 @@ public class NewFragment extends Fragment {
 
         matchMakingViewModel = new ViewModelProvider(requireActivity()).get(MatchMakingViewModel.class);
         matchPref=new MatchPref(requireActivity());
+
+
+
     }
 
     @Override
@@ -68,6 +74,12 @@ public class NewFragment extends Fragment {
         adapter = new NewMatchesAdapterHome(new ArrayList<>(), requireActivity());
         binding.myMatchesRecyclerView.setAdapter(adapter);
         binding.myMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+
+        adapter.setOnItemClickListener((userProfile, position) -> {
+            Intent i = new Intent(requireContext(), ProfileDetailedActivity.class);
+            i.putExtra("currentPerson", new Gson().toJson(userProfile));
+            startActivity(i);
+        });
     }
 
     @Override

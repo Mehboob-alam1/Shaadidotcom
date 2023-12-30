@@ -16,6 +16,7 @@ import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.MatchesSampleBinding;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.entities.UserMatches;
+import com.mehboob.myshadi.utils.Utils;
 
 import java.util.List;
 
@@ -52,11 +53,13 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
 
 
         holder.btnSendConnects.setOnClickListener( view -> {
-
-
-
+           sendConnection(userProfile.getUserId());
 
         });
+    }
+
+    private void sendConnection(String userId) {
+
     }
 
 

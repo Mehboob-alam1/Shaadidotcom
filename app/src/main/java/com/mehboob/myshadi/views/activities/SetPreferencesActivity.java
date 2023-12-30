@@ -184,6 +184,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
 
             binding.spinnerCity.setText(userProfile.getCityName());
 
+
         });
 
 
