@@ -23,7 +23,7 @@ import com.mehboob.myshadi.room.models.User;
 
 import java.util.List;
 
-@Database(entities = {User.class, UserMatches.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, UserMatches.class,UserProfileData.class}, version = 1, exportSchema = false)
 @TypeConverters({PreferencesConverter.class, ArrayListConverter.class,})
 
 public abstract class DataDatabase extends RoomDatabase {

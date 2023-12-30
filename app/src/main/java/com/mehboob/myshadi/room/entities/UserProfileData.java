@@ -12,12 +12,7 @@ import java.util.ArrayList;
 
 @Entity(tableName = "userProfileOwnData",primaryKeys = {"userId"})
 
-public class UserProfileData
-
-
-{
-
-
+public class UserProfileData{
 
 
     @ColumnInfo(name="profile_for")
@@ -133,6 +128,9 @@ public class UserProfileData
     private String aboutMe;
     @ColumnInfo(name = "date_of_birth")
     private String date_of_birth;
+
+    public UserProfileData() {
+    }
 
     public String getDate_of_birth() {
         return date_of_birth;
