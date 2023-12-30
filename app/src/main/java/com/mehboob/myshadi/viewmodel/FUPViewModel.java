@@ -69,6 +69,14 @@ checkIfUpload=repository.getIsProfileCompleted();
     }
 
 
+    public void updateMatchesPreferences(String userId){
+        repository.updateMatchPreferences(userId);
+    }
+
+    public void updateSharedPreferences(String userId){
+        repository.updateSharedPreferences(userId);
+    }
+
     public void updatePreferences(Preferences preferences,String userId){
         repository.updatePreferences(preferences,userId);
     }

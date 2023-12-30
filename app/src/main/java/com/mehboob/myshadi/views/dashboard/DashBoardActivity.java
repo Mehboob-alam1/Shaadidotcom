@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -43,13 +44,14 @@ public class DashBoardActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
 
     private MatchMakingViewModel matchMakingViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDashBoardBinding.inflate(getLayoutInflater());
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        matchMakingViewModel= new ViewModelProvider(this).get(MatchMakingViewModel.class);
+        matchMakingViewModel = new ViewModelProvider(this).get(MatchMakingViewModel.class);
         setContentView(binding.getRoot());
         sessionManager = new SessionManager(this);
 
@@ -60,10 +62,21 @@ public class DashBoardActivity extends AppCompatActivity {
 
             sessionManager.saveUserID(user.getUserId());
 
+            fupViewModel.updateMatchesPreferences(user.getUserId());
+            fupViewModel.updateSharedPreferences(user.getUserId());
+
             getProfileUpdates(user.getUserId());
+
+            if (!sessionManager.fetchGender().equals("null")) {
+                matchMakingViewModel.getUserProfiles();
+            }else{
+                fupViewModel.updateMatchesPreferences(user.getUserId());
+                fupViewModel.updateSharedPreferences(user.getUserId());
+            }
         });
 
-        matchMakingViewModel.getUserProfiles();
+
+
 
     }
 
@@ -91,11 +104,10 @@ public class DashBoardActivity extends AppCompatActivity {
         super.onResume();
 
 
-        matchMakingViewModel.getBestRecentMatchedProfiles().observe(this,userMatches -> {
+        matchMakingViewModel.getBestRecentMatchedProfiles().observe(this, userMatches -> {
 
-            Log.d("Profiles",userMatches.toString());
+            Log.d("Profiles", userMatches.toString());
         });
-
 
 
     }

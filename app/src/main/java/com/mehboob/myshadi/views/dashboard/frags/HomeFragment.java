@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,10 +59,20 @@ public class HomeFragment extends Fragment {
         sessionManager = new SessionManager(requireActivity());
 
 
-        getProfileUpdates(sessionManager.fetchUserId());
+        //
 
 
-        setProfileData();
+        fupViewModel.updateMatchesPreferences(sessionManager.fetchUserId());
+        fupViewModel.updateSharedPreferences(sessionManager.fetchUserId());
+
+
+        if (!sessionManager.fetchGender().equals("null")) {
+            getProfileUpdates(sessionManager.fetchUserId());
+            setProfileData();
+        } else {
+            fupViewModel.updateMatchesPreferences(sessionManager.fetchUserId());
+            fupViewModel.updateSharedPreferences(sessionManager.fetchUserId());
+        }
         setRecyclerView();
 
         binding.lineAboutYourSelf.setOnClickListener(view -> {
@@ -85,7 +96,7 @@ public class HomeFragment extends Fragment {
 
         newMatchesAdapter = new NewMatchesAdapter(new ArrayList<>(), requireActivity());
         binding.recyclerNewMatches.setAdapter(newMatchesAdapter);
-        binding.recyclerNewMatches.setLayoutManager(new LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false));
+        binding.recyclerNewMatches.setLayoutManager(new LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false));
 
 
     }
@@ -93,7 +104,7 @@ public class HomeFragment extends Fragment {
 
     private void getProfileUpdates(String userId) {
 
-        Toast.makeText(requireActivity(), ""+userId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireActivity(), "Hello " + userId, Toast.LENGTH_SHORT).show();
         fupViewModel.getProfile(userId);
     }
 
@@ -104,18 +115,24 @@ public class HomeFragment extends Fragment {
 
             userProfileData = userProfile;
 
-        //    Toast.makeText(requireContext(), userProfileData.getUserId(), Toast.LENGTH_SHORT).show();
 
-//            Glide.with(requireActivity()).load(userProfile.getImageUrl())
-//                    .placeholder(R.drawable.profile_1)
-//                    .into(binding.profileImage);
-//            binding.txtName.setText(userProfile.getFullName());
-//            binding.txtRegNo.setText(Utils.extractFirst8Characters(userProfile.getUserId()));
-//            if (userProfile.getIsVerified()) {
-//                binding.imgVerified.setImageResource(R.drawable.baseline_verified_user_24);
-//            }
-//
-//            binding.txtAccountType.setText(userProfile.getAccountType());
+            try {
+
+
+                Glide.with(requireActivity()).load(userProfile.getImageUrl())
+                        .placeholder(R.drawable.profile_1)
+                        .into(binding.profileImage);
+                binding.txtName.setText(userProfile.getFullName());
+                binding.txtRegNo.setText(Utils.extractFirst8Characters(userProfile.getUserId()));
+                if (userProfile.getIsVerified()) {
+                    binding.imgVerified.setImageResource(R.drawable.baseline_verified_user_24);
+                }
+
+                binding.txtAccountType.setText(userProfile.getAccountType());
+
+            } catch (NullPointerException e) {
+                Log.d("ProfileReadingException",e.getLocalizedMessage());
+            }
 
             binding.btnEditProfile.setOnClickListener(view -> {
                 startActivity(new Intent(requireActivity(), EditProfileActivity.class));
@@ -147,6 +164,8 @@ public class HomeFragment extends Fragment {
             newMatchesAdapter.setNewMatches(userMatches);
 
             binding.txtNewMatchesCount.setText("(" + userMatches.size() + ")");
+
+
         });
 
     }
