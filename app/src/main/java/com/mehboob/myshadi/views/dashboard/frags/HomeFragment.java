@@ -19,7 +19,7 @@ import com.mehboob.myshadi.R;
 
 import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
 import com.mehboob.myshadi.databinding.FragmentHomeBinding;
-import com.mehboob.myshadi.model.profilemodel.Preferences;
+
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;

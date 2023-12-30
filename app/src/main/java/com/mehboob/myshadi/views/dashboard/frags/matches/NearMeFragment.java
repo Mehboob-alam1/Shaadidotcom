@@ -75,7 +75,7 @@ public class NearMeFragment extends Fragment {
         super.onResume();
 
         matchMakingViewModel.getBestMatchesPref(Integer.parseInt(matchPref.fetchPref().getMinAge()),Integer.parseInt(matchPref.fetchPref().getMaxAge())).observe(this, userMatches -> {
-            if (userMatches != null) {
+            if (userMatches != null && userMatches.size() != 0) {
                 binding.lineNoData.getRoot().setVisibility(View.GONE);
                 binding.nearMeRecyclerView.setVisibility(View.VISIBLE);
             }

@@ -82,8 +82,8 @@ public class MyMatchesFragment extends Fragment {
         binding.myMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         myMatchesAdapter.setOnItemClickListener((userProfile, position) -> {
-            Intent i= new Intent(requireContext(), ProfileDetailedActivity.class);
-            i.putExtra("currentPerson",new Gson().toJson(userProfile));
+            Intent i = new Intent(requireContext(), ProfileDetailedActivity.class);
+            i.putExtra("currentPerson", new Gson().toJson(userProfile));
             startActivity(i);
         });
     }
@@ -93,7 +93,7 @@ public class MyMatchesFragment extends Fragment {
         super.onResume();
 
         matchMakingViewModel.getBestMatchesPref(Integer.parseInt(matchPref.fetchPref().getMinAge()), Integer.parseInt(matchPref.fetchPref().getMaxAge())).observe(this, userMatches -> {
-            if (userMatches != null) {
+            if (userMatches != null && userMatches.size() != 0) {
                 binding.lineNoData.getRoot().setVisibility(View.GONE);
                 binding.myMatchesRecyclerView.setVisibility(View.VISIBLE);
             }

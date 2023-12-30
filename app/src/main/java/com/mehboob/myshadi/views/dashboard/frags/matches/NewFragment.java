@@ -75,7 +75,7 @@ public class NewFragment extends Fragment {
         super.onResume();
 
         matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(this, userMatches -> {
-            if (userMatches != null) {
+            if (userMatches != null && userMatches.size() != 0) {
                 binding.lineNoData.getRoot().setVisibility(View.GONE);
                 binding.myMatchesRecyclerView.setVisibility(View.VISIBLE);
             }
