@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.MatchesSampleBinding;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
@@ -24,6 +26,8 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
     private List<UserMatches> newMatches;
     private Context context;
     public OnItemClickListener onItemClickListener;
+
+
 
     public NewMatchesAdapter(List<UserMatches> newMatches, Context context) {
         this.newMatches = newMatches;
@@ -66,6 +70,9 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
     }
 
     private void sendConnection(String userId) {
+
+
+
 
     }
 

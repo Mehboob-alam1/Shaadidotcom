@@ -10,11 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.bumptech.glide.util.Util;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mehboob.myshadi.model.Connection;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.Dao.RecentMatchesDao;
@@ -22,6 +24,7 @@ import com.mehboob.myshadi.room.database.DataDatabase;
 import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.utils.SessionManager;
+import com.mehboob.myshadi.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,7 +54,7 @@ public class MatchMakingRepository {
         recentMatchesDao = dataDatabase.recentMatchesDao();
         allUserProfiles = recentMatchesDao.getAllUserProfiles();
         this.application = application;
-        sessionManager= new SessionManager(application);
+        sessionManager = new SessionManager(application);
         allUserProfilesData = new ArrayList<>();
 
     }
@@ -123,15 +126,15 @@ public class MatchMakingRepository {
         return recentMatchesDao.getUserProfilesCreatedLastWeek(weekAgoTimestamp);
     }
 
-    public LiveData<List<UserMatches>> getBestMatchesPref(int minAge,int maxAge){
+    public LiveData<List<UserMatches>> getBestMatchesPref(int minAge, int maxAge) {
 
         long currentDate = Calendar.getInstance().getTimeInMillis();
         long minDobMillis = calculateMillisForAge(minAge);
         long maxDobMillis = calculateMillisForAge(maxAge);
 
 
-        return recentMatchesDao.getBestMatchesPref( sessionManager.fetchCityName(), sessionManager.fetchCommunity(),
-               sessionManager.fetchSubCommunity(),sessionManager.fetchMaritalStatus(),minDobMillis,maxDobMillis );
+        return recentMatchesDao.getBestMatchesPref(sessionManager.fetchCityName(), sessionManager.fetchCommunity(),
+                sessionManager.fetchSubCommunity(), sessionManager.fetchMaritalStatus(), minDobMillis, maxDobMillis);
     }
 
     public LiveData<List<UserMatches>> getNearestProfiles(double userLatitude, double userLongitude, double radius, int limit) {
@@ -144,9 +147,33 @@ public class MatchMakingRepository {
         calendar.add(Calendar.DAY_OF_YEAR, -7); // 7 days ago
         return calendar.getTimeInMillis();
     }
+
     private long calculateMillisForAge(int age) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.YEAR, -age);
         return calendar.getTimeInMillis();
+    }
+
+
+    public void makeConnections(Connection connection) {
+
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Connects");
+        ref.child(connection.getCombinedId())
+                .setValue(connection)
+                .addOnCompleteListener(task -> {
+                    if (task.isComplete()){
+                        Toast.makeText(application, "Connection sent successfully", Toast.LENGTH_SHORT).show();
+
+                        sendNotification(connection);
+                    }
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(application, "Something went wrong", Toast.LENGTH_SHORT).show();
+                });
+
+    }
+
+    private void sendNotification(Connection connection) {
+
+
     }
 }
