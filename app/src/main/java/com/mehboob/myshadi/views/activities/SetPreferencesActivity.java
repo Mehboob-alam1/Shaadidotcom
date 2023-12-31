@@ -1,28 +1,27 @@
 package com.mehboob.myshadi.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
+import android.widget.ArrayAdapter;
+
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivitySetPreferencesBinding;
 
 import com.mehboob.myshadi.model.profilemodel.Preferences;
+import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.views.dashboard.DashBoardActivity;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class SetPreferencesActivity extends AppCompatActivity {
@@ -30,7 +29,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
     private MatchPref matchPref;
     private FUPViewModel fupViewModel;
     private String userId;
-    private boolean isSkipHide;
+    public boolean isSkipHide;
     private SessionManager sessionManager;
 
     @Override
@@ -47,7 +46,15 @@ public class SetPreferencesActivity extends AppCompatActivity {
         if (isSkipHide) {
             binding.btnSkip.setVisibility(View.GONE);
         }
-        fupViewModel.getUserProfileLiveData().observe(this, userProfile -> userId = userProfile.getUserId());
+        fupViewModel.getUserProfileLiveData().observe(this, new Observer<UserProfileData>() {
+            @Override
+            public void onChanged(UserProfileData userProfileData) {
+                if (userProfileData != null) {
+                    userId = userProfileData.getUserId();
+                }
+            }
+        });
+
 
         binding.btnSkip.setOnClickListener(view -> {
             updateUi();
@@ -174,15 +181,15 @@ public class SetPreferencesActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
 
         fupViewModel.getUserProfileLiveData().observe(this, userProfile -> {
 
-
-            binding.spinnerCity.setText(userProfile.getCityName());
+            if (userProfile != null) {
+                binding.spinnerCity.setText(userProfile.getCityName());
+            }
 
 
         });

@@ -72,7 +72,7 @@ public class DashBoardActivity extends AppCompatActivity {
             }
         });
 
-
+        fupViewModel.getProfile(sessionManager.fetchUserId());
 
 
     }

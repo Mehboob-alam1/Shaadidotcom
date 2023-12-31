@@ -70,9 +70,7 @@ public class MyMatchesFragment extends Fragment {
         setRecyclerView();
 
 
-        myMatchesAdapter.setOnItemClickListener((userProfile, position) -> {
-            //
-        });
+
         return binding.getRoot();
     }
 
@@ -100,7 +98,6 @@ public class MyMatchesFragment extends Fragment {
             }
             myMatchesAdapter.setMyMatches(userMatches);
 
-            Toast.makeText(requireActivity(), "" + userMatches.toString(), Toast.LENGTH_SHORT).show();
 
         });
     }

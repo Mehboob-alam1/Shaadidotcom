@@ -229,8 +229,8 @@
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/roboto_bold"
 
-                        android:text="Connect Now"
-                        android:textColor="@color/blue_A700"
+                        android:text="Add to shortlist"
+                        android:textColor="#023C05"
                         android:textSize="18sp" />
 
                     <ImageView
@@ -1100,7 +1100,7 @@
 
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/roboto"
@@ -1108,6 +1108,7 @@
                 android:textColor="@color/black"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnConnectNow"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

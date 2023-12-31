@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityProfileDetailedBinding;
 import com.mehboob.myshadi.room.entities.UserMatches;
+import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 
 import java.lang.reflect.Type;
@@ -27,6 +28,7 @@ public class ProfileDetailedActivity extends AppCompatActivity {
 
 
     private FUPViewModel fupViewModel;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class ProfileDetailedActivity extends AppCompatActivity {
         binding = ActivityProfileDetailedBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
-
+sessionManager= new SessionManager(this);
         binding.btnBackProfile.setOnClickListener(v -> {
             finish();
         });
@@ -42,8 +44,8 @@ public class ProfileDetailedActivity extends AppCompatActivity {
         Type type = new TypeToken<UserMatches>() {
         }.getType();
         userMatches = new Gson().fromJson(getIntent().getStringExtra("currentPerson"), type);
-        Toast.makeText(this, "" + userMatches.toString(), Toast.LENGTH_SHORT).show();
 
+        fupViewModel.getProfile(sessionManager.fetchUserId());
 
         bindData(userMatches);
     }
@@ -65,27 +67,38 @@ public class ProfileDetailedActivity extends AppCompatActivity {
             binding.imgVerifiedM.setVisibility(View.VISIBLE);
 
         }
-        fupViewModel.getUserProfileLiveData().observe(this,userProfileData -> {
+        fupViewModel.getUserProfileLiveData().observe(this, userProfileData -> {
+         if (userProfileData!=null){
 
-                Glide.with(this)
-                        .load(userProfileData.getImageUrl())
-                        .placeholder(R.drawable.profile)
-                        .into(binding.imgMyProfile);
-            if (userProfileData.isVerified()) {
-                binding.txtBirthDate.setText(userMatches.getDate_of_birth());
-                binding.txtBirthDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                binding.txtContact.setText(userMatches.getPhoneNumber());
-                binding.txtContact.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                binding.txtEmail.setText(userMatches.getEmail());
-                binding.txtEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                binding.txtWorkAsWorkandWith.setText(userMatches.getWorkAs() + ", " + userMatches.getWorksWith());
-                binding.txtWorkAsWorkandWith.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                binding.txtCollegeName.setText(userMatches.getCollege());
-                binding.txtCollegeName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
-            }else{
-                Toast.makeText(this, "You are not verified ", Toast.LENGTH_SHORT).show();
-            }
+
+             try {
+
+
+                 Glide.with(this)
+                         .load(userProfileData.getImageUrl())
+                         .placeholder(R.drawable.profile)
+                         .into(binding.imgMyProfile);
+             } catch (Exception e) {
+                 Log.d("Exception", e.getLocalizedMessage());
+             }
+             if (userProfileData.isVerified()) {
+                 binding.txtBirthDate.setText(userMatches.getDate_of_birth());
+                 binding.txtBirthDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                 binding.txtContact.setText(userMatches.getPhoneNumber());
+                 binding.txtContact.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                 binding.txtEmail.setText(userMatches.getEmail());
+                 binding.txtEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                 binding.txtWorkAsWorkandWith.setText(userMatches.getWorkAs() + ", " + userMatches.getWorksWith());
+                 binding.txtWorkAsWorkandWith.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                 binding.txtCollegeName.setText(userMatches.getCollege());
+                 binding.txtCollegeName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+             } else {
+                 Toast.makeText(this, "You are not verified ", Toast.LENGTH_SHORT).show();
+             }
+
+         }
 
         });
         // if this current user is verified
@@ -134,7 +147,7 @@ public class ProfileDetailedActivity extends AppCompatActivity {
         String remainingDigits = phoneNumber.substring(6);
 
         // Create the formatted phone number
-        String formattedPhoneNumber = "+" + countryCode + operatorCode + "******";
+        String formattedPhoneNumber = countryCode + operatorCode + "******";
 
         return formattedPhoneNumber;
     }

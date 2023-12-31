@@ -23,27 +23,25 @@ import java.util.List;
 public class FUPViewModel extends AndroidViewModel {
 
 
-
-
     private final MutableLiveData<List<Uri>> selectedImages = new MutableLiveData<>();
 
-    private LiveData<UserProfileData> userProfileLiveData ;
+    private MutableLiveData<UserProfileData> userProfileLiveData;
 
     private MutableLiveData<Boolean> checkIfUpload;
 
 
-private MutableLiveData<Boolean> isPreferencesAdded;
-private MutableLiveData<Boolean> isBioUpdated;
+    private MutableLiveData<Boolean> isPreferencesAdded;
+    private MutableLiveData<Boolean> isBioUpdated;
     private FirebaseUserProfileRepository repository;
 
     public FUPViewModel(@NonNull Application application) {
         super(application);
         repository = new FirebaseUserProfileRepository(application);
-checkIfUpload=repository.getIsProfileCompleted();
-userProfileLiveData=repository.getUserProfileData();
+        checkIfUpload = repository.getIsProfileCompleted();
+        userProfileLiveData = repository.getUserProfileData();
 //        userProfileLiveData=repository.getUserProfileLiveData();
-        isPreferencesAdded=repository.getIsPreferencesAdded();
-        isBioUpdated=repository.getIsBioUpdated();
+        isPreferencesAdded = repository.getIsPreferencesAdded();
+        isBioUpdated = repository.getIsBioUpdated();
 
     }
 
@@ -56,7 +54,7 @@ userProfileLiveData=repository.getUserProfileData();
         return isPreferencesAdded;
     }
 
-    public LiveData<UserProfileData> getUserProfileLiveData() {
+    public MutableLiveData<UserProfileData> getUserProfileLiveData() {
         return userProfileLiveData;
     }
 
@@ -64,38 +62,39 @@ userProfileLiveData=repository.getUserProfileData();
         return isBioUpdated;
     }
 
-//    public void getProfile(String userID){
-//
-//
-//        repository.getProfileData(userID);
-//    }
+    public void getProfile(String userID) {
 
 
-    public void updateMatchesPreferences(String userId){
+        repository.getProfileData(userID);
+    }
+
+
+    public void updateMatchesPreferences(String userId) {
         repository.updateMatchPreferences(userId);
     }
 
-    public void updateSharedPreferences(String userId){
+    public void updateSharedPreferences(String userId) {
         repository.updateSharedPreferences(userId);
     }
 
-    public void updatePreferences(Preferences preferences,String userId){
-        repository.updatePreferences(preferences,userId);
+    public void updatePreferences(Preferences preferences, String userId) {
+        repository.updatePreferences(preferences, userId);
     }
 
-    public void updateLocation(String lat,String lon,String userId){
+    public void updateLocation(String lat, String lon, String userId) {
 
-        repository.updateLocation(lat,lon,userId);
+        repository.updateLocation(lat, lon, userId);
 
     }
 
-    public void updateAboutMe(String aboutMe,String userId){
-        repository.updateAboutMe(aboutMe,userId);
+    public void updateAboutMe(String aboutMe, String userId) {
+        repository.updateAboutMe(aboutMe, userId);
     }
 
-    public void uploadChecks(ProfileCheck profileCheck){
+    public void uploadChecks(ProfileCheck profileCheck) {
         repository.uploadChecks(profileCheck);
     }
+
     public void uploadUserProfile(List<Uri> images, UserProfile userProfile) {
 
         repository.uploadImagesToFirebase(images, userProfile, new FirebaseUserProfileRepository.StorageUploadCallback() {
@@ -123,6 +122,7 @@ userProfileLiveData=repository.getUserProfileData();
     public interface ProfileCompletionCallback {
         void onProfileCompletion(boolean isProfileComplete);
     }
+
     public void checkProfileCompletion(String userId, ProfileCompletionCallback callback) {
         LiveData<Boolean> profileCompleteLiveData = repository.isProfileComplete(userId);
 

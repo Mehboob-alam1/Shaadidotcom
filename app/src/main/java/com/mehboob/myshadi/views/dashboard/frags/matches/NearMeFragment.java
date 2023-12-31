@@ -1,5 +1,6 @@
 package com.mehboob.myshadi.views.dashboard.frags.matches;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.adapters.homeAdapters.MyMatchesAdapter;
 import com.mehboob.myshadi.adapters.homeAdapters.NearMeAdapter;
@@ -20,6 +22,7 @@ import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
+import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
 
 import java.util.ArrayList;
 
@@ -68,6 +71,12 @@ public class NearMeFragment extends Fragment {
         nearMeAdapter = new NearMeAdapter(new ArrayList<>(), requireActivity());
         binding.nearMeRecyclerView.setAdapter(nearMeAdapter);
         binding.nearMeRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+
+        nearMeAdapter.setOnItemClickListener((userProfile, position) -> {
+            Intent i = new Intent(requireContext(), ProfileDetailedActivity.class);
+            i.putExtra("currentPerson", new Gson().toJson(userProfile));
+            startActivity(i);
+        });
     }
 
     @Override
@@ -80,7 +89,6 @@ public class NearMeFragment extends Fragment {
                 binding.nearMeRecyclerView.setVisibility(View.VISIBLE);
             }
             nearMeAdapter.setMyMatches(userMatches);
-            Toast.makeText(requireContext(), ""+userMatches.toString(), Toast.LENGTH_SHORT).show();
 
         });
     }

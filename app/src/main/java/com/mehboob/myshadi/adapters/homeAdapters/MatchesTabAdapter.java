@@ -40,14 +40,12 @@ public class MatchesTabAdapter extends FragmentPagerAdapter {
                 ShortListedFragment shortListedFragment = new ShortListedFragment();
                 return shortListedFragment;
 
-            case 3:
-                SearchFragment searchFragment = new SearchFragment();
-                return searchFragment;
 
-            case 4:
+
+            case 3:
                 NewFragment newFragment = new NewFragment();
                 return newFragment;
-            case 5:
+            case 4:
                 DailyFragment dailyFragment = new DailyFragment();
                 return dailyFragment;
             default:

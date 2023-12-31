@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Send Connection"
+        android:text="Add to shortlist"
         android:backgroundTint="@color/green_400"
       android:background="@drawable/edit_text_back"
         android:textColor="@color/white"

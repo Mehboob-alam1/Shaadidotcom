@@ -46,6 +46,7 @@ public class FirebaseUserProfileRepository {
 //    private MutableLiveData<UserProfile> userProfileLiveData;
 
 private LiveData<UserProfileData> userProfileData;
+private MutableLiveData<UserProfileData> userProfileDataMutable;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     int uploadedCount = 0;
@@ -73,8 +74,14 @@ private LiveData<UserProfileData> userProfileData;
         isBioUpdated = new MutableLiveData<>();
 
         userProfileData= userProfileDataDao.getUserProfileLiveData();
+        userProfileDataMutable= new MutableLiveData<>();
+        setUserProfileDataMutable(userProfileData);
+
     }
 
+    public void setUserProfileDataMutable(LiveData<UserProfileData> data) {
+        userProfileDataMutable.postValue(data.getValue());
+    }
 
     public MutableLiveData<Boolean> getIsProfileCompleted() {
         return isProfileCompleted;
@@ -88,8 +95,8 @@ private LiveData<UserProfileData> userProfileData;
         return isBioUpdated;
     }
 
-    public LiveData<UserProfileData> getUserProfileData() {
-        return userProfileData;
+    public MutableLiveData<UserProfileData> getUserProfileData() {
+        return userProfileDataMutable;
     }
 
     public void uploadProfile(UserProfile userProfile, ArrayList<String> imageUrls) {
@@ -199,39 +206,40 @@ private LiveData<UserProfileData> userProfileData;
 
 
     // Method to fetch user profile data from Firebase
-//    public void getProfileData(String userId) {
-//
-//
-//        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
-//                .child(sessionManager.fetchGender())
-//                .child(userId);
-//
-//        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    UserProfile userProfile = dataSnapshot.getValue(UserProfile.class);
-//                    userProfileLiveData.setValue(userProfile);
-//                    Log.d("userProfileCheck", userProfile.toString());
-//                    Log.d("userProfileCheck", sessionManager.fetchGender());
-//
-//                } else {
-//                    // Handle the case where the profile data doesn't exist
-//                    Log.d("userProfileCheck", "No profile");
-//                    userProfileLiveData.setValue(null);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // Handle the error
-//                Log.d("userProfileCheck", databaseError.getMessage());
-//                userProfileLiveData.setValue(null);
-//            }
-//        });
-//
-//
-//    }
+    public void getProfileData(String userId) {
+
+
+        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
+                .child(sessionManager.fetchGender())
+                .child(userId);
+
+        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    UserProfileData userProfile = dataSnapshot.getValue(UserProfileData.class);
+
+                    userProfileDataMutable.postValue(userProfile);
+
+                    Log.d("userProfileCheck", userProfile.toString());
+                    Log.d("userProfileCheck", sessionManager.fetchGender());
+
+                } else {
+                    // Handle the case where the profile data doesn't exist
+                    Log.d("userProfileCheck", "No profile");
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle the error
+                Log.d("userProfileCheck", databaseError.getMessage());
+            }
+        });
+
+
+    }
 
     // Getter method for the MutableLiveData
     //public MutableLiveData<UserProfile> getUserProfileLiveData() {

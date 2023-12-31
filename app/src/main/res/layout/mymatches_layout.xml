@@ -212,8 +212,8 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/roboto_bold"
 
-                android:text="Connect Now"
-                android:textColor="@color/blue_A700"
+                android:text="Add to shortlist"
+                android:textColor="#023C05"
                 android:textSize="18sp" />
 
             <ImageView

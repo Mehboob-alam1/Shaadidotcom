@@ -92,7 +92,6 @@ public class NewFragment extends Fragment {
                 binding.myMatchesRecyclerView.setVisibility(View.VISIBLE);
             }
             adapter.setMyMatches(userMatches);
-            Toast.makeText(requireContext(), ""+userMatches.toString(), Toast.LENGTH_SHORT).show();
 
         });
     }

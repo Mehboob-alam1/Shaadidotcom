@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.mehboob.myshadi.R;
 
 import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
@@ -28,6 +29,7 @@ import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 import com.mehboob.myshadi.views.activities.AddBioActivity;
+import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
 import com.mehboob.myshadi.views.activities.SetPreferencesActivity;
 import com.mehboob.myshadi.views.dashboard.EditProfileActivity;
 import com.mehboob.myshadi.views.dashboard.premium.UpgradePremiumActivity;
@@ -64,7 +66,6 @@ public class HomeFragment extends Fragment {
         //
 
 
-        Toast.makeText(requireActivity(), "" + sessionManager.fetchGender() + "  " + sessionManager.fetchUserId(), Toast.LENGTH_SHORT).show();
 
 
             setProfileData();
@@ -94,7 +95,11 @@ public class HomeFragment extends Fragment {
         binding.recyclerNewMatches.setAdapter(newMatchesAdapter);
         binding.recyclerNewMatches.setLayoutManager(new LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-
+        newMatchesAdapter.setOnItemClickListener((userProfile, position) -> {
+            Intent i = new Intent(requireContext(), ProfileDetailedActivity.class);
+            i.putExtra("currentPerson", new Gson().toJson(userProfile));
+            startActivity(i);
+        });
     }
 
 

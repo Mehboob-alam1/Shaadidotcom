@@ -23,12 +23,19 @@ import java.util.List;
 public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Holder> {
     private List<UserMatches> newMatches;
     private Context context;
+    public OnItemClickListener onItemClickListener;
 
     public NewMatchesAdapter(List<UserMatches> newMatches, Context context) {
         this.newMatches = newMatches;
         this.context = context;
     }
+    public interface OnItemClickListener {
+        void onItemClick(UserMatches userProfile, int position);
+    }
 
+    public void setOnItemClickListener(NewMatchesAdapter.OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -98,6 +105,13 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
             txtProfileName = itemView.findViewById(R.id.txtProfileName);
             txtProfileInfo = itemView.findViewById(R.id.txtProfileInfo);
             btnSendConnects = itemView.findViewById(R.id.btnSendConnects);
+
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
+                    onItemClickListener.onItemClick(newMatches.get(position), position);
+                }
+            });
         }
     }
 }

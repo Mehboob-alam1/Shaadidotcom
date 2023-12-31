@@ -35,11 +35,7 @@ android:icon="@drawable/baseline_location_on_24"
             android:layout_height="wrap_content"
 
             android:text="Shortlisted"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:text="Search"/>
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
