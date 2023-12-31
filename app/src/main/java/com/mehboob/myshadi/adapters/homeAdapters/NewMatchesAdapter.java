@@ -106,6 +106,9 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
             txtProfileInfo = itemView.findViewById(R.id.txtProfileInfo);
             btnSendConnects = itemView.findViewById(R.id.btnSendConnects);
 
+
+
+
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
