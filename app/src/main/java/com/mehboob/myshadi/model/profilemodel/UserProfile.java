@@ -60,6 +60,15 @@ public class UserProfile {
     private String aboutMe;
 
     private String date_of_birth;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getDate_of_birth() {
         return date_of_birth;
@@ -151,7 +160,8 @@ public class UserProfile {
                        String latitude,
                        String longitude,
                        String aboutMe,
-                       String date_of_birth) {
+                       String date_of_birth,
+                       String token) {
         this.profileFor = profileFor;
         this.gender = gender;
         this.fullName = fullName;
@@ -190,6 +200,7 @@ public class UserProfile {
         this.longitude=longitude;
         this.aboutMe=aboutMe;
         this.date_of_birth=date_of_birth;
+        this.token= token;
     }
 
     public UserProfile(String gender,String livingIn,String religion,String community,String subCommunity,String maritalStatus,String userId){

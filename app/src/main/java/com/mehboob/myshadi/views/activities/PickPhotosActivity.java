@@ -1,7 +1,6 @@
 package com.mehboob.myshadi.views.activities;
 
 
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -25,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityPickPhotosBinding;
 import com.mehboob.myshadi.model.ProfileCheck;
@@ -96,6 +96,22 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
             if (!selectedImages.isEmpty()) {
 
                 binding.lottieLoading.setVisibility(View.VISIBLE);
+
+                FirebaseMessaging.getInstance().getToken()
+                        .addOnCompleteListener(task -> {
+                            if (!task.isSuccessful()) {
+                                Log.d("token","Fetching FCM registration token failed");
+                                return;
+                            }
+
+                            // Get new FCM registration token
+                            String token = task.getResult();
+                            sessionManager.saveToken(token);
+                            // Log and toast
+
+                            Log.d("token","The token is " +token);
+                        });
+                Log.d("Token","The token in shared is "+sessionManager.fetchToken());
                 uploadData();
 
 
@@ -110,7 +126,7 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
 
 
     private void uploadData() {
-        String time= String.valueOf(System.currentTimeMillis());
+        String time = String.valueOf(System.currentTimeMillis());
         UserProfile profile = new UserProfile(sessionManager.fetchProfileFor(),
                 sessionManager.fetchGender(),
                 sessionManager.fetchFullName(),
@@ -140,15 +156,16 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
                 false
                 , "Free",
                 false,
-               time,
+                time,
                 new Preferences(),
                 latitude, longitude,
                 sessionManager.fetchAboutMe(),
-                sessionManager.fetchDateBirth());
+                sessionManager.fetchDateBirth(),
+                sessionManager.fetchToken());
         fupViewModel.uploadUserProfile(selectedImages, profile);
 
 
-        fupViewModel.uploadChecks(new ProfileCheck(true,false,time,userData.getUserId()));
+        fupViewModel.uploadChecks(new ProfileCheck(true, false, time, userData.getUserId()));
 
         fupViewModel.getCheckIfUpload().observe(this, aBoolean -> {
 
@@ -239,7 +256,7 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
         latitude = String.valueOf(location.getLatitude());
         longitude = String.valueOf(location.getLongitude());
 
-        fupViewModel.updateLocation(latitude, longitude,userData.getUserId());
+        fupViewModel.updateLocation(latitude, longitude, userData.getUserId());
 
     }
 

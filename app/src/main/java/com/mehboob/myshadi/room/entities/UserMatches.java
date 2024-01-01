@@ -128,6 +128,17 @@ public class UserMatches {
     private String aboutMe;
 @ColumnInfo(name = "date_of_birth")
     private String date_of_birth;
+@ColumnInfo(name = "token")
+private String token;
+
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getDate_of_birth() {
         return date_of_birth;

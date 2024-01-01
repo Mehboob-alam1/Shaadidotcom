@@ -38,6 +38,7 @@ android {
 dependencies {
     implementation 'com.google.firebase:firebase-database:20.3.0'
     implementation 'com.google.firebase:firebase-storage:20.3.0'
+    implementation 'com.google.firebase:firebase-messaging:23.4.0'
 
 //    implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
 
@@ -98,5 +99,5 @@ dependencies {
     // design tablyout
     implementation 'io.github.farimarwat:simpleprogressbar:1.1'
 
-
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }

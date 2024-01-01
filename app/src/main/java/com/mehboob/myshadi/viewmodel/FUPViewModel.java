@@ -81,6 +81,9 @@ public class FUPViewModel extends AndroidViewModel {
         repository.updatePreferences(preferences, userId);
     }
 
+    public void updateToken(String token,String userId){
+        repository.updateToken(token,userId);
+    }
     public void updateLocation(String lat, String lon, String userId) {
 
         repository.updateLocation(lat, lon, userId);

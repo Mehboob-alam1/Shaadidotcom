@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.mehboob.myshadi.R;
 
@@ -66,9 +67,7 @@ public class HomeFragment extends Fragment {
         //
 
 
-
-
-            setProfileData();
+        setProfileData();
 
         setRecyclerView();
 
@@ -85,6 +84,7 @@ public class HomeFragment extends Fragment {
             startActivity(i);
 
         });
+
 
         return binding.getRoot();
     }
@@ -103,15 +103,12 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
     private void setProfileData() {
 
 
         fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), new Observer<UserProfileData>() {
             @Override
             public void onChanged(UserProfileData userProfile) {
-
 
 
                 try {
@@ -138,6 +135,29 @@ public class HomeFragment extends Fragment {
                 binding.btnUpgradeNow.setOnClickListener(view -> {
                     startActivity(new Intent(requireActivity(), UpgradePremiumActivity.class));
                 });
+
+                try {
+
+
+                    FirebaseMessaging.getInstance().getToken()
+                            .addOnCompleteListener(task -> {
+                                if (!task.isSuccessful()) {
+                                    Log.d("token", "Fetching FCM registration token failed");
+                                    return;
+                                }
+
+                                // Get new FCM registration token
+                                String token = task.getResult();
+
+                                fupViewModel.updateToken(token, sessionManager.fetchUserId());
+                                sessionManager.saveToken(token);
+                                // Log and toast
+
+                                Log.d("token", "The token is " + token);
+                            });
+                } catch (Exception e) {
+                    Log.d("Exception", e.getLocalizedMessage());
+                }
             }
         });
 

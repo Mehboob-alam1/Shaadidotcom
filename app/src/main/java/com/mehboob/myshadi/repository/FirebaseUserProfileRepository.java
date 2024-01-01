@@ -15,12 +15,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mehboob.myshadi.model.ProfileCheck;
@@ -59,6 +62,7 @@ private MutableLiveData<UserProfileData> userProfileDataMutable;
     private DataDatabase dataDatabase;
 
     private UserProfileDataDao userProfileDataDao;
+    private String token;
 
 
     public FirebaseUserProfileRepository(Application application) {
@@ -101,6 +105,9 @@ private MutableLiveData<UserProfileData> userProfileDataMutable;
 
     public void uploadProfile(UserProfile userProfile, ArrayList<String> imageUrls) {
 
+
+
+
         UserProfile profile = new UserProfile(userProfile.getProfileFor(),
                 userProfile.getGender(),
                 userProfile.getFullName(),
@@ -135,7 +142,8 @@ private MutableLiveData<UserProfileData> userProfileDataMutable;
                 userProfile.getLatitude(),
                 userProfile.getLongitude(),
                 userProfile.getAboutMe(),
-                userProfile.getDate_of_birth());
+                userProfile.getDate_of_birth(),
+                userProfile.getToken());
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
@@ -318,7 +326,13 @@ private MutableLiveData<UserProfileData> userProfileDataMutable;
 
 
     }
+public void updateToken(String token,String userId){
+    DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");
 
+    userProfileRef.child(sessionManager.fetchGender()).child(userId)
+            .child("token")
+            .setValue(token);
+}
     public void updatePreferences(Preferences preferences, String userId) {
 
         DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles");

@@ -11,27 +11,43 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.bumptech.glide.util.Util;
+import com.google.android.gms.dynamic.IFragmentWrapper;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.JsonObject;
 import com.mehboob.myshadi.model.Connection;
+import com.mehboob.myshadi.model.profilemodel.NotificationData;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.Dao.RecentMatchesDao;
 import com.mehboob.myshadi.room.database.DataDatabase;
 import com.mehboob.myshadi.room.entities.UserMatches;
+import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MatchMakingRepository {
 
@@ -47,8 +63,10 @@ public class MatchMakingRepository {
     DataDatabase dataDatabase;
     private LiveData<List<UserMatches>> allUserProfiles;
     private List<UserMatches> allUserProfilesData;
+    private MutableLiveData<Boolean> connectionSent = new MutableLiveData<>();
 
     public MatchMakingRepository(Application application) {
+        FirebaseApp.initializeApp(application);
 
         dataDatabase = DataDatabase.getInstance(application);
         recentMatchesDao = dataDatabase.recentMatchesDao();
@@ -62,6 +80,10 @@ public class MatchMakingRepository {
     public void insertUserProfile(List<UserMatches> userProfileEntity) {
         // You may want to perform this operation in a background thread.
         new InsertAsyncTask(dataDatabase).execute(userProfileEntity);
+    }
+
+    public MutableLiveData<Boolean> getConnectionSent() {
+        return connectionSent;
     }
 
     public LiveData<List<UserMatches>> getAllUserProfiles() {
@@ -155,25 +177,88 @@ public class MatchMakingRepository {
     }
 
 
-    public void makeConnections(Connection connection) {
+    public void makeConnections(Connection connection, UserMatches otherUserMatches, UserProfileData currentUser) {
 
-        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Connects");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Connects");
         ref.child(connection.getCombinedId())
                 .setValue(connection)
                 .addOnCompleteListener(task -> {
-                    if (task.isComplete()){
-                        Toast.makeText(application, "Connection sent successfully", Toast.LENGTH_SHORT).show();
-
-                        sendNotification(connection);
+                    if (task.isComplete()) {
+                        connectionSent.postValue(true);
+                        NotificationData notificationData= new NotificationData(currentUser.getImageUrl(), currentUser.getFullName(),
+                                currentUser.getUserId(),currentUser.getCityName() + " is interested in your profile",otherUserMatches.getUserId());
+                        setNotificationToServerToOtherUser(notificationData);
                     }
                 }).addOnFailureListener(e -> {
-                    Toast.makeText(application, "Something went wrong", Toast.LENGTH_SHORT).show();
                 });
 
     }
 
-    private void sendNotification(Connection connection) {
+    private void setNotificationToServerToOtherUser(NotificationData notificationData) {
+
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Notifications");
+         databaseReference.child(notificationData.getUserId())
+                 .setValue(notificationData);
+
+    }
+
+    public void sendNotification(Connection connection, UserMatches otherUserMatches, UserProfileData currentUser) {
+
+        // current user name, message,currentUSerID,otherUSerToken
 
 
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject notificationObject = new JSONObject();
+
+            notificationObject.put("title", currentUser.getFullName());
+            notificationObject.put("body", currentUser.getFullName() + " sent you a connect");
+
+
+            JSONObject dataObject = new JSONObject();
+            dataObject.put("userId", currentUser.getUserId());
+            dataObject.put("gender", currentUser.getGender());
+
+            jsonObject.put("notification", notificationObject);
+            jsonObject.put("data", dataObject);
+            jsonObject.put("to", otherUserMatches.getToken());
+
+            callApi(jsonObject, connection, otherUserMatches, currentUser);
+        } catch (Exception e) {
+
+        }
+    }
+
+
+    public void callApi(JSONObject jsonObject, Connection connection, UserMatches otherUserMatches, UserProfileData userProfileData) {
+        MediaType JSON = MediaType.get("application/json");
+
+        OkHttpClient client = new OkHttpClient();
+
+        String url = "https://fcm.googleapis.com/fcm/send";
+
+        RequestBody requestBody = RequestBody.create(jsonObject.toString(), JSON);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .header("Authorization", "Bearer AAAAtT1kHVE:APA91bHLrXzauLb6Iw0bxzoFS6mkLhDvJRxECeM96INdpD3DeFjNAlx-YXTWgnMFTqz_eNyt8lGnBYpH7ks6ot2LO1J6H6IH7tbfEwuHXz9152YOOiXzy5tx7mfvop6kOZ9A_uXwLrk0")
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                connectionSent.postValue(false);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+
+
+                    makeConnections(connection, otherUserMatches, userProfileData);
+                }
+            }
+        });
     }
 }

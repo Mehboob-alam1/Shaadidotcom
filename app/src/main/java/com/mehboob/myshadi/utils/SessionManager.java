@@ -44,6 +44,7 @@ public class SessionManager {
 
     private String USER_ID="user_id";
     private String DATE_BIRTH="date_birth";
+    private String TOKEN="token";
 
 
     public SessionManager(Context context) {
@@ -75,10 +76,22 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(ABOUT_ME, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(USER_ID, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(DATE_BIRTH, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(TOKEN, Context.MODE_PRIVATE);
 
 
     }
 
+
+    public void saveToken(String token){
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString(TOKEN,token);
+        editor.apply();
+        editor.commit();
+    }
+
+    public String fetchToken(){
+        return  sharedPreferences.getString(TOKEN,"null");
+    }
     public void saveDateBirth(String date_ofBirth){
         SharedPreferences.Editor editor= sharedPreferences.edit();
         editor.putString(DATE_BIRTH,date_ofBirth);

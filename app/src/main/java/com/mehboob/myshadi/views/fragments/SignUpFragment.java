@@ -39,8 +39,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.databinding.FragmentSignUpBinding;
@@ -49,6 +56,7 @@ import com.mehboob.myshadi.room.models.User;
 import com.mehboob.myshadi.viewmodel.AuthViewModel;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.UserViewModel;
+import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
 import com.mehboob.myshadi.views.activities.ProfileForActivity;
 import com.mehboob.myshadi.views.dashboard.DashBoardActivity;
 
@@ -232,7 +240,7 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
     @Override
     public void onProfileCompletion(boolean isProfileComplete) {
 
-
+          checkNotifData();
         Log.d("ProfileCompletion", "onProfileCompletion: " + isProfileComplete);
         if (isProfileComplete) {
             startActivity(new Intent(requireActivity(), DashBoardActivity.class));
@@ -247,6 +255,39 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
 
         dialog.dismiss();
 
+    }
+
+    private void checkNotifData() {
+
+        if (requireActivity().getIntent().getExtras() != null) {
+            // from notification
+            String userId = requireActivity().getIntent().getExtras().getString("userId");
+            String gender = requireActivity().getIntent().getExtras().getString("gender");
+
+            Toast.makeText(requireActivity(), "Notification from  " + userId + " gender " + gender, Toast.LENGTH_SHORT).show();
+            DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
+                    .child(gender)
+                    .child(userId);
+            userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        UserProfileData userProfile = snapshot.getValue(UserProfileData.class);
+                        Toast.makeText(requireActivity(), "" + userProfile.toString(), Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(requireActivity(), ProfileDetailedActivity.class);
+                        i.putExtra("currentPerson", new Gson().toJson(userProfile));
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
     }
 
     @Override

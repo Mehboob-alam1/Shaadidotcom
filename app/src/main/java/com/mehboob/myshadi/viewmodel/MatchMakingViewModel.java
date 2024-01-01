@@ -6,9 +6,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.mehboob.myshadi.model.Connection;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.repository.MatchMakingRepository;
 import com.mehboob.myshadi.room.entities.UserMatches;
+import com.mehboob.myshadi.room.entities.UserProfileData;
 
 import java.util.List;
 
@@ -19,6 +21,8 @@ public class MatchMakingViewModel extends AndroidViewModel {
 
     private LiveData<List<UserMatches>> bestRecentMatchedProfiles;
 
+    private MutableLiveData<Boolean>   connectionSent;
+
 
     public MatchMakingViewModel(Application application) {
         super(application);
@@ -28,9 +32,14 @@ public class MatchMakingViewModel extends AndroidViewModel {
 
         bestRecentMatchedProfiles = repository.getAllUserProfiles();
 
+        connectionSent=repository.getConnectionSent();
+
 
     }
 
+    public MutableLiveData<Boolean> getConnectionSent() {
+        return connectionSent;
+    }
 
     public LiveData<List<UserMatches>> getUserProfilesCreatedLastWeek() {
 
@@ -42,6 +51,11 @@ public class MatchMakingViewModel extends AndroidViewModel {
         repository.checkMyProfileMatches();
     }
 
+
+    public void sendNotification(Connection connection, UserMatches otherUserMatches, UserProfileData currentUser){
+
+        repository.sendNotification(connection,otherUserMatches,currentUser);
+    }
     public LiveData<List<UserMatches>> getBestMatchesPref(int minAge,int maxAge){
 
         return repository.getBestMatchesPref(minAge,maxAge);
