@@ -22,6 +22,10 @@ import com.mehboob.myshadi.viewmodel.CountriesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import kotlinx.coroutines.GlobalScope;
 
 public class CityNameActivity extends AppCompatActivity {
     private ActivityCityNameBinding binding;
@@ -32,16 +36,18 @@ public class CityNameActivity extends AppCompatActivity {
     private List<CitiesAdapter> citiesList;
 
     private SessionManager sessionManager;
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding=ActivityCityNameBinding.inflate(getLayoutInflater());
+        binding = ActivityCityNameBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         citiesViewModel = new ViewModelProvider(this).get(CitiesViewModel.class);
-        sessionManager= new SessionManager(this);
+        sessionManager = new SessionManager(this);
 
-        citiesList= new ArrayList<>();
+        citiesList = new ArrayList<>();
         adapter = new CitiesAdapter();
 
 
@@ -50,23 +56,24 @@ public class CityNameActivity extends AppCompatActivity {
         });
 
 
+        citiesViewModel.isLoading.observe(this, aBoolean -> {
 
-        citiesViewModel.isLoading.observe(this,aBoolean -> {
-
-            if (!aBoolean){
+            if (!aBoolean) {
                 binding.progressBar.setVisibility(View.GONE);
             }
         });
-        Toast.makeText(this, ""+sessionManager.fetchStateCode(), Toast.LENGTH_SHORT).show();
-        citiesViewModel.getCities(sessionManager.fetchStateCode());
-        citiesViewModel.getMutableLiveData().observe(this,cities -> {
+        Toast.makeText(this, "" + sessionManager.fetchStateCode(), Toast.LENGTH_SHORT).show();
+
+
+        runInBackground();
+        citiesViewModel.getMutableLiveData().observe(this, cities -> {
             adapter.setCities(cities);
 
             adapter.setOnItemClickListener((city, position) -> {
 
 
                 sessionManager.saveCityName(city.getName());
-
+                executor.shutdown();
                 finish();
             });
         });
@@ -74,8 +81,6 @@ public class CityNameActivity extends AppCompatActivity {
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setAdapter(adapter);
-
-
 
 
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -91,5 +96,20 @@ public class CityNameActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void runInBackground() {
+        executor.execute(() -> {
+            try {
+                // Perform your potentially memory-intensive operation here
+                citiesViewModel.getCities(sessionManager.fetchStateCode());
+            } catch (OutOfMemoryError e) {
+                // Handle OutOfMemoryError
+                System.out.println(e.getLocalizedMessage());
+            } catch (Exception e) {
+                // Handle other exceptions
+                System.out.println(e.getLocalizedMessage());
+            }
+        });
     }
 }

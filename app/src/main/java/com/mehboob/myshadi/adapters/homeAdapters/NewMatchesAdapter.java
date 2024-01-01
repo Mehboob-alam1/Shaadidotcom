@@ -1,6 +1,7 @@
 package com.mehboob.myshadi.adapters.homeAdapters;
 
 import android.content.Context;
+import android.se.omapi.SEService;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +22,7 @@ import com.mehboob.myshadi.databinding.MatchesSampleBinding;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.utils.Utils;
+import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 
 import java.util.List;
 
@@ -26,20 +30,31 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
     private List<UserMatches> newMatches;
     private Context context;
     public OnItemClickListener onItemClickListener;
-
+    public onConnectClickListener onConnectClickListener;
+    private MatchMakingViewModel makingViewModel;
 
 
     public NewMatchesAdapter(List<UserMatches> newMatches, Context context) {
         this.newMatches = newMatches;
         this.context = context;
     }
+
     public interface OnItemClickListener {
         void onItemClick(UserMatches userProfile, int position);
+    }
+
+    public interface onConnectClickListener {
+        void onConnectClick(UserMatches userMatches, int position);
+    }
+
+    public void setOnConnectClickListener(NewMatchesAdapter.onConnectClickListener listener) {
+        this.onConnectClickListener = listener;
     }
 
     public void setOnItemClickListener(NewMatchesAdapter.OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
+
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -62,19 +77,9 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
 
 
 
-
-        holder.btnSendConnects.setOnClickListener( view -> {
-           sendConnection(userProfile.getUserId());
-
-        });
     }
 
-    private void sendConnection(String userId) {
 
-
-
-
-    }
 
 
     public String formatInfo(String age, String height, String community, String subCommunity, String livingIn) {
@@ -114,7 +119,12 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
             btnSendConnects = itemView.findViewById(R.id.btnSendConnects);
 
 
-
+            btnSendConnects.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION && onConnectClickListener != null) {
+                    onConnectClickListener.onConnectClick(newMatches.get(pos), pos);
+                }
+            });
 
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();

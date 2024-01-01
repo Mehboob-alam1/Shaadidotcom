@@ -100,4 +100,8 @@ dependencies {
     implementation 'io.github.farimarwat:simpleprogressbar:1.1'
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+    //couroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
+
 }

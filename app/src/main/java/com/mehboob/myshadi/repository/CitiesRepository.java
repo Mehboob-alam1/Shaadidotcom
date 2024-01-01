@@ -30,9 +30,29 @@ public class CitiesRepository {
 
     public void getCities(String stateCode,CitiesCallBack citiesCallBack){
 
-        Query query = databaseReference.orderByChild("state_code").equalTo(stateCode);
+//        Query query = databaseReference.orderByChild("state_code").equalTo(stateCode);
+//
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                List<Cities> cities = new ArrayList<>();
+//                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+//                    Cities city = childSnapshot.getValue(Cities.class);
+//                    if (city != null) {
+//                        cities.add(city);
+//                    }
+//                }
+//                citiesCallBack.onSuccess(cities);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                citiesCallBack.onFailure(error.getMessage());
+//            }
+//        });
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Cities> cities = new ArrayList<>();

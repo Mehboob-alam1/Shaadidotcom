@@ -23,6 +23,7 @@ import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
 import com.mehboob.myshadi.databinding.FragmentHomeBinding;
 
+import com.mehboob.myshadi.model.Connection;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.utils.SessionManager;
@@ -99,6 +100,24 @@ public class HomeFragment extends Fragment {
             Intent i = new Intent(requireContext(), ProfileDetailedActivity.class);
             i.putExtra("currentPerson", new Gson().toJson(userProfile));
             startActivity(i);
+        });
+
+        newMatchesAdapter.setOnConnectClickListener((userMatches, position) -> {
+            fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), userProfileData -> {
+                Connection connection = new Connection(userProfileData.getUserId(),
+                        userMatches.getUserId(), String.valueOf(System.currentTimeMillis()),
+                        userMatches.getUserId() + "_" + userProfileData.getUserId());
+                matchMakingViewModel.sendNotification(connection, userMatches, userProfileData);
+
+                matchMakingViewModel.getConnectionSent().observe(getViewLifecycleOwner(), aBoolean -> {
+                    if (aBoolean) {
+                        Toast.makeText(requireActivity(), "Connection sent", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(requireActivity(), "Connection not sent ", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+
         });
     }
 

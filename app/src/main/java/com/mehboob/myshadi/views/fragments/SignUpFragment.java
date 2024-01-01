@@ -240,9 +240,10 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
     @Override
     public void onProfileCompletion(boolean isProfileComplete) {
 
-          checkNotifData();
+
         Log.d("ProfileCompletion", "onProfileCompletion: " + isProfileComplete);
         if (isProfileComplete) {
+            checkNotifData();
             startActivity(new Intent(requireActivity(), DashBoardActivity.class));
             requireActivity().finishAffinity();
 
