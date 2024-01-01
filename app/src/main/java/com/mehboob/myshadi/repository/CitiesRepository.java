@@ -1,5 +1,8 @@
 package com.mehboob.myshadi.repository;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,31 +31,12 @@ public class CitiesRepository {
 
 
 
-    public void getCities(String stateCode,CitiesCallBack citiesCallBack){
 
-//        Query query = databaseReference.orderByChild("state_code").equalTo(stateCode);
-//
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                List<Cities> cities = new ArrayList<>();
-//                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-//                    Cities city = childSnapshot.getValue(Cities.class);
-//                    if (city != null) {
-//                        cities.add(city);
-//                    }
-//                }
-//                citiesCallBack.onSuccess(cities);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                citiesCallBack.onFailure(error.getMessage());
-//            }
-//        });
+    public void getCities(String stateCode,CitiesCallBack citiesCallBack) {
 
+        Query query = databaseReference.orderByChild("state_code").equalTo(stateCode);
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Cities> cities = new ArrayList<>();
@@ -70,8 +54,8 @@ public class CitiesRepository {
                 citiesCallBack.onFailure(error.getMessage());
             }
         });
-
     }
+
 
 
     public interface CitiesCallBack{

@@ -116,11 +116,11 @@
                 android:textSize="20sp" />
 
 
-            <TextView
+            <EditText
                 android:id="@+id/etCity"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Select a city"
+                android:text="Enter a city"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/edit_text_back"
                 android:gravity="center_vertical"

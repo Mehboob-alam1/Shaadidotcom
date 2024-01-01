@@ -93,9 +93,9 @@ public class StateCityActivity extends AppCompatActivity {
 
             startActivity(new Intent(StateCityActivity.this, StateNameActivity.class));
         });
-        binding.etCity.setOnClickListener(view -> {
-            startActivity(new Intent(StateCityActivity.this,CityNameActivity.class));
-        });
+//        binding.etCity.setOnClickListener(view -> {
+//            startActivity(new Intent(StateCityActivity.this,CityNameActivity.class));
+//        });
         binding.btnContinue.setOnClickListener(view -> {
             if (binding.txtState.getText().toString().equals("Select a state") ) {
 
