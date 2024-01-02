@@ -19,6 +19,7 @@ import com.mehboob.myshadi.adapters.homeAdapters.NearMeAdapter;
 import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
 import com.mehboob.myshadi.databinding.FragmentNearMeBinding;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
@@ -57,9 +58,7 @@ public class NearMeFragment extends Fragment {
 
 
 
-        nearMeAdapter.setOnItemClickListener((userProfile, position) -> {
-            //
-        });
+
         return binding.getRoot();
 
 
@@ -72,11 +71,13 @@ public class NearMeFragment extends Fragment {
         binding.nearMeRecyclerView.setAdapter(nearMeAdapter);
         binding.nearMeRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
+
         nearMeAdapter.setOnItemClickListener((userProfile, position) -> {
             Intent i = new Intent(requireContext(), ProfileDetailedActivity.class);
             i.putExtra("currentPerson", new Gson().toJson(userProfile));
             startActivity(i);
         });
+      
     }
 
     @Override

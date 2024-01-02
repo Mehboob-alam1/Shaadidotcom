@@ -179,17 +179,34 @@ public class MatchMakingRepository {
 
     public void makeConnections(Connection connection, UserMatches otherUserMatches, UserProfileData currentUser) {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Connects");
-        ref.child(connection.getCombinedId())
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("ConnectionISent").child(currentUser.getUserId())
                 .setValue(connection)
                 .addOnCompleteListener(task -> {
                     if (task.isComplete()) {
+
+                          connectionToUser(connection,otherUserMatches,currentUser);
+
+                    }
+                }).addOnFailureListener(e -> {
+                });
+
+    }
+
+    private void connectionToUser(Connection connection, UserMatches otherUserMatches, UserProfileData currentUser) {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("ConnectionIRecieved").child(otherUserMatches.getUserId())
+                .setValue(connection)
+                .addOnCompleteListener(task -> {
+                    if (task.isComplete() && task.isSuccessful()){
                         connectionSent.postValue(true);
                         NotificationData notificationData= new NotificationData(currentUser.getImageUrl(), currentUser.getFullName(),
-                                currentUser.getUserId(),currentUser.getCityName() + " is interested in your profile",otherUserMatches.getUserId());
+                                currentUser.getUserId(),currentUser.getFullName() + " is interested in your profile",otherUserMatches.getUserId());
                         setNotificationToServerToOtherUser(notificationData);
                     }
                 }).addOnFailureListener(e -> {
+                    connectionSent.postValue(false);
                 });
 
     }

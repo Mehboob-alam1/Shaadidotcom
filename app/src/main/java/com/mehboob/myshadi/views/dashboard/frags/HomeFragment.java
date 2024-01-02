@@ -25,6 +25,7 @@ import com.mehboob.myshadi.databinding.FragmentHomeBinding;
 
 import com.mehboob.myshadi.model.Connection;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
@@ -106,12 +107,20 @@ public class HomeFragment extends Fragment {
             fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), userProfileData -> {
                 Connection connection = new Connection(userProfileData.getUserId(),
                         userMatches.getUserId(), String.valueOf(System.currentTimeMillis()),
-                        userMatches.getUserId() + "_" + userProfileData.getUserId());
+                        userMatches.getUserId() + "_" + userProfileData.getUserId(),"Pending",false,userProfileData.getGender(),userMatches.getGender());
                 matchMakingViewModel.sendNotification(connection, userMatches, userProfileData);
 
                 matchMakingViewModel.getConnectionSent().observe(getViewLifecycleOwner(), aBoolean -> {
                     if (aBoolean) {
                         Toast.makeText(requireActivity(), "Connection sent", Toast.LENGTH_SHORT).show();
+                        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(), new Observer<List<UserMatches>>() {
+                            @Override
+                            public void onChanged(List<UserMatches> userMatches) {
+                                userMatches.get(position).setConnectionSent(true);
+                                userMatches.remove(position);
+                                newMatchesAdapter.notifyDataSetChanged();
+                            }
+                        });
                     } else {
                         Toast.makeText(requireActivity(), "Connection not sent ", Toast.LENGTH_SHORT).show();
                     }

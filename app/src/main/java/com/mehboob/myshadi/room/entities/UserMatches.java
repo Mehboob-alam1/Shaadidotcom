@@ -131,6 +131,27 @@ public class UserMatches {
 @ColumnInfo(name = "token")
 private String token;
 
+@ColumnInfo(name = "connected")
+private boolean connected;
+
+@ColumnInfo(name = "connectionSent")
+private boolean connectionSent;
+
+    public boolean isConnectionSent() {
+        return connectionSent;
+    }
+
+    public void setConnectionSent(boolean connectionSent) {
+        this.connectionSent = connectionSent;
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
 
     public String getToken() {
         return token;
