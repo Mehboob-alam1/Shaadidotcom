@@ -6,16 +6,26 @@ public class ProfileCheck {
     private boolean profileVerified;
     private String profileCreatedTime;
     private String userId;
+    private String gender;
 
 
     public ProfileCheck() {
     }
 
-    public ProfileCheck(boolean profileCompleted, boolean profileVerified, String profileCreatedTime, String userId) {
+    public ProfileCheck(boolean profileCompleted, boolean profileVerified, String profileCreatedTime, String userId, String gender) {
         this.profileCompleted = profileCompleted;
         this.profileVerified = profileVerified;
         this.profileCreatedTime = profileCreatedTime;
         this.userId = userId;
+        this.gender = gender;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public boolean isProfileCompleted() {

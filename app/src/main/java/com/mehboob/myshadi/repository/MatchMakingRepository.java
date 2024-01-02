@@ -181,6 +181,7 @@ public class MatchMakingRepository {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("ConnectionISent").child(currentUser.getUserId())
+                .child(otherUserMatches.getUserId())
                 .setValue(connection)
                 .addOnCompleteListener(task -> {
                     if (task.isComplete()) {
@@ -197,6 +198,7 @@ public class MatchMakingRepository {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("ConnectionIRecieved").child(otherUserMatches.getUserId())
+                .child(currentUser.getUserId())
                 .setValue(connection)
                 .addOnCompleteListener(task -> {
                     if (task.isComplete() && task.isSuccessful()){
@@ -215,6 +217,7 @@ public class MatchMakingRepository {
 
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Notifications");
          databaseReference.child(notificationData.getUserId())
+                 .child(notificationData.getFromUserId())
                  .setValue(notificationData);
 
     }

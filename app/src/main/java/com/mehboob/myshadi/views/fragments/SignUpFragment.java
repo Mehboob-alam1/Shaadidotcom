@@ -295,7 +295,7 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
     public void onResume() {
         super.onResume();
 
-dialog.show();
+//        dialog.show();
     }
 
     @Override

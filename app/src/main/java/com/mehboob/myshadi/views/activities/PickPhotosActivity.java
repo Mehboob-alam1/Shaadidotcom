@@ -165,7 +165,7 @@ public class PickPhotosActivity extends AppCompatActivity implements FUPViewMode
         fupViewModel.uploadUserProfile(selectedImages, profile);
 
 
-        fupViewModel.uploadChecks(new ProfileCheck(true, false, time, userData.getUserId()));
+        fupViewModel.uploadChecks(new ProfileCheck(true, false, time, userData.getUserId(),sessionManager.fetchGender()));
 
         fupViewModel.getCheckIfUpload().observe(this, aBoolean -> {
 

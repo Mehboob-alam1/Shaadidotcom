@@ -68,6 +68,8 @@ public class DashBoardActivity extends AppCompatActivity {
         setBottomBar();
 
 
+        fupViewModel.getProfile(sessionManager.fetchUserId());
+
 //        checkNotifData();
 
         userViewModel.getLiveData().observe(this, user -> {
@@ -83,7 +85,7 @@ public class DashBoardActivity extends AppCompatActivity {
             }
         });
 
-        fupViewModel.getProfile(sessionManager.fetchUserId());
+
 
 
     }
