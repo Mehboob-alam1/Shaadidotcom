@@ -109,18 +109,24 @@ public class HomeFragment extends Fragment {
                         userMatches.getUserId(), String.valueOf(System.currentTimeMillis()),
                         userMatches.getUserId() + "_" + userProfileData.getUserId(),"Pending",false,userProfileData.getGender(),userMatches.getGender());
                 matchMakingViewModel.sendNotification(connection, userMatches, userProfileData);
-
+                matchMakingViewModel.insertConnection(connection);
                 matchMakingViewModel.getConnectionSent().observe(getViewLifecycleOwner(), aBoolean -> {
                     if (aBoolean) {
                         Toast.makeText(requireActivity(), "Connection sent", Toast.LENGTH_SHORT).show();
-                        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(), new Observer<List<UserMatches>>() {
-                            @Override
-                            public void onChanged(List<UserMatches> userMatches) {
-                                userMatches.get(position).setConnectionSent(true);
-                                userMatches.remove(position);
-                                newMatchesAdapter.notifyDataSetChanged();
-                            }
-                        });
+
+
+
+                        matchMakingViewModel.deleteUserMatches(userMatches);
+// Insert the SentConnection into the SentConnection table
+//                        userRepository.insertSentConnection(sentConnection);
+//
+//                        // Remove the UserMatches from the original table
+//                        userRepository.deleteUserMatches(userProfile);
+
+
+                        userMatches.setConnectionSent(true);
+                        newMatchesAdapter.notifyDataSetChanged();
+
                     } else {
                         Toast.makeText(requireActivity(), "Connection not sent ", Toast.LENGTH_SHORT).show();
                     }
@@ -208,13 +214,45 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(this, userMatches -> {
-
-            newMatchesAdapter.setNewMatches(userMatches);
-
-            binding.txtNewMatchesCount.setText("(" + userMatches.size() + ")");
 
 
+        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(),userMatches -> {
+
+
+            List<Connection> connectedUserIds = matchMakingViewModel.getConnectedUserIds().getValue();
+            List<UserMatches> filteredRecentMatches = new ArrayList<>();
+
+            if (connectedUserIds != null) {
+                for (UserMatches userProfile : userMatches) {
+                    boolean isUserConnected = false;
+
+                    // Check if the user ID is in the connectedUserIds list
+                    for (Connection connection : connectedUserIds) {
+                        if (userProfile.getUserId().equals(connection.getConnectionToId())) {
+                            isUserConnected = true;
+                            break; // No need to check further, user is connected
+                        }
+                    }
+
+                    // If the user is not connected, add to the filtered list
+                    if (!isUserConnected) {
+                        filteredRecentMatches.add(userProfile);
+                    }
+                }
+
+                // Use filteredRecentMatches for your UI or any further processing
+                newMatchesAdapter.setNewMatches(filteredRecentMatches);
+                binding.txtNewMatchesCount.setText("(" + filteredRecentMatches.size() + ")");
+            }else{
+
+                    newMatchesAdapter.setNewMatches(userMatches);
+
+                    binding.txtNewMatchesCount.setText("(" + userMatches.size() + ")");
+
+
+
+
+            }
         });
 
     }

@@ -19,6 +19,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -181,9 +182,9 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
             } catch (ApiException e) {
                 // Handle sign-in failure
 
-                Log.d("SignInError",e.getLocalizedMessage());
+                Log.d("SignInError", e.getLocalizedMessage());
 
-                Toast.makeText(requireActivity(), "Error "+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity(), "Error " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
             }
 
@@ -264,30 +265,33 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
             // from notification
             String userId = requireActivity().getIntent().getExtras().getString("userId");
             String gender = requireActivity().getIntent().getExtras().getString("gender");
+            if (userId != null && gender != null) {
 
-            Toast.makeText(requireActivity(), "Notification from  " + userId + " gender " + gender, Toast.LENGTH_SHORT).show();
-            DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
-                    .child(gender)
-                    .child(userId);
-            userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        UserProfileData userProfile = snapshot.getValue(UserProfileData.class);
-                        Toast.makeText(requireActivity(), "" + userProfile.toString(), Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(requireActivity(), ProfileDetailedActivity.class);
-                        i.putExtra("currentPerson", new Gson().toJson(userProfile));
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);
+
+                Toast.makeText(requireActivity(), "Notification from  " + userId + " gender " + gender, Toast.LENGTH_SHORT).show();
+                DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
+                        .child(gender)
+                        .child(userId);
+                userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            UserProfileData userProfile = snapshot.getValue(UserProfileData.class);
+                            Toast.makeText(requireActivity(), "" + userProfile.toString(), Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(requireActivity(), ProfileDetailedActivity.class);
+                            i.putExtra("currentPerson", new Gson().toJson(userProfile));
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(i);
+                        }
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
+                    }
+                });
 
+            }
         }
     }
 
@@ -295,7 +299,13 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
     public void onResume() {
         super.onResume();
 
-//        dialog.show();
+        dialog.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+            }
+        }, 2000);
     }
 
     @Override

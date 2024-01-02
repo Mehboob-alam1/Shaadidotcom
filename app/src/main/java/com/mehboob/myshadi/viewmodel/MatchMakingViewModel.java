@@ -67,4 +67,15 @@ public class MatchMakingViewModel extends AndroidViewModel {
     public LiveData<List<UserMatches>> getBestRecentMatchedProfiles() {
         return bestRecentMatchedProfiles;
     }
+    public void deleteUserMatches(UserMatches userMatches) {
+        repository.deleteUserMatches(userMatches);
+    }
+
+
+    public void insertConnection(Connection connection){
+        repository.insertSentConnection(connection);
+    }
+    public LiveData<List<Connection>> getConnectedUserIds() {
+        return repository.getConnectedUserIds();
+    }
 }

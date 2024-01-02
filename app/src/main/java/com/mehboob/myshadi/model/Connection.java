@@ -1,17 +1,38 @@
 package com.mehboob.myshadi.model;
 
-public class Connection {
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "sent_connections")
+
+public class Connection {
+    @NonNull
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "connectionFromId")
     private String connectionFromId;
+    @ColumnInfo(name = "connectionToId")
+
     private String connectionToId;
+    @ColumnInfo(name = "timeStamp")
+
     private String timeStamp;
+    @ColumnInfo(name = "combinedId")
+
 
     private String combinedId;
+    @ColumnInfo(name = "status")
+
     private String status;
+    @ColumnInfo(name = "connected")
 
     private boolean connected;
+    @ColumnInfo(name = "connectionFromGender")
 
     private String connectionFromGender;
+    @ColumnInfo(name = "connectionToGender")
+
     private String connectionToGender;
 
     public String getConnectionFromGender() {

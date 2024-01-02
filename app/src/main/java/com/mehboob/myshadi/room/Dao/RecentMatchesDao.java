@@ -21,8 +21,10 @@ public interface RecentMatchesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertRecentMatches(List<UserMatches> userProfiles);
 
-    @Query("Delete from userMatches")
-    void deleteUserData();
+
+
+    @Delete
+    void deleteUserMatches(UserMatches userMatches);
     @Query("SELECT * FROM userMatches")
     LiveData<List<UserMatches>> getAllUserProfiles();
 

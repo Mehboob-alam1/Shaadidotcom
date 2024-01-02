@@ -11,8 +11,10 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.google.common.collect.HashBasedTable;
+import com.mehboob.myshadi.model.Connection;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.Dao.RecentMatchesDao;
+import com.mehboob.myshadi.room.Dao.SentConnectionDao;
 import com.mehboob.myshadi.room.Dao.UserDao;
 import com.mehboob.myshadi.room.Dao.UserProfileDataDao;
 import com.mehboob.myshadi.room.entities.ArrayListConverter;
@@ -23,7 +25,7 @@ import com.mehboob.myshadi.room.models.User;
 
 import java.util.List;
 
-@Database(entities = {User.class, UserMatches.class,UserProfileData.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, UserMatches.class,UserProfileData.class, Connection.class}, version = 1, exportSchema = false)
 @TypeConverters({PreferencesConverter.class, ArrayListConverter.class,})
 
 public abstract class DataDatabase extends RoomDatabase {
@@ -35,6 +37,8 @@ public abstract class DataDatabase extends RoomDatabase {
     public abstract RecentMatchesDao recentMatchesDao();
 
     public abstract UserProfileDataDao userProfileDataDao();
+    public abstract SentConnectionDao sentConnectionDao();
+
 
     private static volatile DataDatabase instance = null;
 

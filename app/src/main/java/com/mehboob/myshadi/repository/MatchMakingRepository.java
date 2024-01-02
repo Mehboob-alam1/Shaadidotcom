@@ -24,6 +24,7 @@ import com.mehboob.myshadi.model.profilemodel.NotificationData;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.Dao.RecentMatchesDao;
+import com.mehboob.myshadi.room.Dao.SentConnectionDao;
 import com.mehboob.myshadi.room.database.DataDatabase;
 import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.room.entities.UserProfileData;
@@ -65,6 +66,11 @@ public class MatchMakingRepository {
     private List<UserMatches> allUserProfilesData;
     private MutableLiveData<Boolean> connectionSent = new MutableLiveData<>();
 
+    private SentConnectionDao sentConnectionDao;
+
+    private LiveData<List<Connection>> connectedUserIds;
+
+
     public MatchMakingRepository(Application application) {
         FirebaseApp.initializeApp(application);
 
@@ -75,6 +81,9 @@ public class MatchMakingRepository {
         sessionManager = new SessionManager(application);
         allUserProfilesData = new ArrayList<>();
 
+        sentConnectionDao = dataDatabase.sentConnectionDao();
+        connectedUserIds = sentConnectionDao.getSentConnections();
+
     }
 
     public void insertUserProfile(List<UserMatches> userProfileEntity) {
@@ -84,6 +93,9 @@ public class MatchMakingRepository {
 
     public MutableLiveData<Boolean> getConnectionSent() {
         return connectionSent;
+    }
+    public LiveData<List<Connection>> getConnectedUserIds() {
+        return connectedUserIds;
     }
 
     public LiveData<List<UserMatches>> getAllUserProfiles() {
@@ -203,6 +215,8 @@ public class MatchMakingRepository {
                 .addOnCompleteListener(task -> {
                     if (task.isComplete() && task.isSuccessful()){
                         connectionSent.postValue(true);
+
+
                         NotificationData notificationData= new NotificationData(currentUser.getImageUrl(), currentUser.getFullName(),
                                 currentUser.getUserId(),currentUser.getFullName() + " is interested in your profile",otherUserMatches.getUserId());
                         setNotificationToServerToOtherUser(notificationData);
@@ -219,7 +233,6 @@ public class MatchMakingRepository {
          databaseReference.child(notificationData.getUserId())
                  .child(notificationData.getFromUserId())
                  .setValue(notificationData);
-
     }
 
     public void sendNotification(Connection connection, UserMatches otherUserMatches, UserProfileData currentUser) {
@@ -280,5 +293,43 @@ public class MatchMakingRepository {
                 }
             }
         });
+    }
+
+    public void insertSentConnection(Connection sentConnection) {
+        new InsertSentConnectionAsyncTask(sentConnectionDao).execute(sentConnection);
+    }
+
+    public void deleteUserMatches(UserMatches userMatches) {
+        new DeleteUserMatchesAsyncTask(recentMatchesDao).execute(userMatches);
+    }
+
+
+
+    private static class InsertSentConnectionAsyncTask extends AsyncTask<Connection, Void, Void> {
+        private SentConnectionDao sentConnectionDao;
+
+        private InsertSentConnectionAsyncTask(SentConnectionDao sentConnectionDao) {
+            this.sentConnectionDao = sentConnectionDao;
+        }
+
+        @Override
+        protected Void doInBackground(Connection... sentConnections) {
+            sentConnectionDao.insertSentConnection(sentConnections[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteUserMatchesAsyncTask extends AsyncTask<UserMatches, Void, Void> {
+       private RecentMatchesDao recentMatchesDao;
+
+        private DeleteUserMatchesAsyncTask(RecentMatchesDao recentMatchesDao) {
+            this.recentMatchesDao = recentMatchesDao;
+        }
+
+        @Override
+        protected Void doInBackground(UserMatches... userMatches) {
+            recentMatchesDao.deleteUserMatches(userMatches[0]);
+            return null;
+        }
     }
 }
