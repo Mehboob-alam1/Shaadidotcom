@@ -1,8 +1,16 @@
 package com.mehboob.myshadi.views.dashboard.frags.matches;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +29,7 @@ import com.mehboob.myshadi.databinding.FragmentNearMeBinding;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.utils.MatchPref;
+import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
@@ -28,7 +37,7 @@ import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
 import java.util.ArrayList;
 
 
-public class NearMeFragment extends Fragment {
+public class NearMeFragment extends Fragment implements LocationListener {
 
 
     private FragmentNearMeBinding binding;
@@ -37,8 +46,10 @@ public class NearMeFragment extends Fragment {
     private MatchMakingViewModel matchMakingViewModel;
 
     private NearMeAdapter nearMeAdapter;
+    protected LocationManager locationManager;
 
     MatchPref matchPref;
+    private SessionManager sessionManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,9 +66,20 @@ public class NearMeFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentNearMeBinding.inflate(inflater, container, false);
         setRecyclerView();
+sessionManager= new SessionManager(requireActivity());
 
+        if (ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted, request it
+            int MY_PERMISSIONS_REQUEST_LOCATION = 123;
+            ActivityCompat.requestPermissions(requireActivity(),
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
+        } else {
+            locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,this::onLocationChanged);
 
-
+        }
 
         return binding.getRoot();
 
@@ -92,5 +114,15 @@ public class NearMeFragment extends Fragment {
             nearMeAdapter.setMyMatches(userMatches);
 
         });
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+
+       String latitude = String.valueOf(location.getLatitude());
+      String  longitude = String.valueOf(location.getLongitude());
+
+        fupViewModel.updateLocation(latitude, longitude, sessionManager.fetchUserId());
+
     }
 }

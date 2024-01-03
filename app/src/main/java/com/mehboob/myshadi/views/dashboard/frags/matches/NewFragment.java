@@ -20,13 +20,16 @@ import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
 import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapterHome;
 import com.mehboob.myshadi.databinding.FragmentNearMeBinding;
 import com.mehboob.myshadi.databinding.FragmentNewBinding;
+import com.mehboob.myshadi.model.Connection;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class NewFragment extends Fragment {
@@ -86,13 +89,47 @@ public class NewFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(this, userMatches -> {
-            if (userMatches != null && userMatches.size() != 0) {
-                binding.lineNoData.getRoot().setVisibility(View.GONE);
-                binding.myMatchesRecyclerView.setVisibility(View.VISIBLE);
-            }
-            adapter.setMyMatches(userMatches);
+        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(),userMatches -> {
 
+
+            List<Connection> connectedUserIds = matchMakingViewModel.getConnectedUserIds().getValue();
+            List<UserMatches> filteredRecentMatches = new ArrayList<>();
+
+            if (connectedUserIds!=null) {
+                Toast.makeText(requireActivity(), "Running from here", Toast.LENGTH_SHORT).show();
+                for (UserMatches userProfile : userMatches) {
+                    boolean isUserConnected = false;
+
+                    // Check if the user ID is in the connectedUserIds list
+                    for (Connection connection : connectedUserIds) {
+                        if (connection.getConnectionToId().equals(userProfile.getUserId())) {
+                            isUserConnected = true;
+                            break; // No need to check further, user is connected
+                        }
+                    }
+
+                    // If the user is not connected, add to the filtered list
+                    if (!isUserConnected) {
+                        filteredRecentMatches.add(userProfile);
+                    }
+                }
+
+                // Use filteredRecentMatches for your UI or any further processing
+                adapter.setMyMatches(filteredRecentMatches);
+            }else{
+                Toast.makeText(requireActivity(), "Running from there", Toast.LENGTH_SHORT).show();
+
+
+                adapter.setMyMatches(userMatches);
+
+
+
+
+
+            }
         });
+
+
+
     }
 }

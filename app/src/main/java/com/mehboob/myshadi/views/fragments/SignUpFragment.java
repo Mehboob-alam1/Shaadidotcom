@@ -261,6 +261,10 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
 
     private void checkNotifData() {
 
+        try {
+
+
+
         if (requireActivity().getIntent().getExtras() != null) {
             // from notification
             String userId = requireActivity().getIntent().getExtras().getString("userId");
@@ -292,6 +296,14 @@ public class SignUpFragment extends Fragment implements FUPViewModel.ProfileComp
                 });
 
             }
+        }
+        }catch (NullPointerException e){
+            Log.d("Exception",e.getLocalizedMessage());
+        }catch (Exception e){
+            Log.d("Exception",e.getLocalizedMessage());
+        }finally {
+            startActivity(new Intent(requireActivity(), DashBoardActivity.class));
+            requireActivity().finishAffinity();
         }
     }
 

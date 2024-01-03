@@ -1,8 +1,11 @@
 package com.mehboob.myshadi.views.dashboard.frags;
 
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -41,7 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements LocationListener {
 
 
     private FragmentHomeBinding binding;
@@ -107,21 +110,15 @@ public class HomeFragment extends Fragment {
             fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), userProfileData -> {
                 Connection connection = new Connection(userProfileData.getUserId(),
                         userMatches.getUserId(), String.valueOf(System.currentTimeMillis()),
-                        userMatches.getUserId() + "_" + userProfileData.getUserId(),"Pending",false,userProfileData.getGender(),userMatches.getGender());
+                        userMatches.getUserId() + "_" + userProfileData.getUserId(), "Pending", false, userProfileData.getGender(), userMatches.getGender());
                 matchMakingViewModel.sendNotification(connection, userMatches, userProfileData);
-                matchMakingViewModel.insertConnection(connection);
+
                 matchMakingViewModel.getConnectionSent().observe(getViewLifecycleOwner(), aBoolean -> {
                     if (aBoolean) {
                         Toast.makeText(requireActivity(), "Connection sent", Toast.LENGTH_SHORT).show();
 
 
-
                         matchMakingViewModel.deleteUserMatches(userMatches);
-// Insert the SentConnection into the SentConnection table
-//                        userRepository.insertSentConnection(sentConnection);
-//
-//                        // Remove the UserMatches from the original table
-//                        userRepository.deleteUserMatches(userProfile);
 
 
                         userMatches.setConnectionSent(true);
@@ -213,22 +210,26 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        matchMakingViewModel.getConnectedUserIds().observe(getViewLifecycleOwner(), connections -> {
+
+            Log.d("Connection", connections.toString());
+        });
 
 
-
-        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(),userMatches -> {
+        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(), userMatches -> {
 
 
             List<Connection> connectedUserIds = matchMakingViewModel.getConnectedUserIds().getValue();
             List<UserMatches> filteredRecentMatches = new ArrayList<>();
 
             if (connectedUserIds != null) {
+                Toast.makeText(requireActivity(), "Running from here", Toast.LENGTH_SHORT).show();
                 for (UserMatches userProfile : userMatches) {
                     boolean isUserConnected = false;
 
                     // Check if the user ID is in the connectedUserIds list
                     for (Connection connection : connectedUserIds) {
-                        if (userProfile.getUserId().equals(connection.getConnectionToId())) {
+                        if (connection.getConnectionToId().equals(userProfile.getUserId())) {
                             isUserConnected = true;
                             break; // No need to check further, user is connected
                         }
@@ -243,13 +244,13 @@ public class HomeFragment extends Fragment {
                 // Use filteredRecentMatches for your UI or any further processing
                 newMatchesAdapter.setNewMatches(filteredRecentMatches);
                 binding.txtNewMatchesCount.setText("(" + filteredRecentMatches.size() + ")");
-            }else{
-
-                    newMatchesAdapter.setNewMatches(userMatches);
-
-                    binding.txtNewMatchesCount.setText("(" + userMatches.size() + ")");
+            } else {
+                Toast.makeText(requireActivity(), "Running from there", Toast.LENGTH_SHORT).show();
 
 
+                newMatchesAdapter.setNewMatches(userMatches);
+
+                binding.txtNewMatchesCount.setText("(" + userMatches.size() + ")");
 
 
             }
@@ -261,5 +262,13 @@ public class HomeFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+       String  latitude = String.valueOf(location.getLatitude());
+       String  longitude = String.valueOf(location.getLongitude());
+
+        fupViewModel.updateLocation(latitude, longitude, sessionManager.fetchUserId());
     }
 }

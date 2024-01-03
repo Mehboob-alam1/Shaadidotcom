@@ -19,8 +19,10 @@ import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
 import com.mehboob.myshadi.databinding.ActivityDashBoardBinding;
 import com.mehboob.myshadi.databinding.FragmentHomeBinding;
 import com.mehboob.myshadi.databinding.FragmentMyMatchesBinding;
+import com.mehboob.myshadi.model.Connection;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
+import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
@@ -28,6 +30,7 @@ import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MyMatchesFragment extends Fragment {
@@ -91,14 +94,46 @@ public class MyMatchesFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        matchMakingViewModel.getBestMatchesPref(Integer.parseInt(matchPref.fetchPref().getMinAge()), Integer.parseInt(matchPref.fetchPref().getMaxAge())).observe(this, userMatches -> {
-            if (userMatches != null && userMatches.size() != 0) {
-                binding.lineNoData.getRoot().setVisibility(View.GONE);
-                binding.myMatchesRecyclerView.setVisibility(View.VISIBLE);
+        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(),userMatches -> {
+
+
+            List<Connection> connectedUserIds = matchMakingViewModel.getConnectedUserIds().getValue();
+            List<UserMatches> filteredRecentMatches = new ArrayList<>();
+
+            if (connectedUserIds!=null) {
+                Toast.makeText(requireActivity(), "Running from here", Toast.LENGTH_SHORT).show();
+                for (UserMatches userProfile : userMatches) {
+                    boolean isUserConnected = false;
+
+                    // Check if the user ID is in the connectedUserIds list
+                    for (Connection connection : connectedUserIds) {
+                        if (connection.getConnectionToId().equals(userProfile.getUserId())) {
+                            isUserConnected = true;
+                            break; // No need to check further, user is connected
+                        }
+                    }
+
+                    // If the user is not connected, add to the filtered list
+                    if (!isUserConnected) {
+                        filteredRecentMatches.add(userProfile);
+                    }
+                }
+
+                // Use filteredRecentMatches for your UI or any further processing
+                myMatchesAdapter.setMyMatches(filteredRecentMatches);
+            }else{
+                Toast.makeText(requireActivity(), "Running from there", Toast.LENGTH_SHORT).show();
+
+
+                myMatchesAdapter.setMyMatches(userMatches);
+
+
+
+
+
             }
-            myMatchesAdapter.setMyMatches(userMatches);
-
-
         });
+
+
     }
 }

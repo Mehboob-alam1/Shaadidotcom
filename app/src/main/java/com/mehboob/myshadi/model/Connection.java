@@ -8,12 +8,12 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "sent_connections")
 
 public class Connection {
-    @NonNull
-    @PrimaryKey(autoGenerate = false)
+
     @ColumnInfo(name = "connectionFromId")
     private String connectionFromId;
     @ColumnInfo(name = "connectionToId")
-
+    @NonNull
+    @PrimaryKey(autoGenerate = false)
     private String connectionToId;
     @ColumnInfo(name = "timeStamp")
 

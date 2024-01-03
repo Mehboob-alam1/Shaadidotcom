@@ -29,7 +29,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
     private MatchPref matchPref;
     private FUPViewModel fupViewModel;
     private String userId;
-    public boolean isSkipHide;
+
     private SessionManager sessionManager;
 
     @Override
@@ -42,10 +42,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
 
         matchPref = new MatchPref(this);
 
-        isSkipHide = getIntent().getBooleanExtra("skip", false);
-        if (isSkipHide) {
-            binding.btnSkip.setVisibility(View.GONE);
-        }
+
         fupViewModel.getUserProfileLiveData().observe(this, new Observer<UserProfileData>() {
             @Override
             public void onChanged(UserProfileData userProfileData) {
@@ -56,9 +53,7 @@ public class SetPreferencesActivity extends AppCompatActivity {
         });
 
 
-        binding.btnSkip.setOnClickListener(view -> {
-            updateUi();
-        });
+
 
 
         setReligionsAdapter();

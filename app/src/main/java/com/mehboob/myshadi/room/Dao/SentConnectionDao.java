@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface SentConnectionDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertSentConnection(Connection sentConnection);
 
     @Query("SELECT * FROM sent_connections")
