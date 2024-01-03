@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment implements LocationListener {
 
                         matchMakingViewModel.deleteUserMatches(userMatches);
 
-
+                        matchMakingViewModel.insertConnection(connection);
                         userMatches.setConnectionSent(true);
                         newMatchesAdapter.notifyDataSetChanged();
 
@@ -209,6 +209,8 @@ public class HomeFragment extends Fragment implements LocationListener {
     }
 
 
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -225,47 +227,55 @@ public class HomeFragment extends Fragment implements LocationListener {
     public void onResume() {
         super.onResume();
 
+        matchMakingViewModel.getConnectedUserIds().observe(getViewLifecycleOwner(), connectedUserIds -> {
+            Log.d("Connections", connectedUserIds.toString());
 
 
-        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(), userMatches -> {
+            matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(), userMatches -> {
 
 
-            List<Connection> connectedUserIds = matchMakingViewModel.getConnectedUserIds().getValue();
-            List<UserMatches> filteredRecentMatches = new ArrayList<>();
+                List<UserMatches> filteredRecentMatches = new ArrayList<>();
 
-            if (connectedUserIds != null) {
-                Toast.makeText(requireActivity(), "Running from here", Toast.LENGTH_SHORT).show();
-                for (UserMatches userProfile : userMatches) {
-                    boolean isUserConnected = false;
 
-                    // Check if the user ID is in the connectedUserIds list
-                    for (Connection connection : connectedUserIds) {
-                        if (connection.getConnectionToId().equals(userProfile.getUserId())) {
-                            isUserConnected = true;
-                            break; // No need to check further, user is connected
+                if (connectedUserIds != null) {
+                    Toast.makeText(requireActivity(), "Running from here", Toast.LENGTH_SHORT).show();
+                    for (UserMatches userProfile : userMatches) {
+                        boolean isUserConnected = false;
+
+                        // Check if the user ID is in the connectedUserIds list
+                        for (Connection connection : connectedUserIds) {
+                            if (connection.getConnectionToId().equals(userProfile.getUserId())) {
+                                isUserConnected = true;
+                                break; // No need to check further, user is connected
+                            }
+                        }
+
+                        // If the user is not connected, add to the filtered list
+                        if (!isUserConnected) {
+                            filteredRecentMatches.add(userProfile);
                         }
                     }
 
-                    // If the user is not connected, add to the filtered list
-                    if (!isUserConnected) {
-                        filteredRecentMatches.add(userProfile);
-                    }
+                    // Use filteredRecentMatches for your UI or any further processing
+                    newMatchesAdapter.setNewMatches(filteredRecentMatches);
+                    newMatchesAdapter.notifyDataSetChanged();
+
+                    binding.txtNewMatchesCount.setText("(" + filteredRecentMatches.size() + ")");
+                } else {
+                    Toast.makeText(requireActivity(), "Running from there", Toast.LENGTH_SHORT).show();
+
+
+                    newMatchesAdapter.setNewMatches(userMatches);
+                    newMatchesAdapter.notifyDataSetChanged();
+                    binding.txtNewMatchesCount.setText("(" + userMatches.size() + ")");
+
+
                 }
-
-                // Use filteredRecentMatches for your UI or any further processing
-                newMatchesAdapter.setNewMatches(filteredRecentMatches);
-                binding.txtNewMatchesCount.setText("(" + filteredRecentMatches.size() + ")");
-            } else {
-                Toast.makeText(requireActivity(), "Running from there", Toast.LENGTH_SHORT).show();
+            });
 
 
-                newMatchesAdapter.setNewMatches(userMatches);
-
-                binding.txtNewMatchesCount.setText("(" + userMatches.size() + ")");
-
-
-            }
         });
+
 
     }
 

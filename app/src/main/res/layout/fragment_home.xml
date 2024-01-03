@@ -28,16 +28,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+
+        <TextView
+            android:id="@+id/nav_notifications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/nav_notifications"
+        android:drawableBottom="@drawable/baseline_notifications_24"
+
+        android:text="0"
+            android:textAlignment="textEnd"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/baseline_notifications_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/green_900"
+        android:textSize="8sp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

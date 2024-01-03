@@ -215,7 +215,7 @@ public class MatchMakingRepository {
                 .addOnCompleteListener(task -> {
                     if (task.isComplete() && task.isSuccessful()){
                         connectionSent.postValue(true);
-                        insertSentConnection(connection);
+                       //  insertSentConnection(connection);
 
                         NotificationData notificationData= new NotificationData(currentUser.getImageUrl(), currentUser.getFullName(),
                                 currentUser.getUserId(),currentUser.getFullName() + " is interested in your profile",otherUserMatches.getUserId(),String.valueOf(System.currentTimeMillis()));
