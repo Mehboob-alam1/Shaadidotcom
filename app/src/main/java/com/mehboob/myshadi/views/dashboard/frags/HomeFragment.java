@@ -34,7 +34,9 @@ import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
+import com.mehboob.myshadi.viewmodel.NotificationViewModel;
 import com.mehboob.myshadi.views.activities.AddBioActivity;
+import com.mehboob.myshadi.views.activities.NOtificationsActivity;
 import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
 import com.mehboob.myshadi.views.activities.SetPreferencesActivity;
 import com.mehboob.myshadi.views.dashboard.EditProfileActivity;
@@ -53,12 +55,15 @@ public class HomeFragment extends Fragment implements LocationListener {
 
     private MatchMakingViewModel matchMakingViewModel;
 
+    private NotificationViewModel viewModel;
+
     private NewMatchesAdapter newMatchesAdapter;
     private LinearLayoutManager layoutManager;
 
     private UserProfileData userProfileData;
 
     private SessionManager sessionManager;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,6 +93,14 @@ public class HomeFragment extends Fragment implements LocationListener {
             i.putExtra("skip", true);
             startActivity(i);
 
+        });
+
+        binding.navNotifications.setOnClickListener(v -> {
+            if (!sessionManager.fetchUserId().equals("null")) {
+                startActivity(new Intent(requireActivity(), NOtificationsActivity.class));
+            } else {
+                Toast.makeText(requireActivity(), "Fetching your data", Toast.LENGTH_SHORT).show();
+            }
         });
 
 
@@ -202,6 +215,7 @@ public class HomeFragment extends Fragment implements LocationListener {
         fupViewModel = new ViewModelProvider(requireActivity()).get(FUPViewModel.class);
 
         matchMakingViewModel = new ViewModelProvider(requireActivity()).get(MatchMakingViewModel.class);
+        viewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
 
 
     }
@@ -210,10 +224,7 @@ public class HomeFragment extends Fragment implements LocationListener {
     @Override
     public void onResume() {
         super.onResume();
-        matchMakingViewModel.getConnectedUserIds().observe(getViewLifecycleOwner(), connections -> {
 
-            Log.d("Connection", connections.toString());
-        });
 
 
         matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(), userMatches -> {
@@ -266,8 +277,8 @@ public class HomeFragment extends Fragment implements LocationListener {
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-       String  latitude = String.valueOf(location.getLatitude());
-       String  longitude = String.valueOf(location.getLongitude());
+        String latitude = String.valueOf(location.getLatitude());
+        String longitude = String.valueOf(location.getLongitude());
 
         fupViewModel.updateLocation(latitude, longitude, sessionManager.fetchUserId());
     }

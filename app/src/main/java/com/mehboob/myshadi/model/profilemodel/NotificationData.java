@@ -9,17 +9,27 @@ public class NotificationData {
     private String fromMessage;
     private String userId;
 
+    private String time;
+
     public NotificationData() {
     }
 
-    public NotificationData(String fromImageUrl, String fromUserName, String fromUserId, String fromMessage, String userId) {
+    public NotificationData(String fromImageUrl, String fromUserName, String fromUserId, String fromMessage, String userId, String time) {
         this.fromImageUrl = fromImageUrl;
         this.fromUserName = fromUserName;
         this.fromUserId = fromUserId;
         this.fromMessage = fromMessage;
         this.userId = userId;
+        this.time = time;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public String getFromImageUrl() {
         return fromImageUrl;

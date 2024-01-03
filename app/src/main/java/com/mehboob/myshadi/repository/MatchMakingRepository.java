@@ -218,7 +218,7 @@ public class MatchMakingRepository {
                         insertSentConnection(connection);
 
                         NotificationData notificationData= new NotificationData(currentUser.getImageUrl(), currentUser.getFullName(),
-                                currentUser.getUserId(),currentUser.getFullName() + " is interested in your profile",otherUserMatches.getUserId());
+                                currentUser.getUserId(),currentUser.getFullName() + " is interested in your profile",otherUserMatches.getUserId(),String.valueOf(System.currentTimeMillis()));
                         setNotificationToServerToOtherUser(notificationData);
                     }
                 }).addOnFailureListener(e -> {
