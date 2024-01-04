@@ -76,10 +76,7 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
         holder.txtProfileInfo.setText(formatInfo(userProfile.getDob(), userProfile.getHeight(), userProfile.getCommunity(), userProfile.getSubCommunity(), userProfile.getLivingIn()));
 
 
-
     }
-
-
 
 
     public String formatInfo(String age, String height, String community, String subCommunity, String livingIn) {
