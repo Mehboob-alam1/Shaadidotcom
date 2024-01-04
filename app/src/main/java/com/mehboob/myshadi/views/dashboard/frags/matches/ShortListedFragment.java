@@ -1,15 +1,18 @@
 package com.mehboob.myshadi.views.dashboard.frags.matches;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.adapters.homeAdapters.ShortlistedAdapter;
 import com.mehboob.myshadi.databinding.FragmentHomeBinding;
@@ -18,6 +21,7 @@ import com.mehboob.myshadi.model.Connection;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 import com.mehboob.myshadi.viewmodel.ShortlistViewModel;
+import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +67,9 @@ public class ShortListedFragment extends Fragment {
 
 
         adapter.setOnItemClickListener((userProfile, position) -> {
-
+            Intent i = new Intent(requireContext(), ProfileDetailedActivity.class);
+            i.putExtra("currentPerson", new Gson().toJson(userProfile));
+            startActivity(i);
         });
 
 
@@ -81,6 +87,12 @@ public class ShortListedFragment extends Fragment {
 
 
             viewModel.getListUserProfiles().observe(getViewLifecycleOwner(), userProfiles -> {
+
+                if (userProfiles!=null){
+                    binding.shortlistedRecyclerView.setVisibility(View.VISIBLE);
+                    binding.lineNoData.getRoot().setVisibility(View.GONE);
+                }
+                Log.d("ProfileShort",userProfiles.toString());
                 adapter.setMyMatches(userProfiles);
             });
 
