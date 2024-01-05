@@ -11,16 +11,26 @@ public class NotificationData {
 
     private String time;
 
+    private String fromGender;
     public NotificationData() {
     }
 
-    public NotificationData(String fromImageUrl, String fromUserName, String fromUserId, String fromMessage, String userId, String time) {
+    public NotificationData(String fromImageUrl, String fromUserName, String fromUserId, String fromMessage, String userId, String time, String fromGender) {
         this.fromImageUrl = fromImageUrl;
         this.fromUserName = fromUserName;
         this.fromUserId = fromUserId;
         this.fromMessage = fromMessage;
         this.userId = userId;
         this.time = time;
+        this.fromGender = fromGender;
+    }
+
+    public String getFromGender() {
+        return fromGender;
+    }
+
+    public void setFromGender(String fromGender) {
+        this.fromGender = fromGender;
     }
 
     public String getTime() {

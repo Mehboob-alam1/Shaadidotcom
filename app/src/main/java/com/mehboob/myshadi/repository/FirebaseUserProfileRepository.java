@@ -2,6 +2,7 @@ package com.mehboob.myshadi.repository;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.health.connect.datatypes.BoneMassRecord;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -26,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 import com.mehboob.myshadi.model.ProfileCheck;
 import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
@@ -33,12 +35,14 @@ import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.Dao.RecentMatchesDao;
 import com.mehboob.myshadi.room.Dao.UserProfileDataDao;
 import com.mehboob.myshadi.room.database.DataDatabase;
+import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.room.models.User;
 import com.mehboob.myshadi.utils.MatchPref;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.TinyDB;
 import com.mehboob.myshadi.viewmodel.AuthViewModel;
+import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +69,9 @@ public class FirebaseUserProfileRepository {
     private String token;
 
 
+    private MutableLiveData<UserMatches> anyUserProfileData;
+
+
     public FirebaseUserProfileRepository(Application application) {
         this.storageReference = FirebaseStorage.getInstance().getReference("userProfiles").child("images");
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -80,6 +87,7 @@ public class FirebaseUserProfileRepository {
         userProfileData = userProfileDataDao.getUserProfileLiveData();
         userProfileDataMutable = new MutableLiveData<>();
         setUserProfileDataMutable(userProfileData);
+        anyUserProfileData=new MutableLiveData<>();
 
     }
 
@@ -457,6 +465,33 @@ public class FirebaseUserProfileRepository {
         });
 
         return isProfileCompleteLiveData;
+    }
+
+
+    public MutableLiveData<UserMatches> getAnyUserProfile(String userId,String gender){
+
+
+
+        DatabaseReference userProfileRef = FirebaseDatabase.getInstance().getReference("userProfiles")
+                .child(gender)
+                .child(userId);
+        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    UserMatches userProfile = snapshot.getValue(UserMatches.class);
+
+                    anyUserProfileData.setValue(userProfile);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return anyUserProfileData;
     }
 
 

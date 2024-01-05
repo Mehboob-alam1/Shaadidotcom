@@ -1,5 +1,6 @@
 package com.mehboob.myshadi.views.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -9,30 +10,40 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mehboob.myshadi.R;
-import com.mehboob.myshadi.databinding.ActivityShortlistedDetailsBinding;
+import com.mehboob.myshadi.databinding.ActivityConnectionRecivedDetailedBinding;
+import com.mehboob.myshadi.model.Connection;
 import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.utils.SessionManager;
+import com.mehboob.myshadi.viewmodel.ConnectionViewModel;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 
 import java.lang.reflect.Type;
 
-public class ShortlistedDetailsActivity extends AppCompatActivity {
-private ActivityShortlistedDetailsBinding binding;
-
+public class ConnectionRecivedDetailedActivity extends AppCompatActivity {
+    private ActivityConnectionRecivedDetailedBinding binding;
     private UserMatches userMatches;
     private FUPViewModel fupViewModel;
     private SessionManager sessionManager;
+    private ConnectionViewModel connectionViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding=ActivityShortlistedDetailsBinding.inflate(getLayoutInflater());
+        binding = ActivityConnectionRecivedDetailedBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
-        sessionManager= new SessionManager(this);
+        connectionViewModel = new ViewModelProvider(this).get(ConnectionViewModel.class);
+        sessionManager = new SessionManager(this);
         binding.btnBackProfile.setOnClickListener(v -> {
             finish();
         });
@@ -44,6 +55,13 @@ private ActivityShortlistedDetailsBinding binding;
         fupViewModel.getProfile(sessionManager.fetchUserId());
 
         bindData(userMatches);
+
+
+        binding.btnBackProfile.setOnClickListener(v -> {
+            finish();
+        });
+
+
     }
 
     private void bindData(UserMatches userMatches) {
@@ -64,10 +82,21 @@ private ActivityShortlistedDetailsBinding binding;
 
         }
         fupViewModel.getUserProfileLiveData().observe(this, userProfileData -> {
-            if (userProfileData!=null){
+            if (userProfileData != null) {
+                checkIfIAlsoSentConnection(userProfileData.getUserId(), userMatches.getUserId());
 
 
 
+                binding.btnAcceptConnection.setOnClickListener(v -> {
+
+                    // setBothUserConnected
+
+                    Connection connection = new Connection(userProfileData.getUserId(),
+                            userMatches.getUserId(), String.valueOf(System.currentTimeMillis()),
+                            userMatches.getUserId() + "_" + userProfileData.getUserId(), "Connected", false, userProfileData.getGender(), userMatches.getGender());
+                    connectionViewModel.connectBothUsers(connection);
+
+                });
                 try {
 
 
@@ -132,6 +161,15 @@ private ActivityShortlistedDetailsBinding binding;
                 .into(binding.imgPersonProfile);
 
 
+        connectionViewModel.getConnected().observe(this,aBoolean -> {
+            if (aBoolean){
+                Toast.makeText(this, "You are connected", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, "Try again", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     private String extractPhoneNumber(String phoneNumber) {
@@ -148,5 +186,25 @@ private ActivityShortlistedDetailsBinding binding;
         return formattedPhoneNumber;
     }
 
+
+    public void checkIfIAlsoSentConnection(String myUserId, String thisUserId) {
+
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("ConnectionIRecieved");
+
+        ref.child(myUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child(thisUserId).exists()) {
+                    binding.txtDidYou.setText("You also send connect to this profile");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 }

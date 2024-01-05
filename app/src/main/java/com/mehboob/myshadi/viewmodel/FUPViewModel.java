@@ -15,6 +15,7 @@ import com.mehboob.myshadi.model.profilemodel.Preferences;
 import com.mehboob.myshadi.model.profilemodel.ProfileResponse;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.repository.FirebaseUserProfileRepository;
+import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.room.entities.UserProfileData;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class FUPViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> isBioUpdated;
     private FirebaseUserProfileRepository repository;
 
+
     public FUPViewModel(@NonNull Application application) {
         super(application);
         repository = new FirebaseUserProfileRepository(application);
@@ -42,6 +44,8 @@ public class FUPViewModel extends AndroidViewModel {
 //        userProfileLiveData=repository.getUserProfileLiveData();
         isPreferencesAdded = repository.getIsPreferencesAdded();
         isBioUpdated = repository.getIsBioUpdated();
+
+
 
     }
 
@@ -62,12 +66,19 @@ public class FUPViewModel extends AndroidViewModel {
         return isBioUpdated;
     }
 
+
     public void getProfile(String userID) {
 
 
         repository.getProfileData(userID);
     }
 
+
+    public MutableLiveData<UserMatches> getAnyUserProfile(String userId,String gender){
+      MutableLiveData<UserMatches> data =  repository.getAnyUserProfile(userId,gender);
+
+      return data;
+    }
 
     public void updateMatchesPreferences(String userId) {
         repository.updateMatchPreferences(userId);

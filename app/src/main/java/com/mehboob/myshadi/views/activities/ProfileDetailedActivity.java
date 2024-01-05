@@ -36,7 +36,7 @@ public class ProfileDetailedActivity extends AppCompatActivity {
         binding = ActivityProfileDetailedBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
-sessionManager= new SessionManager(this);
+        sessionManager = new SessionManager(this);
         binding.btnBackProfile.setOnClickListener(v -> {
             finish();
         });
@@ -68,37 +68,36 @@ sessionManager= new SessionManager(this);
 
         }
         fupViewModel.getUserProfileLiveData().observe(this, userProfileData -> {
-         if (userProfileData!=null){
+            if (userProfileData != null) {
 
 
+                try {
 
-             try {
 
+                    Glide.with(this)
+                            .load(userProfileData.getImageUrl())
+                            .placeholder(R.drawable.profile)
+                            .into(binding.imgMyProfile);
+                } catch (Exception e) {
+                    Log.d("Exception", e.getLocalizedMessage());
+                }
+                if (userProfileData.isVerified()) {
+                    binding.txtBirthDate.setText(userMatches.getDate_of_birth());
+                    binding.txtBirthDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    binding.txtContact.setText(userMatches.getPhoneNumber());
+                    binding.txtContact.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    binding.txtEmail.setText(userMatches.getEmail());
+                    binding.txtEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    binding.txtWorkAsWorkandWith.setText(userMatches.getWorkAs() + ", " + userMatches.getWorksWith());
+                    binding.txtWorkAsWorkandWith.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    binding.txtCollegeName.setText(userMatches.getCollege());
+                    binding.txtCollegeName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
-                 Glide.with(this)
-                         .load(userProfileData.getImageUrl())
-                         .placeholder(R.drawable.profile)
-                         .into(binding.imgMyProfile);
-             } catch (Exception e) {
-                 Log.d("Exception", e.getLocalizedMessage());
-             }
-             if (userProfileData.isVerified()) {
-                 binding.txtBirthDate.setText(userMatches.getDate_of_birth());
-                 binding.txtBirthDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                 binding.txtContact.setText(userMatches.getPhoneNumber());
-                 binding.txtContact.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                 binding.txtEmail.setText(userMatches.getEmail());
-                 binding.txtEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                 binding.txtWorkAsWorkandWith.setText(userMatches.getWorkAs() + ", " + userMatches.getWorksWith());
-                 binding.txtWorkAsWorkandWith.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                 binding.txtCollegeName.setText(userMatches.getCollege());
-                 binding.txtCollegeName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                } else {
+                    Toast.makeText(this, "You are not verified ", Toast.LENGTH_SHORT).show();
+                }
 
-             } else {
-                 Toast.makeText(this, "You are not verified ", Toast.LENGTH_SHORT).show();
-             }
-
-         }
+            }
 
         });
         // if this current user is verified
@@ -150,5 +149,11 @@ sessionManager= new SessionManager(this);
         String formattedPhoneNumber = countryCode + operatorCode + "******";
 
         return formattedPhoneNumber;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
