@@ -9,6 +9,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".utils.App"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+        <activity
+            android:name=".views.activities.NoNetworkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activities.ShortlistedDetailsActivity"
+            android:exported="false" />
         <activity
             android:name=".views.activities.NOtificationsActivity"
             android:exported="false" />
@@ -103,6 +110,19 @@
                 <action android:name="com.google.firebase.MeSSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service
+            android:name=".services.NetworkMonitorService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".recievers.NetworkChangeReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

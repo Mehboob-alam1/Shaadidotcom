@@ -22,6 +22,7 @@ import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 import com.mehboob.myshadi.viewmodel.ShortlistViewModel;
 import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
+import com.mehboob.myshadi.views.activities.ShortlistedDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class ShortListedFragment extends Fragment {
 
 
         adapter.setOnItemClickListener((userProfile, position) -> {
-            Intent i = new Intent(requireContext(), ProfileDetailedActivity.class);
+            Intent i = new Intent(requireContext(), ShortlistedDetailsActivity.class);
             i.putExtra("currentPerson", new Gson().toJson(userProfile));
             startActivity(i);
         });
