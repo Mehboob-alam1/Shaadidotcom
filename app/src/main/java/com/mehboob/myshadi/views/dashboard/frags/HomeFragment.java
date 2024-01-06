@@ -123,7 +123,7 @@ public class HomeFragment extends Fragment implements LocationListener {
             fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), userProfileData -> {
                 Connection connection = new Connection(userProfileData.getUserId(),
                         userMatches.getUserId(), String.valueOf(System.currentTimeMillis()),
-                        userMatches.getUserId() + "_" + userProfileData.getUserId(), "Pending", false, userProfileData.getGender(), userMatches.getGender());
+                        userMatches.getUserId() + "_" + userProfileData.getUserId(), "Pending", false, userProfileData.getGender(), userMatches.getGender(), userMatches.getImageUrl(), userMatches.getImageUrl(),userMatches.getFullName(),userProfileData.getFullName());
                 matchMakingViewModel.sendNotification(connection, userMatches, userProfileData);
 
                 matchMakingViewModel.getConnectionSent().observe(getViewLifecycleOwner(), aBoolean -> {
@@ -150,58 +150,55 @@ public class HomeFragment extends Fragment implements LocationListener {
     private void setProfileData() {
 
 
-        fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), new Observer<UserProfileData>() {
-            @Override
-            public void onChanged(UserProfileData userProfile) {
+        fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), userProfile -> {
 
 
-                try {
+            try {
 
 
-                    Glide.with(requireActivity()).load(userProfile.getImageUrl())
-                            .placeholder(R.drawable.profile_1)
-                            .into(binding.profileImage);
-                    binding.txtName.setText(userProfile.getFullName());
-                    binding.txtRegNo.setText(Utils.extractFirst8Characters(userProfile.getUserId()));
-                    if (userProfile.isVerified()) {
-                        binding.imgVerified.setImageResource(R.drawable.baseline_verified_user_24);
-                    }
-
-                    binding.txtAccountType.setText(userProfile.getAccountType());
-
-                } catch (NullPointerException e) {
-                    Log.d("ProfileReadingException", e.getLocalizedMessage());
+                Glide.with(requireActivity()).load(userProfile.getImageUrl())
+                        .placeholder(R.drawable.profile_1)
+                        .into(binding.profileImage);
+                binding.txtName.setText(userProfile.getFullName());
+                binding.txtRegNo.setText(Utils.extractFirst8Characters(userProfile.getUserId()));
+                if (userProfile.isVerified()) {
+                    binding.imgVerified.setImageResource(R.drawable.baseline_verified_user_24);
                 }
 
-                binding.btnEditProfile.setOnClickListener(view -> {
-                    startActivity(new Intent(requireActivity(), EditProfileActivity.class));
-                });
-                binding.btnUpgradeNow.setOnClickListener(view -> {
-                    startActivity(new Intent(requireActivity(), UpgradePremiumActivity.class));
-                });
+                binding.txtAccountType.setText(userProfile.getAccountType());
 
-                try {
+            } catch (NullPointerException e) {
+                Log.d("ProfileReadingException", e.getLocalizedMessage());
+            }
+
+            binding.btnEditProfile.setOnClickListener(view -> {
+                startActivity(new Intent(requireActivity(), EditProfileActivity.class));
+            });
+            binding.btnUpgradeNow.setOnClickListener(view -> {
+                startActivity(new Intent(requireActivity(), UpgradePremiumActivity.class));
+            });
+
+            try {
 
 
-                    FirebaseMessaging.getInstance().getToken()
-                            .addOnCompleteListener(task -> {
-                                if (!task.isSuccessful()) {
-                                    Log.d("token", "Fetching FCM registration token failed");
-                                    return;
-                                }
+                FirebaseMessaging.getInstance().getToken()
+                        .addOnCompleteListener(task -> {
+                            if (!task.isSuccessful()) {
+                                Log.d("token", "Fetching FCM registration token failed");
+                                return;
+                            }
 
-                                // Get new FCM registration token
-                                String token = task.getResult();
+                            // Get new FCM registration token
+                            String token = task.getResult();
 
-                                fupViewModel.updateToken(token, sessionManager.fetchUserId());
-                                sessionManager.saveToken(token);
-                                // Log and toast
+                            fupViewModel.updateToken(token, sessionManager.fetchUserId());
+                            sessionManager.saveToken(token);
+                            // Log and toast
 
-                                Log.d("token", "The token is " + token);
-                            });
-                } catch (Exception e) {
-                    Log.d("Exception", e.getLocalizedMessage());
-                }
+                            Log.d("token", "The token is " + token);
+                        });
+            } catch (Exception e) {
+                Log.d("Exception", e.getLocalizedMessage());
             }
         });
 

@@ -93,7 +93,7 @@ public class ConnectionRecivedDetailedActivity extends AppCompatActivity {
 
                     Connection connection = new Connection(userProfileData.getUserId(),
                             userMatches.getUserId(), String.valueOf(System.currentTimeMillis()),
-                            userMatches.getUserId() + "_" + userProfileData.getUserId(), "Connected", false, userProfileData.getGender(), userMatches.getGender());
+                            userMatches.getUserId() + "_" + userProfileData.getUserId(), "Connected", false, userProfileData.getGender(), userMatches.getGender(),userProfileData.getImageUrl(),userMatches.getImageUrl(),userMatches.getFullName(),userProfileData.getFullName());
                     connectionViewModel.connectBothUsers(connection);
 
                 });
@@ -164,6 +164,9 @@ public class ConnectionRecivedDetailedActivity extends AppCompatActivity {
         connectionViewModel.getConnected().observe(this,aBoolean -> {
             if (aBoolean){
                 Toast.makeText(this, "You are connected", Toast.LENGTH_SHORT).show();
+                //User have connected
+
+                   // List of all connected users
             }else{
                 Toast.makeText(this, "Try again", Toast.LENGTH_SHORT).show();
             }

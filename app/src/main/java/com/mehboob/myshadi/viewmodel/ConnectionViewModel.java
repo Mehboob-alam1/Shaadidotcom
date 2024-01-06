@@ -20,7 +20,7 @@ public class ConnectionViewModel extends AndroidViewModel {
         super(application);
 
         repository= new MakeConnectionRepository(application);
-        connectedUsers=repository.getConnectedProfiles();
+
         connected=repository.getConnected();
     }
 
@@ -28,7 +28,9 @@ public class ConnectionViewModel extends AndroidViewModel {
         repository.connectBothUsers(connection);
     }
 
-    public MutableLiveData<List<Connection>> getConnectedUsers() {
+    public MutableLiveData<List<Connection>> getConnectedUsers(String userId) {
+
+        connectedUsers=repository.getConnectedProfiles(userId);
         return connectedUsers;
     }
 

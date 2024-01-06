@@ -35,6 +35,53 @@ public class Connection {
 
     private String connectionToGender;
 
+    @ColumnInfo(name = "connectionFromImage")
+    private String connectionFromImage;
+
+
+    @ColumnInfo(name = "connectionToImage")
+
+    private String connectionToImage;
+
+    @ColumnInfo(name = "connectionToName")
+    private String connectionToName;
+
+    @ColumnInfo(name = "ConnectionFromName")
+    private String connectionFromName;
+
+
+    public String getConnectionToName() {
+        return connectionToName;
+    }
+
+    public void setConnectionToName(String connectionToName) {
+        this.connectionToName = connectionToName;
+    }
+
+    public String getConnectionFromName() {
+        return connectionFromName;
+    }
+
+    public void setConnectionFromName(String connectionFromName) {
+        this.connectionFromName = connectionFromName;
+    }
+
+    public String getConnectionFromImage() {
+        return connectionFromImage;
+    }
+
+    public void setConnectionFromImage(String connectionFromImage) {
+        this.connectionFromImage = connectionFromImage;
+    }
+
+    public String getConnectionToImage() {
+        return connectionToImage;
+    }
+
+    public void setConnectionToImage(String connectionToImage) {
+        this.connectionToImage = connectionToImage;
+    }
+
     public String getConnectionFromGender() {
         return connectionFromGender;
     }
@@ -70,7 +117,7 @@ public class Connection {
         this.connected = connected;
     }
 
-    public Connection(String connectionFromId, String connectionToId, String timeStamp, String combinedId, String status, boolean connected, String connectionFromGender, String connectionToGender) {
+    public Connection(String connectionFromId, @NonNull String connectionToId, String timeStamp, String combinedId, String status, boolean connected, String connectionFromGender, String connectionToGender, String connectionFromImage, String connectionToImage, String connectionToName, String connectionFromName) {
         this.connectionFromId = connectionFromId;
         this.connectionToId = connectionToId;
         this.timeStamp = timeStamp;
@@ -79,6 +126,10 @@ public class Connection {
         this.connected = connected;
         this.connectionFromGender = connectionFromGender;
         this.connectionToGender = connectionToGender;
+        this.connectionFromImage = connectionFromImage;
+        this.connectionToImage = connectionToImage;
+        this.connectionToName = connectionToName;
+        this.connectionFromName = connectionFromName;
     }
 
     public String getConnectionFromId() {

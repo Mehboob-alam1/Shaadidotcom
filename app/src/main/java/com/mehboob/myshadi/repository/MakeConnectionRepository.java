@@ -20,63 +20,59 @@ public class MakeConnectionRepository {
 
     private Application application;
     private DataDatabase database;
-private MutableLiveData<List<Connection>> connectedUserData;
-private MutableLiveData<Boolean> connected;
+    private MutableLiveData<List<Connection>> connectedUserData;
+    private MutableLiveData<Boolean> connected;
+
 
     public MakeConnectionRepository(Application application) {
 
         this.application = application;
-        connectedUserData= new MutableLiveData<>();
-        connected= new MutableLiveData<>();
+        connectedUserData = new MutableLiveData<>();
+        connected = new MutableLiveData<>();
+
 
     }
 
 
     public void connectBothUsers(Connection connection) {
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ConnectedProfiles");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child(connection.getCombinedId())
-                .setValue(connection).addOnCompleteListener(task -> {
+        ref.child("ConnectionIRecieved").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
+                .child("connected")
+                .setValue(true);
+        ref.child("ConnectionIRecieved").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
+                .child("status")
+                .setValue("connected");
 
-                    if (task.isComplete() && task.isSuccessful()) {
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("ConnectionISent").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
+                .child("connected")
+                .setValue(true);
 
-                        ref.child("ConnectionIRecieved").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
-                                .child("connected")
-                                .setValue(true);
-                        ref.child("ConnectionIRecieved").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
-                                .child("status")
-                                .setValue("connected");
+        ref.child("ConnectionISent").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
+                .child("status")
+                .setValue("connected");
 
-                        ref.child("ConnectionISent").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
-                                .child("connected")
-                                .setValue(true);
-
-                        ref.child("ConnectionISent").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
-                                .child("status")
-                                .setValue("connected");
-                        connected.setValue(true);
-                    }else{
-                        connected.setValue(false);
-                    }
-                });
+        connected.setValue(true);
 
 
     }
 
 
-    public MutableLiveData<List<Connection>> getConnectedProfiles() {
+    public MutableLiveData<List<Connection>> getConnectedProfiles(String userId) {
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ConnectedProfiles");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ConnectionISent");
         List<Connection> connections = new ArrayList<>();
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    for (DataSnapshot snap:snapshot.getChildren()){
-                      Connection connectedUsers=  snap.getValue(Connection.class);
-                      connections.add(connectedUsers);
+                if (snapshot.exists()) {
+                    for (DataSnapshot snap : snapshot.getChildren()) {
+                        Connection connectedUsers = snap.getValue(Connection.class);
+                        if (connectedUsers.isConnected() && connectedUsers.getStatus().equals("connected")){
+                            connections.add(connectedUsers);
+                        }
+
                     }
 
                     connectedUserData.setValue(connections);
@@ -85,7 +81,7 @@ private MutableLiveData<Boolean> connected;
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                   connectedUserData.setValue(null);
+                connectedUserData.setValue(null);
             }
         });
 
