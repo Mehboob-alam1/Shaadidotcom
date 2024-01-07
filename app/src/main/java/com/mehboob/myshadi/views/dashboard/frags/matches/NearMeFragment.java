@@ -31,6 +31,7 @@ import com.mehboob.myshadi.adapters.homeAdapters.MyMatchesAdapter;
 import com.mehboob.myshadi.adapters.homeAdapters.NearMeAdapter;
 import com.mehboob.myshadi.adapters.homeAdapters.NewMatchesAdapter;
 import com.mehboob.myshadi.databinding.FragmentNearMeBinding;
+import com.mehboob.myshadi.model.Connection;
 import com.mehboob.myshadi.model.profilemodel.UserProfile;
 import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.services.LocationTrack;
@@ -95,6 +96,34 @@ public class NearMeFragment extends Fragment {
             i.putExtra("currentPerson", new Gson().toJson(userProfile));
             startActivity(i);
         });
+
+
+        nearMeAdapter.setOnConnectClickListener((userMatches, position) -> {
+            fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), userProfileData -> {
+                Connection connection = new Connection(userProfileData.getUserId(),
+                        userMatches.getUserId(), String.valueOf(System.currentTimeMillis()),
+                        userMatches.getUserId() + "_" + userProfileData.getUserId(), "Pending", false, userProfileData.getGender(), userMatches.getGender(), userMatches.getImageUrl(), userMatches.getImageUrl(),userMatches.getFullName(),userProfileData.getFullName());
+                matchMakingViewModel.sendNotification(connection, userMatches, userProfileData);
+
+                matchMakingViewModel.getConnectionSent().observe(getViewLifecycleOwner(), aBoolean -> {
+                    if (aBoolean) {
+                        Toast.makeText(requireActivity(), "Connection sent", Toast.LENGTH_SHORT).show();
+
+
+                        matchMakingViewModel.deleteUserMatches(userMatches);
+
+                        matchMakingViewModel.insertConnection(connection);
+                        userMatches.setConnectionSent(true);
+                        nearMeAdapter.notifyDataSetChanged();
+
+                    } else {
+                        Toast.makeText(requireActivity(), "Connection not sent ", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+
+        });
+
 
     }
 

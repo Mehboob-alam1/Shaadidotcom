@@ -15,11 +15,13 @@ public class NotificationViewModel extends AndroidViewModel {
 
     private NotificationRepository notificationRepository;
     private MutableLiveData<List<NotificationData>> notificationsDataList;
+    private MutableLiveData<Boolean> notificationDeleted;
     public NotificationViewModel( Application application) {
         super(application);
 
         notificationRepository= new NotificationRepository(application);
         notificationsDataList=notificationRepository.getNotificationDataList();
+        notificationDeleted=notificationRepository.getNotificationDeleted();
 
     }
 
@@ -28,7 +30,16 @@ public class NotificationViewModel extends AndroidViewModel {
         notificationRepository.fetchNotificationsIRecieved(userId);
     }
 
+
+    public void deleteNotification(String myId,String otherUserId){
+        notificationRepository.deleteNotification(myId,otherUserId);
+    }
     public MutableLiveData<List<NotificationData>> getNotificationsDataList() {
         return notificationsDataList;
+    }
+
+
+    public MutableLiveData<Boolean> getNotificationDeleted() {
+        return notificationDeleted;
     }
 }

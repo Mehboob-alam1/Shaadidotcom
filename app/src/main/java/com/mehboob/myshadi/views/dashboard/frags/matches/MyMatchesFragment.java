@@ -88,6 +88,33 @@ public class MyMatchesFragment extends Fragment {
             i.putExtra("currentPerson", new Gson().toJson(userProfile));
             startActivity(i);
         });
+
+        myMatchesAdapter.setOnConnectClickListener((userMatches, position) -> {
+            fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), userProfileData -> {
+                Connection connection = new Connection(userProfileData.getUserId(),
+                        userMatches.getUserId(), String.valueOf(System.currentTimeMillis()),
+                        userMatches.getUserId() + "_" + userProfileData.getUserId(), "Pending", false, userProfileData.getGender(), userMatches.getGender(), userMatches.getImageUrl(), userMatches.getImageUrl(),userMatches.getFullName(),userProfileData.getFullName());
+                matchMakingViewModel.sendNotification(connection, userMatches, userProfileData);
+
+                matchMakingViewModel.getConnectionSent().observe(getViewLifecycleOwner(), aBoolean -> {
+                    if (aBoolean) {
+                        Toast.makeText(requireActivity(), "Connection sent", Toast.LENGTH_SHORT).show();
+
+
+                        matchMakingViewModel.deleteUserMatches(userMatches);
+
+                        matchMakingViewModel.insertConnection(connection);
+                        userMatches.setConnectionSent(true);
+                        myMatchesAdapter.notifyDataSetChanged();
+
+                    } else {
+                        Toast.makeText(requireActivity(), "Connection not sent ", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+
+        });
+
     }
 
     @Override

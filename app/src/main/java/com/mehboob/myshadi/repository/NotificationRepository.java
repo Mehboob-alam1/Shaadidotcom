@@ -24,10 +24,13 @@ public class NotificationRepository {
 
     private List<NotificationData> list;
 
+    private MutableLiveData<Boolean> notificationDeleted;
+
     public NotificationRepository(Application application) {
         this.application = application;
         notificationDataList = new MutableLiveData<>();
         list = new ArrayList<>();
+        notificationDeleted= new MutableLiveData<>();
 
     }
 
@@ -62,6 +65,28 @@ public class NotificationRepository {
 
     }
 
+
+    public void deleteNotification(String userId,String otherUserId){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Notifications");
+
+
+        databaseReference.child(userId).child(otherUserId)
+                .setValue(null)
+                .addOnCompleteListener(task -> {
+                    if (task.isComplete() && task.isSuccessful()){
+                        notificationDeleted.setValue(true);
+                    }else{
+                        notificationDeleted.setValue(false);
+                    }
+                }).addOnFailureListener(e -> {
+                    notificationDeleted.setValue(false);
+                });
+
+    }
+
+    public MutableLiveData<Boolean> getNotificationDeleted() {
+        return notificationDeleted;
+    }
 
     public MutableLiveData<List<NotificationData>> getNotificationDataList() {
         return notificationDataList;

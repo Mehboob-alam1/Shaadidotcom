@@ -2,6 +2,7 @@ package com.mehboob.myshadi.adapters.homeAdapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.se.omapi.SEService;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ public class NewMatchesAdapterHome extends RecyclerView.Adapter<NewMatchesAdapte
     private List<UserMatches> myMatches;
     private Context context;
     public OnItemClickListener onItemClickListener;
+    public onConnectClickListener onConnectClickListener;
 
 
     public NewMatchesAdapterHome(List<UserMatches> newMatches, Context context) {
@@ -35,6 +37,12 @@ public class NewMatchesAdapterHome extends RecyclerView.Adapter<NewMatchesAdapte
         void onItemClick(UserMatches userProfile, int position);
     }
 
+    public interface onConnectClickListener {
+        void onConnectClick(UserMatches userMatches, int position);
+    }
+    public void setOnConnectClickListener(onConnectClickListener listener) {
+        this.onConnectClickListener = listener;
+    }
     public void setOnItemClickListener(NewMatchesAdapterHome.OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
@@ -86,12 +94,21 @@ public class NewMatchesAdapterHome extends RecyclerView.Adapter<NewMatchesAdapte
             txtCityCountryM = itemView.findViewById(R.id.txtCityCountryM);
             btnConnectNowM = itemView.findViewById(R.id.btnConnectNowM);
 
+
+            btnConnectNowM.setOnClickListener(v -> {
+
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && onConnectClickListener != null) {
+               onConnectClickListener.onConnectClick(myMatches.get(position), position);
+                }
+            });
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
                     onItemClickListener.onItemClick(myMatches.get(position), position);
                 }
             });
+
 
 
         }

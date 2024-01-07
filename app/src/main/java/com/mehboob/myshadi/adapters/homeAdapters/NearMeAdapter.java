@@ -19,6 +19,7 @@ public class NearMeAdapter extends RecyclerView.Adapter<NearMeAdapter.Holder> {
     private List<UserMatches> myMatches;
     private Context context;
     public OnItemClickListener onItemClickListener;
+    public onConnectClickListener onConnectClickListener;
 
 
     public NearMeAdapter(List<UserMatches> newMatches, Context context) {
@@ -32,6 +33,13 @@ public class NearMeAdapter extends RecyclerView.Adapter<NearMeAdapter.Holder> {
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
+    }
+    public interface onConnectClickListener {
+        void onConnectClick(UserMatches userMatches, int position);
+    }
+
+    public void setOnConnectClickListener(onConnectClickListener listener) {
+        this.onConnectClickListener = listener;
     }
 
     @NonNull
@@ -80,7 +88,13 @@ public class NearMeAdapter extends RecyclerView.Adapter<NearMeAdapter.Holder> {
             txtCommunitySubCommunityM = itemView.findViewById(R.id.txtCommunitySubCommunityM);
             txtCityCountryM = itemView.findViewById(R.id.txtCityCountryM);
             btnConnectNowM = itemView.findViewById(R.id.btnConnectNowM);
+            btnConnectNowM.setOnClickListener(v -> {
 
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && onConnectClickListener != null) {
+                    onConnectClickListener.onConnectClick(myMatches.get(position), position);
+                }
+            });
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {

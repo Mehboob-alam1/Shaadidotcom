@@ -2,8 +2,14 @@ package com.mehboob.myshadi.views.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,8 +28,11 @@ import com.mehboob.myshadi.databinding.ActivityConnectionRecivedDetailedBinding;
 import com.mehboob.myshadi.model.Connection;
 import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.utils.SessionManager;
+import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.ConnectionViewModel;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
+import com.mehboob.myshadi.viewmodel.NotificationViewModel;
+import com.mehboob.myshadi.views.dashboard.frags.InboxFragment;
 
 import java.lang.reflect.Type;
 
@@ -33,6 +42,7 @@ public class ConnectionRecivedDetailedActivity extends AppCompatActivity {
     private FUPViewModel fupViewModel;
     private SessionManager sessionManager;
     private ConnectionViewModel connectionViewModel;
+    private NotificationViewModel notificationViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +52,7 @@ public class ConnectionRecivedDetailedActivity extends AppCompatActivity {
 
 
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
+        notificationViewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
         connectionViewModel = new ViewModelProvider(this).get(ConnectionViewModel.class);
         sessionManager = new SessionManager(this);
         binding.btnBackProfile.setOnClickListener(v -> {
@@ -86,15 +97,28 @@ public class ConnectionRecivedDetailedActivity extends AppCompatActivity {
                 checkIfIAlsoSentConnection(userProfileData.getUserId(), userMatches.getUserId());
 
 
-
                 binding.btnAcceptConnection.setOnClickListener(v -> {
 
                     // setBothUserConnected
+                    binding.progressBar.setVisibility(View.VISIBLE);
 
                     Connection connection = new Connection(userProfileData.getUserId(),
                             userMatches.getUserId(), String.valueOf(System.currentTimeMillis()),
-                            userMatches.getUserId() + "_" + userProfileData.getUserId(), "Connected", false, userProfileData.getGender(), userMatches.getGender(),userProfileData.getImageUrl(),userMatches.getImageUrl(),userMatches.getFullName(),userProfileData.getFullName());
+                            userMatches.getUserId() + "_" + userProfileData.getUserId(), "Connected", false, userProfileData.getGender(), userMatches.getGender(), userProfileData.getImageUrl(), userMatches.getImageUrl(), userMatches.getFullName(), userProfileData.getFullName());
                     connectionViewModel.connectBothUsers(connection);
+
+
+                    notificationViewModel.getNotificationDeleted().observe(this, aBoolean1 -> {
+
+                        if (aBoolean1) {
+                            binding.progressBar.setVisibility(View.GONE);
+                            Utils.showSnackBar(this, "Accepted the invitation");
+                            finish();
+                        } else {
+                            Utils.showSnackBar(this, "Try again");
+                            binding.progressBar.setVisibility(View.GONE);
+                        }
+                    });
 
                 });
                 try {
@@ -120,7 +144,6 @@ public class ConnectionRecivedDetailedActivity extends AppCompatActivity {
                     binding.txtCollegeName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
                 } else {
-                    Toast.makeText(this, "You are not verified ", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -161,13 +184,15 @@ public class ConnectionRecivedDetailedActivity extends AppCompatActivity {
                 .into(binding.imgPersonProfile);
 
 
-        connectionViewModel.getConnected().observe(this,aBoolean -> {
-            if (aBoolean){
-                Toast.makeText(this, "You are connected", Toast.LENGTH_SHORT).show();
+        connectionViewModel.getConnected().observe(this, aBoolean -> {
+            if (aBoolean) {
                 //User have connected
 
-                   // List of all connected users
-            }else{
+                notificationViewModel.deleteNotification(sessionManager.fetchUserId(), userMatches.getUserId());
+
+
+                // List of all connected users
+            } else {
                 Toast.makeText(this, "Try again", Toast.LENGTH_SHORT).show();
             }
         });

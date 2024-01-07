@@ -31,6 +31,8 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
     private List<UserMatches> myMatches;
     private Context context;
     public OnItemClickListener onItemClickListener;
+    public onConnectClickListener onConnectClickListener;
+
 
 
     public MyMatchesAdapter(List<UserMatches> newMatches, Context context) {
@@ -45,7 +47,12 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
     public void setOnItemClickListener(MyMatchesAdapter.OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
-
+    public interface onConnectClickListener {
+        void onConnectClick(UserMatches userMatches, int position);
+    }
+    public void setOnConnectClickListener(onConnectClickListener listener) {
+        this.onConnectClickListener = listener;
+    }
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -100,7 +107,12 @@ public class MyMatchesAdapter extends RecyclerView.Adapter<MyMatchesAdapter.Hold
             txtCommunitySubCommunityM = itemView.findViewById(R.id.txtCommunitySubCommunityM);
             txtCityCountryM = itemView.findViewById(R.id.txtCityCountryM);
             btnConnectNowM = itemView.findViewById(R.id.btnConnectNowM);
-
+            btnConnectNowM.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION && onConnectClickListener != null) {
+                    onConnectClickListener.onConnectClick(myMatches.get(pos), pos);
+                }
+            });
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {

@@ -31,7 +31,7 @@ public class NewMatchesAdapter extends RecyclerView.Adapter<NewMatchesAdapter.Ho
     private Context context;
     public OnItemClickListener onItemClickListener;
     public onConnectClickListener onConnectClickListener;
-    private MatchMakingViewModel makingViewModel;
+    public MatchMakingViewModel makingViewModel;
 
 
     public NewMatchesAdapter(List<UserMatches> newMatches, Context context) {
