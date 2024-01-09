@@ -123,6 +123,7 @@ public class NewFragment extends Fragment {
             List<UserMatches> filteredRecentMatches = new ArrayList<>();
 
             if (connectedUserIds!=null) {
+
                 Toast.makeText(requireActivity(), "Running from here", Toast.LENGTH_SHORT).show();
                 for (UserMatches userProfile : userMatches) {
                     boolean isUserConnected = false;
@@ -142,10 +143,14 @@ public class NewFragment extends Fragment {
                 }
 
                 // Use filteredRecentMatches for your UI or any further processing
+                binding.myMatchesRecyclerView.setVisibility(View.VISIBLE);
+                binding.lineNoData.getRoot().setVisibility(View.GONE);
                 adapter.setMyMatches(filteredRecentMatches);
-            }else{
-                Toast.makeText(requireActivity(), "Running from there", Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
 
+            }else{
+                binding.myMatchesRecyclerView.setVisibility(View.VISIBLE);
+                binding.lineNoData.getRoot().setVisibility(View.GONE);
 
                 adapter.setMyMatches(userMatches);
 

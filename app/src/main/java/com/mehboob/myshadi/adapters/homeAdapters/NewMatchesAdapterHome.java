@@ -147,9 +147,7 @@ public class NewMatchesAdapterHome extends RecyclerView.Adapter<NewMatchesAdapte
                     Toast.makeText(context, "" + userProfile.getImages().size(), Toast.LENGTH_SHORT).show();
                 });
 
-                btnConnectNowM.setOnClickListener(view -> {
-                    Toast.makeText(context, "Upgrade to premium to get connected", Toast.LENGTH_SHORT).show();
-                });
+
             }
 
     }

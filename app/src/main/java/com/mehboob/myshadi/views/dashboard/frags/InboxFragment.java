@@ -1,5 +1,6 @@
 package com.mehboob.myshadi.views.dashboard.frags;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.adapters.homeAdapters.ConnectedUsersAdapter;
 import com.mehboob.myshadi.databinding.FragmentInboxBinding;
@@ -27,6 +29,7 @@ import com.mehboob.myshadi.room.entities.UserMatches;
 import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.viewmodel.ConnectionViewModel;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
+import com.mehboob.myshadi.views.activities.ChatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +75,22 @@ public class InboxFragment extends Fragment {
         adapter = new ConnectedUsersAdapter(new ArrayList<>(), requireActivity());
         binding.allConnectedUsersRecyclerView.setAdapter(adapter);
         binding.allConnectedUsersRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+
+
+
+          adapter.setOnItemClickListener((connection, position) -> {
+
+
+              // creation of room
+
+              Intent i = new Intent(requireContext(), ChatActivity.class);
+              i.putExtra("user", new Gson().toJson(connection));
+              startActivity(i);
+
+
+
+
+          });
     }
 
 

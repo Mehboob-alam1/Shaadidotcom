@@ -50,13 +50,15 @@ public class GoogleSignInRepo {
                 FirebaseUser firebaseUser = auth.getCurrentUser();
 
                 if (firebaseUser != null) {
+                    String photoUrl = "";
                     String uid = firebaseUser.getUid();
                     String name = firebaseUser.getDisplayName();
                     String email = firebaseUser.getEmail();
                     String userId = firebaseUser.getUid();
-                       String photoUrl=             firebaseUser.getPhotoUrl().toString();
-
-                    UserAuth user = new UserAuth(uid, name, email, true, isNewUser, true, userId,photoUrl);
+                    if (firebaseUser.getPhotoUrl() != null) {
+                        photoUrl = firebaseUser.getPhotoUrl().toString();
+                    }
+                    UserAuth user = new UserAuth(uid, name, email, true, isNewUser, true, userId, photoUrl);
                     user.setNew(isNewUser);
                     authenticatedUserMutableLiveData.postValue(user);
                     //  authenticatedUserMutableLiveData.setValue(user);

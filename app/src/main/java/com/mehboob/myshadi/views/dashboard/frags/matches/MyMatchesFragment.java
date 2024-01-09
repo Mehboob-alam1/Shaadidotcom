@@ -73,7 +73,6 @@ public class MyMatchesFragment extends Fragment {
         setRecyclerView();
 
 
-
         return binding.getRoot();
     }
 
@@ -93,7 +92,7 @@ public class MyMatchesFragment extends Fragment {
             fupViewModel.getUserProfileLiveData().observe(getViewLifecycleOwner(), userProfileData -> {
                 Connection connection = new Connection(userProfileData.getUserId(),
                         userMatches.getUserId(), String.valueOf(System.currentTimeMillis()),
-                        userMatches.getUserId() + "_" + userProfileData.getUserId(), "Pending", false, userProfileData.getGender(), userMatches.getGender(), userMatches.getImageUrl(), userMatches.getImageUrl(),userMatches.getFullName(),userProfileData.getFullName());
+                        userMatches.getUserId() + "_" + userProfileData.getUserId(), "Pending", false, userProfileData.getGender(), userMatches.getGender(), userMatches.getImageUrl(), userMatches.getImageUrl(), userMatches.getFullName(), userProfileData.getFullName());
                 matchMakingViewModel.sendNotification(connection, userMatches, userProfileData);
 
                 matchMakingViewModel.getConnectionSent().observe(getViewLifecycleOwner(), aBoolean -> {
@@ -121,13 +120,13 @@ public class MyMatchesFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(),userMatches -> {
+        matchMakingViewModel.getUserProfilesCreatedLastWeek().observe(getViewLifecycleOwner(), userMatches -> {
 
 
             List<Connection> connectedUserIds = matchMakingViewModel.getConnectedUserIds().getValue();
             List<UserMatches> filteredRecentMatches = new ArrayList<>();
 
-            if (connectedUserIds!=null) {
+            if (connectedUserIds != null) {
                 Toast.makeText(requireActivity(), "Running from here", Toast.LENGTH_SHORT).show();
                 for (UserMatches userProfile : userMatches) {
                     boolean isUserConnected = false;
@@ -147,15 +146,14 @@ public class MyMatchesFragment extends Fragment {
                 }
 
                 // Use filteredRecentMatches for your UI or any further processing
+                binding.myMatchesRecyclerView.setVisibility(View.VISIBLE);
+                binding.lineNoData.getRoot().setVisibility(View.GONE);
                 myMatchesAdapter.setMyMatches(filteredRecentMatches);
-            }else{
-                Toast.makeText(requireActivity(), "Running from there", Toast.LENGTH_SHORT).show();
-
+            } else {
+                binding.myMatchesRecyclerView.setVisibility(View.VISIBLE);
+                binding.lineNoData.getRoot().setVisibility(View.GONE);
 
                 myMatchesAdapter.setMyMatches(userMatches);
-
-
-
 
 
             }

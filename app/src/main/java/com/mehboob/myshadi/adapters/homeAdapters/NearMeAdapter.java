@@ -134,13 +134,9 @@ public class NearMeAdapter extends RecyclerView.Adapter<NearMeAdapter.Holder> {
                 txtCityCountryM.setText(userProfile.getCityName() + "," + userProfile.getLivingIn());
 
 
-                btnImagesM.setOnClickListener(view -> {
-                    Toast.makeText(context, "" + userProfile.getImages().size(), Toast.LENGTH_SHORT).show();
-                });
 
-                btnConnectNowM.setOnClickListener(view -> {
-                    Toast.makeText(context, "Upgrade to premium to get connected", Toast.LENGTH_SHORT).show();
-                });
+
+
             }
 
     }
