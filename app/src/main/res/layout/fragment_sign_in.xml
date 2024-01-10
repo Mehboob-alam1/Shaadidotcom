@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/color_Background"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.fragments.SignInFragment">
@@ -24,7 +25,7 @@
             android:layout_margin="8dp"
             android:fontFamily="@font/roboto"
             android:text="@string/welcome_back"
-            android:textColor="@color/black"
+            android:textColor="@color/color_Text"
             android:textSize="21sp" />
 
         <TextView
@@ -67,7 +68,7 @@
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/continue_with_google"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color_Text"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -214,7 +215,7 @@
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/roboto"
                 android:text="@string/sign_up_free"
-                android:textColor="@color/black" />
+                android:textColor="@color/color_Text" />
 
         </LinearLayout>
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/background_main"
+    android:background="@color/color_Background"
     android:layout_height="match_parent"
     tools:context=".views.fragments.SignUpFragment">
 
@@ -15,7 +15,7 @@
         android:layout_marginTop="32dp"
         android:fontFamily="@font/roboto_light"
         android:text="@string/app_name"
-        android:textColor="@color/text_Color"
+        android:textColor="@color/color_Text"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
         android:fontFamily="@font/roboto_bold"
         android:textAlignment="center"
         android:text="@string/new_to_shaadi_com"
-        android:textColor="@color/text_Color"
+        android:textColor="@color/color_Text"
         app:layout_constraintBottom_toTopOf="@+id/line_signIns" />
 
 
@@ -40,105 +40,130 @@
         android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btnSignUpEmail"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/sign_button_back">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:src="@drawable/ic_email"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
+            app:cardCornerRadius="24dp"
+           >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnSignUpEmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Sign Up with Email"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:foreground="?attr/selectableItemBackground"
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btnSignUpMobile"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+
+                >
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_email"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Sign Up with Email"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_Text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/sign_button_back">
-
-            <ImageView
-                android:id="@+id/imageViewMobile"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:src="@drawable/ic_mobile"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
+            app:cardCornerRadius="24dp"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnSignUpMobile"
+                android:layout_height="40dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:fontFamily="@font/roboto_medium"
-                android:text="@string/sign_up_with_mobile"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_margin="8dp"
+                android:foreground="?attr/selectableItemBackground"
+                >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btnSignUpGoogle"
+                <ImageView
+                    android:id="@+id/imageViewMobile"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_mobile"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/sign_up_with_mobile"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_Text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:foreground="?attr/selectableItemBackground"
-            android:background="@drawable/sign_button_back">
-
-            <ImageView
-                android:id="@+id/imageViewGoogle"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:src="@drawable/ic_googl"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
+            app:cardCornerRadius="24dp"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnSignUpGoogle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:fontFamily="@font/roboto_medium"
-                android:text="@string/sign_up_with_google"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+                android:foreground="?attr/selectableItemBackground"
+               >
+
+                <ImageView
+                    android:id="@+id/imageViewGoogle"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_googl"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/sign_up_with_google"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_Text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -153,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/already_have_an_account"
-                android:textColor="@color/text_Color" />
+                android:textColor="@color/color_Text" />
 
             <TextView
                 android:id="@+id/btnLogin"
@@ -167,7 +192,7 @@
                 android:padding="8dp"
                 android:text="Login"
                 android:textAlignment="center"
-                android:textColor="@color/text_Color" />
+                android:textColor="@color/color_Text" />
         </LinearLayout>
 
 

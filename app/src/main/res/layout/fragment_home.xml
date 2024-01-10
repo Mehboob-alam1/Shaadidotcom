@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@color/color_Background"
     android:orientation="vertical"
+
     tools:context=".views.dashboard.frags.HomeFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
+        android:background="@color/color_Background"
 
 
         >
@@ -23,7 +24,7 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/roboto"
             android:text="@string/app_name"
-            android:textColor="@color/black"
+            android:textColor="@color/color_Text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,14 +35,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
         android:drawableBottom="@drawable/baseline_notifications_24"
-
+android:drawableTint="@color/color_Text"
         android:text="0"
             android:textAlignment="textEnd"
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/green_900"
+        android:textColor="@color/color_Text"
         android:textSize="8sp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -62,7 +63,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
-                android:background="#180B38">
+               >
 
                 <de.hdodenhof.circleimageview.CircleImageView
 
@@ -96,7 +97,7 @@
                             android:fontFamily="@font/roboto_bold"
                             android:id="@+id/txtName"
                             android:text="Mehboob Alam"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/color_Text" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -117,7 +118,7 @@
                             android:fontFamily="@font/roboto_light"
                             android:text="reg no"
                             android:id="@+id/txtRegNo"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/color_Text" />
 
                         <View
                             android:layout_width="2dp"
@@ -130,7 +131,7 @@
                             android:layout_height="wrap_content"
                             android:text="Edit profile"
                             android:id="@+id/btnEditProfile"
-                            android:textColor="#0097A7" />
+                            android:textColor="@color/color_Text" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -142,7 +143,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_medium"
                             android:text="Account -"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/color_Text" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -150,7 +151,7 @@
                             android:fontFamily="@font/roboto_medium"
                             android:text="Free"
                             android:id="@+id/txtAccountType"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/color_Text" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -228,13 +229,12 @@
                     android:layout_marginStart="16dp"
                     android:fontFamily="@font/roboto_bold"
                     android:text="Add about yourself"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_Text" />
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
       android:layout_marginTop="5dp"
                     android:padding="8dp"
-                    android:background="@color/white"
                     android:orientation="horizontal">
 
 
@@ -256,6 +256,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="8dp"
                         android:layout_weight="3"
+                        android:textColor="@color/color_Text"
                         android:fontFamily="@font/roboto"
                         android:text="Get noticed by adding your bio"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -332,7 +333,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:visibility="visible"
-                android:background="@color/white"
                 android:id="@+id/lineNewMatches"
                 android:orientation="vertical"
        >
@@ -349,7 +349,7 @@
 
                     android:fontFamily="@font/roboto_bold"
                     android:text="New Matches"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_Text" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -359,7 +359,7 @@
                     android:visibility="visible"
                     android:id="@+id/txtNewMatchesCount"
                     android:fontFamily="@font/roboto_bold"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/color_Text"/>
             </LinearLayout>
 
 
@@ -404,13 +404,12 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/settings_options"
-                android:textColor="@color/black" />
+                android:textColor="@color/color_Text" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@color/white"
                 android:orientation="vertical"
                 android:layout_marginBottom="24dp"
                 android:padding="8dp">
