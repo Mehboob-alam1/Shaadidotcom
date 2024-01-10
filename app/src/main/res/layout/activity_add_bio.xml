@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/color_Background"
     android:layout_height="match_parent">
 
     <ImageView
@@ -12,16 +13,18 @@
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_arrow_back_ios_new_24" />
+        app:srcCompat="@drawable/baseline_arrow_back_ios_new_24"
+        app:tint="@color/color_Text" />
 
     <TextView
         android:id="@+id/txt_about_me"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="About me"
-        android:textColor="@android:color/black"
+        android:textColor="@color/color_Text"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnBackAboutMe" />
@@ -29,7 +32,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView7"
         android:layout_width="match_parent"
-
+app:cardBackgroundColor="@color/color_Background"
         android:layout_height="200dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -40,6 +43,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+         android:backgroundTint="@color/color_Background"
             android:layout_height="match_parent"
             android:paddingTop="8dp">
 
@@ -49,11 +53,10 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="@color/white"
                 android:ems="8"
                 android:gravity="top"
                 android:hint="Tell me about you"
-
+android:textColor="@color/color_Text_Grey"
                 style="@style/EditTextStyleMultiLine"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"

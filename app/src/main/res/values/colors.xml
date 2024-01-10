@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="text_Color">#FFFFFFFF</color>
+
+
+
+    <color name="color_Text">#333333 </color>
+    <color name="color_Text_Grey">#666666</color>
+    <color name="color_Background">#FFFFF</color>
+    <color name="color_Button">#FF4081</color>
+
+
+
+
+    <color name="text_Color">#0B0B0B</color>
     <color name="grey">#A2A1A1</color>
     <color name="color_main">#0097A7</color>
+
 
 
     <color name="color_bg">#FDFDFD</color>

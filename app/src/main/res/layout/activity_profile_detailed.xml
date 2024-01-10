@@ -64,7 +64,8 @@
                     android:layout_marginTop="8dp"
                     android:src="@drawable/baseline_arrow_back_ios_new_24"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/color_Text" />
 
                 <ImageView
                     android:id="@+id/btnMoreProfile"
@@ -83,7 +84,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
-                    android:background="#816F6F"
+                    android:background="#EFB2C7"
                     android:orientation="vertical"
                     android:padding="8dp"
                     app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
@@ -112,7 +113,7 @@
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Mehboob Alam"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_Text"
                             android:textSize="16sp" />
 
                         <TextView
@@ -144,14 +145,15 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
                             android:text="21 yrs,5'4"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/color_Text"
+                            />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="•"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_Text"
                             android:textSize="16sp" />
 
                         <TextView
@@ -161,7 +163,8 @@
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Software Engineer"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/color_Text"
+                            />
 
 
                     </LinearLayout>
@@ -179,14 +182,15 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Urdu,Pakistan"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/color_Text"
+                            />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="•"
-                            android:textColor="@color/white"
+                            android:textColor="@color/color_Text"
                             android:textSize="16sp" />
 
                         <TextView
@@ -196,7 +200,8 @@
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Gilgit,Gilgit Baltistan"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/color_Text"
+                            />
 
 
                     </LinearLayout>
@@ -207,9 +212,10 @@
                 <LinearLayout
                     android:id="@+id/linearLayout8"
                     android:layout_width="match_parent"
+                    android:background="#EFB2C7"
+
                     android:layout_height="wrap_content"
-                    android:alpha="0.8"
-                    android:background="#816F6F"
+                    android:alpha="1"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:padding="5dp"
@@ -220,7 +226,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Like this profile?"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/color_Text" />
 
                     <TextView
                         android:id="@+id/btnConnectNowM"
@@ -274,7 +280,7 @@
                         android:padding="3dp"
                         android:text="About Mehboob Alam"
 
-                        android:textColor="@color/black"
+                        android:textColor="@color/color_Text"
                         android:textSize="16sp" />
 
                     <TextView
@@ -287,7 +293,7 @@
                         android:lineSpacingMultiplier="1"
                         android:padding="3dp"
                         android:text="Heloo,here is a little bit about my realative she has completed her high school.Her optimistic personality is adored by one and all. Please get in touch in case you like my relative's profile."
-                        android:textColor="@color/black" />
+                      />
 
 
                 </LinearLayout>
@@ -316,7 +322,7 @@
                         android:fontFamily="@font/roboto_bold"
                         android:padding="3dp"
                         android:text="Basic Details"
-                        android:textColor="@color/black"
+                        android:textColor="@color/color_Text"
                         android:textSize="16sp" />
 
                     <LinearLayout
@@ -410,7 +416,7 @@
                                 android:drawableEnd="@drawable/baseline_lock_24"
                                 android:gravity="center_vertical"
                                 android:text="Born on **/**/****"
-                                android:textColor="@color/black" />
+                                />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -447,7 +453,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="Never Married"
-                                android:textColor="@color/black" />
+                                />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -485,7 +491,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="Gilgit, Gilgit Baltistan. Pakistan"
-                                android:textColor="@color/black" />
+                              />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -522,7 +528,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="Muslim,Urdu"
-                                android:textColor="@color/black" />
+                              />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -560,7 +566,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="Sunni"
-                                android:textColor="@color/black" />
+                              />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -597,7 +603,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="Non Veg"
-                                android:textColor="@color/black" />
+                             />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -659,15 +665,15 @@
                         android:fontFamily="@font/roboto_bold"
                         android:padding="3dp"
                         android:text="Contact Details"
-                        android:textColor="@color/black"
+                        android:textColor="@color/color_Text"
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
                     <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:src="@drawable/premium"
@@ -719,7 +725,7 @@
                                     android:drawableEnd="@drawable/baseline_lock_24"
                                     android:gravity="center_vertical"
                                     android:text="+974660****"
-                                    android:textColor="@color/black" />
+                                   />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -758,7 +764,7 @@
                                     android:drawableEnd="@drawable/baseline_lock_24"
                                     android:gravity="center_vertical"
                                     android:text="*********@gamil.com"
-                                    android:textColor="@color/black" />
+                                  />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -823,7 +829,7 @@
                         android:fontFamily="@font/roboto_bold"
                         android:padding="3dp"
                         android:text="Career &amp; Education"
-                        android:textColor="@color/black"
+                        android:textColor="@color/color_Text"
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -863,7 +869,7 @@
                                 android:gravity="center_vertical"
                                 android:text="**************"
 
-                                android:textColor="@color/black" />
+                              />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -902,7 +908,7 @@
                                 android:gravity="center_vertical"
                                 android:text="Pkr 2 lacs "
 
-                                android:textColor="@color/black" />
+                                android:textColor="@color/color_Text" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -942,7 +948,7 @@
                                 android:gravity="center_vertical"
                                 android:text="***********"
 
-                                android:textColor="@color/black" />
+                                android:textColor="@color/color_Text" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -1105,7 +1111,7 @@
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/roboto"
                 android:text="Like this profile?"
-                android:textColor="@color/black"
+                android:textColor="@color/color_Text"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnConnectNow"
@@ -1139,7 +1145,7 @@
 
                     android:fontFamily="@font/roboto"
                     android:text="Connect Now"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color_Text"
                     android:textSize="12sp" />
 
             </LinearLayout>

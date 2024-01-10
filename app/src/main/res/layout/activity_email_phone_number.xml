@@ -28,7 +28,8 @@
         android:layout_marginTop="8dp"
         android:src="@drawable/baseline_arrow_back_ios_new_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress" />
+        app:layout_constraintTop_toBottomOf="@+id/progress"
+        app:tint="@color/color_Text" />
 
 
     <ImageView
@@ -69,8 +70,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
             android:text="Email ID"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textColor="@color/color_Text"            android:textSize="20sp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -88,8 +88,7 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/roboto_bold"
             android:text="Phone Number"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textColor="@color/color_Text"            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -133,7 +132,8 @@
         android:fontFamily="@font/roboto_medium"
         android:text="Submit"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/color_Text"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />

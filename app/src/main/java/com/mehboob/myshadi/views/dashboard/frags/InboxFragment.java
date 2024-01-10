@@ -82,7 +82,7 @@ public class InboxFragment extends Fragment {
 
 
               // creation of room
-
+              Toast.makeText(requireActivity(), ""+connection.toString(), Toast.LENGTH_SHORT).show();
               Intent i = new Intent(requireContext(), ChatActivity.class);
               i.putExtra("user", new Gson().toJson(connection));
               startActivity(i);

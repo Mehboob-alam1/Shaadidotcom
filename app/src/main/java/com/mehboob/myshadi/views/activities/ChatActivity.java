@@ -32,7 +32,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
         sessionManager = new SessionManager(this);
-        Type type = new TypeToken<UserMatches>() {
+        Type type = new TypeToken<Connection>() {
         }.getType();
         connection = new Gson().fromJson(getIntent().getStringExtra("user"), type);
 
@@ -48,13 +48,22 @@ public class ChatActivity extends AppCompatActivity {
         fupViewModel.getProfile(sessionManager.fetchUserId());
 
 
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         fupViewModel.getUserProfileLiveData().observe(this, userProfileData -> {
-            if (userProfileData.isVerified()) {
-                binding.notVerifiedLayout.setVisibility(View.GONE);
-                binding.relativeLayout.setVisibility(View.VISIBLE);
+            if (userProfileData!=null) {
+                if (userProfileData.isVerified()) {
+                    binding.notVerifiedLayout.setVisibility(View.GONE);
+                    binding.relativeLayout.setVisibility(View.VISIBLE);
+                }
             }
         });
-
-
     }
 }

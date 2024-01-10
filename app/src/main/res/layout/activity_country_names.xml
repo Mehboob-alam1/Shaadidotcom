@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/color_Background"
     android:layout_height="match_parent"
     tools:context=".views.activities.CountryNamesActivity">
 
@@ -19,7 +20,8 @@
             android:layout_marginEnd="8dp"
             android:src="@drawable/baseline_cancel_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/color_Text" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,8 +29,7 @@
             android:fontFamily="@font/roboto"
             android:id="@+id/txtTitle"
             android:text="Select a country"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/color_Text"            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgCancel" />
 
@@ -75,6 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
