@@ -30,7 +30,7 @@
         android:src="@drawable/baseline_arrow_back_ios_new_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress"
-        app:tint="@color/color_Text" />
+        app:tint="@color/color_text" />
 
     <LinearLayout
         android:id="@+id/imageView2"
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Income"
-                android:textColor="@color/color_Text"
+                android:textColor="@color/color_text"
                 android:textSize="20sp" />
 
 
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Work Details"
-                android:textColor="@color/color_Text"
+                android:textColor="@color/color_text"
                 android:textSize="20sp" />
 
             <LinearLayout

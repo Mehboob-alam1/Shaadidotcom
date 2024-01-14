@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/color_Background"
+    android:background="@color/color_background"
     tools:context=".views.activities.ChatActivity">
 
 
@@ -33,7 +33,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/color_Text" />
+                app:tint="@color/color_text" />
 
             <TextView
                 android:id="@+id/txtName"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Mehboob Alam"
-                android:textColor="@color/color_Text"
+                android:textColor="@color/color_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/circleImageView"
                 app:layout_constraintStart_toEndOf="@+id/imgBack"
@@ -93,7 +93,7 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:src="@drawable/baseline_send_24"
-            app:tint="@color/color_Button" />
+            app:tint="@color/color_button" />
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/notVerifiedLayout"

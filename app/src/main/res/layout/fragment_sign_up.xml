@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/color_Background"
+    android:background="@color/color_background"
     android:layout_height="match_parent"
     tools:context=".views.fragments.SignUpFragment">
 
@@ -15,7 +15,7 @@
         android:layout_marginTop="32dp"
         android:fontFamily="@font/roboto_light"
         android:text="@string/app_name"
-        android:textColor="@color/color_Text"
+        android:textColor="@color/color_text"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
         android:fontFamily="@font/roboto_bold"
         android:textAlignment="center"
         android:text="@string/new_to_shaadi_com"
-        android:textColor="@color/color_Text"
+        android:textColor="@color/color_text"
         app:layout_constraintBottom_toTopOf="@+id/line_signIns" />
 
 
@@ -74,7 +74,7 @@
                     android:fontFamily="@font/roboto_medium"
                     android:text="Sign Up with Email"
                     android:textAlignment="center"
-                    android:textColor="@color/color_Text"
+                    android:textColor="@color/color_text"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +115,7 @@
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/sign_up_with_mobile"
                     android:textAlignment="center"
-                    android:textColor="@color/color_Text"
+                    android:textColor="@color/color_text"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -155,7 +155,7 @@
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/sign_up_with_google"
                     android:textAlignment="center"
-                    android:textColor="@color/color_Text"
+                    android:textColor="@color/color_text"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/already_have_an_account"
-                android:textColor="@color/color_Text" />
+                android:textColor="@color/color_text" />
 
             <TextView
                 android:id="@+id/btnLogin"
@@ -192,7 +192,7 @@
                 android:padding="8dp"
                 android:text="Login"
                 android:textAlignment="center"
-                android:textColor="@color/color_Text" />
+                android:textColor="@color/color_text" />
         </LinearLayout>
 
 

@@ -43,7 +43,7 @@ android:padding="8dp"
                     android:fontFamily="@font/roboto_bold"
                     android:text="Mehboob Alam"
                     android:id="@+id/txtUserNameNotif"
-                    android:textColor="@color/color_Text" />
+                    android:textColor="@color/color_text" />
 
                 <TextView
                     android:layout_width="wrap_content"

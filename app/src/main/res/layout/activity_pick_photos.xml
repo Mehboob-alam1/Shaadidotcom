@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_Background"
+    android:background="@color/color_background"
     tools:context=".views.activities.PickPhotosActivity">
 
     <com.farimarwat.simpleprogress.ProgressBar
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Almost Done"
-        android:textColor="@color/color_Text"
+        android:textColor="@color/color_text"
         app:layout_constraintBottom_toBottomOf="@+id/imgBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
         android:src="@drawable/baseline_arrow_back_ios_new_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress"
-        app:tint="@color/color_Text" />
+        app:tint="@color/color_text" />
 
     <TextView
         android:id="@+id/textView4"
@@ -51,7 +51,7 @@
         android:layout_marginTop="32dp"
         android:fontFamily="@font/roboto_bold"
         android:text="Pick your photos"
-        android:textColor="@color/color_Text"
+        android:textColor="@color/color_text"
         app:layout_constraintStart_toStartOf="@+id/imgBack"
         app:layout_constraintTop_toBottomOf="@+id/imgBack" />
 

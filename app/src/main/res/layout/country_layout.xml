@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_margin="8dp"
     android:padding="8dp"
-    android:background="@color/color_Background"
+    android:background="@color/color_background"
     android:layout_height="wrap_content">
 
     <TextView
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/countryNameTextView"
         android:text="Pakistan"
-        android:textColor="@color/color_Text"
+        android:textColor="@color/color_text"
         android:fontFamily="@font/roboto"/>
 
 

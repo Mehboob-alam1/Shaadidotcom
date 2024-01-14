@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_Background"
+    android:background="@color/color_background"
     tools:context=".views.activities.ImagesFullActivity">
     <!-- viewpager to show images -->
 
@@ -17,7 +17,7 @@
         android:src="@drawable/baseline_cancel_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/color_Text" />
+        app:tint="@color/color_text" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPagerMain"

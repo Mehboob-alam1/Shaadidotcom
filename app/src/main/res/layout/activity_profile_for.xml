@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_Background"
+    android:background="@color/color_background"
     tools:context=".views.activities.ProfileForActivity">
 
     <com.farimarwat.simpleprogress.ProgressBar
@@ -31,7 +31,7 @@
         android:src="@drawable/baseline_arrow_back_ios_new_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress"
-        app:tint="@color/color_Text" />
+        app:tint="@color/color_text" />
 
 
     <ImageView
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
             android:text="This profile is for"
-            android:textColor="@color/color_Text"
+            android:textColor="@color/color_text"
             android:textSize="20sp"/>
 
         <LinearLayout

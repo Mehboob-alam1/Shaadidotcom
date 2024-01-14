@@ -104,4 +104,9 @@ dependencies {
     //couroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
 
+    // in app update
+
+    implementation 'com.github.SanojPunchihewa:InAppUpdater:1.0.5'
+
+
 }

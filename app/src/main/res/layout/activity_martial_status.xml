@@ -35,7 +35,7 @@
         android:src="@drawable/baseline_arrow_back_ios_new_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress"
-        app:tint="@color/color_Text" />
+        app:tint="@color/color_text" />
 
 
     <ImageView
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Marital Status"
-                android:textColor="@color/color_Text"
+                android:textColor="@color/color_text"
                 android:textSize="20sp" />
 
 
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Children"
-                android:textColor="@color/color_Text"
+                android:textColor="@color/color_text"
                 android:textSize="20sp" />
 
 
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/edit_text_back"
-                android:textColor="@color/color_Text">
+                android:textColor="@color/color_text">
 
                 <Spinner
                     android:id="@+id/spinnerChildren"
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Height"
-                android:textColor="@color/color_Text"
+                android:textColor="@color/color_text"
                 android:textSize="20sp" />
 
 
@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/edit_text_back"
-                android:textColor="@color/color_Text">
+                android:textColor="@color/color_text">
 
                 <Spinner
                     android:id="@+id/spinnerHeight"
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Diet"
-                android:textColor="@color/color_Text"
+                android:textColor="@color/color_text"
                 android:textSize="20sp" />
 
 

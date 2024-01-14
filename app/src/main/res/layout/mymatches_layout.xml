@@ -5,7 +5,7 @@
     app:cardCornerRadius="16dp"
     android:layout_margin="8dp"
     app:cardElevation="5dp"
-    android:background="@color/color_Background"
+    android:background="@color/color_background"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,7 +96,7 @@
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/roboto_bold"
                     android:text="Mehboob Alam"
-                    android:textColor="@color/color_Text"
+                    android:textColor="@color/color_text"
                     android:textSize="16sp" />
 
                 <TextView
@@ -128,14 +128,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
                     android:text="21 yrs,5'4"
-                    android:textColor="@color/color_Text" />
+                    android:textColor="@color/color_text" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="•"
-                    android:textColor="@color/color_Text"
+                    android:textColor="@color/color_text"
                     android:textSize="16sp" />
 
                 <TextView
@@ -145,7 +145,7 @@
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/roboto_bold"
                     android:text="Software Engineer"
-                    android:textColor="@color/color_Text" />
+                    android:textColor="@color/color_text" />
 
 
             </LinearLayout>
@@ -163,14 +163,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
                     android:text="Urdu,Pakistan"
-                    android:textColor="@color/color_Text" />
+                    android:textColor="@color/color_text" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="•"
-                    android:textColor="@color/color_Text"
+                    android:textColor="@color/color_text"
                     android:textSize="16sp" />
 
                 <TextView
@@ -180,7 +180,7 @@
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/roboto_bold"
                     android:text="Gilgit,Gilgit Baltistan"
-                    android:textColor="@color/color_Text" />
+                    android:textColor="@color/color_text" />
 
 
             </LinearLayout>
@@ -203,7 +203,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/color_Text"
+                android:textColor="@color/color_text"
                 android:text="Like this profile?" />
 
             <TextView

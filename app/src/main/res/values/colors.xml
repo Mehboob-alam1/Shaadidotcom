@@ -4,10 +4,10 @@
 
 
 
-    <color name="color_Text">#333333 </color>
-    <color name="color_Text_Grey">#666666</color>
-    <color name="color_Background">#FFFFF</color>
-    <color name="color_Button">#FF4081</color>
+    <color name="color_text">#333333 </color>
+    <color name="color_text_grey">#666666</color>
+    <color name="color_background">#ffff</color>
+    <color name="color_button">#FF4081</color>
 
 
 

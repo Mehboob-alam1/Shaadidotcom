@@ -3,16 +3,25 @@
     <style name="Base.Theme.MyApplication" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="android:statusBarColor">
+            @android:color/transparent
+        </item>
     </style>
 
-    <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
+    <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" >
+
+        <item name="android:statusBarColor">
+            @android:color/transparent
+        </item>
+    </style>
 
 
 
     <style name="EditTextStyleMultiLine">
 
 
-        <item name="android:background">@color/color_Background</item>
+        <item name="android:background">@color/color_background</item>
         <item name="android:ems">10</item>
         <item name="maxLines">20</item>
         <item name="android:gravity">top|start</item>

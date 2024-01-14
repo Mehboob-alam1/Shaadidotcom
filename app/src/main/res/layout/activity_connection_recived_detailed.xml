@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_Background"
+    android:background="@color/color_background"
     tools:context=".views.activities.ConnectionRecivedDetailedActivity" >
 
 
@@ -66,7 +66,7 @@
                     android:src="@drawable/baseline_arrow_back_ios_new_24"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/color_Text" />
+                    app:tint="@color/color_text" />
 
                 <ImageView
                     android:id="@+id/btnMoreProfile"
@@ -114,7 +114,7 @@
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Mehboob Alam"
-                            android:textColor="@color/color_Text"
+                            android:textColor="@color/color_text"
                             android:textSize="16sp" />
 
                         <TextView
@@ -146,14 +146,14 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
                             android:text="21 yrs,5'4"
-                            android:textColor="@color/color_Text" />
+                            android:textColor="@color/color_text" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="•"
-                            android:textColor="@color/color_Text"
+                            android:textColor="@color/color_text"
                             android:textSize="16sp" />
 
                         <TextView
@@ -163,7 +163,7 @@
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Software Engineer"
-                            android:textColor="@color/color_Text" />
+                            android:textColor="@color/color_text" />
 
 
                     </LinearLayout>
@@ -176,7 +176,7 @@
 
 
                         <TextView
-                            android:textColor="@color/color_Text"
+                            android:textColor="@color/color_text"
                             android:id="@+id/txtCommunitySubCommunityM"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="•"
-                            android:textColor="@color/color_Text"
+                            android:textColor="@color/color_text"
                             android:textSize="16sp" />
 
                         <TextView
@@ -199,7 +199,7 @@
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Gilgit,Gilgit Baltistan"
-                            android:textColor="@color/color_Text" />
+                            android:textColor="@color/color_text" />
 
 
                     </LinearLayout>
@@ -239,7 +239,7 @@
                         android:padding="3dp"
                         android:text="About Mehboob Alam"
 
-                        android:textColor="@color/color_Text"                        android:textSize="16sp" />
+                        android:textColor="@color/color_text"                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtAboutDescPerson"
@@ -280,7 +280,7 @@
                         android:fontFamily="@font/roboto_bold"
                         android:padding="3dp"
                         android:text="Basic Details"
-                        android:textColor="@color/color_Text"                        android:textSize="16sp" />
+                        android:textColor="@color/color_text"                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -622,7 +622,7 @@
                         android:fontFamily="@font/roboto_bold"
                         android:padding="3dp"
                         android:text="Contact Details"
-                        android:textColor="@color/color_Text"                        android:textSize="16sp"
+                        android:textColor="@color/color_text"                        android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -785,7 +785,7 @@
                         android:fontFamily="@font/roboto_bold"
                         android:padding="3dp"
                         android:text="Career &amp; Education"
-                        android:textColor="@color/color_Text"                        android:textSize="16sp"
+                        android:textColor="@color/color_text"                        android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -1078,7 +1078,7 @@
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/roboto"
                 android:text=""
-                android:textColor="@color/color_Text"                android:textStyle="italic"
+                android:textColor="@color/color_text"                android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnConnectNow"
                 app:layout_constraintStart_toStartOf="parent"
@@ -1111,7 +1111,7 @@
 
                     android:fontFamily="@font/roboto"
                     android:text="Accept Connection"
-                    android:textColor="@color/color_Text"                    android:textSize="12sp" />
+                    android:textColor="@color/color_text"                    android:textSize="12sp" />
 
             </LinearLayout>
 
