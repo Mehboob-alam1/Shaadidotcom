@@ -126,6 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:maxLength="2"
+                    android:nextFocusForward="@id/etMonth"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/edit_text_back"
                     android:hint="DD"
@@ -152,7 +153,7 @@
                     android:background="@drawable/edit_text_back"
                     android:hint="MM"
                     android:maxLength="2"
-
+android:nextFocusForward="@id/etYear"
                     android:inputType="number"
                     android:padding="16dp" />
             </LinearLayout>

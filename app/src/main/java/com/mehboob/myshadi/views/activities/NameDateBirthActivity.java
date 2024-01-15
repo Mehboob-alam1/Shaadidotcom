@@ -33,7 +33,7 @@ public class NameDateBirthActivity extends AppCompatActivity {
 
         binding = ActivityNameDateBirthBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        sessionManager= new SessionManager(this);
+        sessionManager = new SessionManager(this);
 
         binding.imgBack.setOnClickListener(view -> {
             finish();
@@ -56,6 +56,16 @@ public class NameDateBirthActivity extends AppCompatActivity {
         String firstName = binding.etFirstName.getText().toString();
         String lastName = binding.etLastName.getText().toString();
 
+        if (dayStr.length() == 1) {
+            showToast("Also add 0 at the beginning");
+            binding.etDay.requestFocus();
+            return;
+        }
+        if (monthStr.length() == 1) {
+            showToast("Also add 0 at the beginning");
+            binding.etMonth.requestFocus();
+            return;
+        }
         if (dayStr.isEmpty() || monthStr.isEmpty() || yearStr.isEmpty()) {
             showToast("Please enter all date components.");
             return;
@@ -70,10 +80,10 @@ public class NameDateBirthActivity extends AppCompatActivity {
             return;
         }
 
-       if (firstName.isEmpty() || lastName.isEmpty()){
-           showToast("Kindly provide name to proceed further");
-           return;
-       }
+        if (firstName.isEmpty() || lastName.isEmpty()) {
+            showToast("Kindly provide name to proceed further");
+            return;
+        }
         // Check for valid date format
         if (!isValidDate(day, month, year)) {
             showToast("Invalid date format. Please enter a valid date.");
@@ -88,13 +98,13 @@ public class NameDateBirthActivity extends AppCompatActivity {
 
         // Continue with your logic if the date is valid and age is at least 21
         // ...
-        String fullName=firstName + " "+lastName;
+        String fullName = firstName + " " + lastName;
 
-       // String dateOfBirth = "2000-12-31";
+        // String dateOfBirth = "2000-12-31";
 
         // TODO add two digits for day month string
-        String dob=yearStr +"-"+monthStr+ "-"+dayStr;
-       String date= String.valueOf(Utils.calculateAge(dob));
+        String dob = yearStr + "-" + monthStr + "-" + dayStr;
+        String date = String.valueOf(Utils.calculateAge(dob));
         sessionManager.saveFullName(fullName);
         sessionManager.saveDOb(date);
         sessionManager.saveDateBirth(dob);
