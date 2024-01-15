@@ -250,7 +250,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
             android:text="Gender"
-            android:textColor="@color/black"
+            android:textColor="@color/color_text"
             android:textSize="20sp" />
 
         <LinearLayout

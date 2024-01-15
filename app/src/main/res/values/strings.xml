@@ -76,4 +76,5 @@
     <string name="marital_status_should_be"><b>Marital</b> status should be</string>
     <string name="settings_options"><![CDATA[Settings & Options]]></string>
     <string name="help_support"><![CDATA[Help & Support]]></string>
+    <string name="title_activity_edit_basic_info">EditBasicInfoActivity</string>
 </resources>

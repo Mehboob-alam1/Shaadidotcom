@@ -96,29 +96,6 @@ public class ReligionCastActivity extends AppCompatActivity {
         binding.spinnerComunity.setAdapter(adapter);
     }
 
-    //    private void setSpinnerLivingIn() {
-//
-//
-//        ListAdapter adapter = new ListAdapter(this,countryList);
-//
-//        binding.spinnerLivingIn.setAdapter(adapter);
-//
-//
-//        binding.spinnerLivingIn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                Log.d("ItemCode",countryList.get(i).getCode());
-//                sessionManager.saveLivingIn(countryList.get(i).getName());
-//                sessionManager.saveCountryCode(countryList.get(i).getCode());
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
-//    }
     private void setReligionSpinner() {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, religion);
