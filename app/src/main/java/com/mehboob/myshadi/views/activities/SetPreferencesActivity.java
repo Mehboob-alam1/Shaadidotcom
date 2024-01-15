@@ -65,15 +65,15 @@ public class SetPreferencesActivity extends AppCompatActivity {
         setMaritalStatus();
 
 
-        binding.ageRangeSlider.addOnChangeListener((slider, value, fromUser) -> {
-            List<Float> vals = slider.getValues();
-
-            float firstThumb = vals.get(0);
-            float secondThumb = vals.get(1);
-
-
-            Utils.showSnackBar(this, "values are " + firstThumb + " " + secondThumb);
-        });
+//        binding.ageRangeSlider.addOnChangeListener((slider, value, fromUser) -> {
+//            List<Float> vals = slider.getValues();
+//
+//            float firstThumb = vals.get(0);
+//            float secondThumb = vals.get(1);
+//
+//
+//            Utils.showSnackBar(this, "values are " + firstThumb + " " + secondThumb);
+//        });
 
 
         binding.btnContinue.setOnClickListener(view -> {
@@ -87,8 +87,8 @@ public class SetPreferencesActivity extends AppCompatActivity {
             } else {
 
 
-                Preferences preferences = new Preferences(String.valueOf(binding.ageRangeSlider.getValues().get(0).intValue()),
-                        String.valueOf((binding.ageRangeSlider.getValues().get(1).intValue())),
+                Preferences preferences = new Preferences(String.valueOf(21),
+                        String.valueOf(34),
                         "Any",
                         "Any",
                         binding.spinnerCity.getText().toString(),

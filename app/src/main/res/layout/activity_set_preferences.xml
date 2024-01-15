@@ -82,17 +82,17 @@
                     android:text="@string/age_should_be_in_between"
                     android:textColor="@color/color_text" />
 
-                <com.google.android.material.slider.RangeSlider
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ageRangeSlider"
-                    android:layout_marginTop="8dp"
-                    android:valueFrom="21"
-                    android:valueTo="55"
-                    android:stepSize="1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:values="@array/arrayRangeAge"
-                    tools:ignore="SpeakableTextPresentCheck" />
+<!--                <com.google.android.material.slider.RangeSlider-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/ageRangeSlider"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:valueFrom="21"-->
+<!--                    android:valueTo="55"-->
+<!--                    android:stepSize="1"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:values="@array/arrayRangeAge"-->
+<!--                    tools:ignore="SpeakableTextPresentCheck" />-->
             </LinearLayout>
 
             <View

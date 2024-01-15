@@ -40,18 +40,25 @@ public class MakeConnectionRepository {
 
         ref.child("ConnectionIRecieved").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
                 .child("connected")
-                .setValue(true);
-        ref.child("ConnectionIRecieved").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
-                .child("status")
-                .setValue("connected");
+                .setValue(true)
+                .addOnCompleteListener(task -> {
+                    if (task.isComplete() && task.isSuccessful()) {
+                        ref.child("ConnectionIRecieved").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
+                                .child("status")
+                                .setValue("connected").addOnCompleteListener(task1 -> {
+                                    if (task1.isComplete() && task1.isSuccessful()) {
+                                        ref.child("ConnectionISent").child(connection.getConnectionToId()).child(connection.getConnectionFromId())
+                                                .child("connected")
+                                                .setValue(true);
 
-        ref.child("ConnectionISent").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
-                .child("connected")
-                .setValue(true);
+                                        ref.child("ConnectionISent").child(connection.getConnectionToId()).child(connection.getConnectionFromId())
+                                                .child("status")
+                                                .setValue("connected");
+                                    }
+                                });
+                    }
+                });
 
-        ref.child("ConnectionISent").child(connection.getConnectionFromId()).child(connection.getConnectionToId())
-                .child("status")
-                .setValue("connected");
 
         connected.setValue(true);
 
@@ -69,7 +76,7 @@ public class MakeConnectionRepository {
                 if (snapshot.exists()) {
                     for (DataSnapshot snap : snapshot.getChildren()) {
                         Connection connectedUsers = snap.getValue(Connection.class);
-                        if (connectedUsers.isConnected() && connectedUsers.getStatus().equals("connected")){
+                        if (connectedUsers.isConnected() && connectedUsers.getStatus().equals("connected")) {
                             connections.add(connectedUsers);
                         }
 

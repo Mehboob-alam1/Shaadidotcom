@@ -22,7 +22,14 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="_1_month_title">1-Month</string>
+    <string name="total_price_one_month">$12.99 Monthly</string>
 
+    <string name="_6_month_title">6-Month</string>
+    <string name="total_price_six_month">$12.99 Monthly</string>
+
+    <string name="_1_year_title">1-Year</string>-->
+    <string name="total_price_one_year">$12.99 Monthly</string>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus

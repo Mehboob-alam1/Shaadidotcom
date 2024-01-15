@@ -203,8 +203,11 @@ public class FirebaseUserProfileRepository {
 
         @Override
         protected Void doInBackground(UserProfileData... userProfileData) {
-
-            userProfileDataDao.insertUserProfile(userProfileData[0]);
+try {
+    userProfileDataDao.insertUserProfile(userProfileData[0]);
+}catch (Exception e){
+    Log.d("Exception",e.getLocalizedMessage());
+}
             return null;
         }
     }
