@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityEditProfileBinding;
 import com.mehboob.myshadi.utils.SessionManager;
@@ -78,7 +79,13 @@ public class EditProfileActivity extends AppCompatActivity {
                         "Annual Income\t\t\t\t" + userProfile.getIncome() + "\n" +
                         "Diet\t\t\t\t" + userProfile.getDiet());
 
+                binding.btnEditBasicInfo.setOnClickListener(v -> {
 
+                    Intent i = new Intent(this, EditBasicInfoActivity.class);
+                    i.putExtra("user",new Gson().toJson(userProfile));
+                    startActivity(i);
+
+                });
             } catch (NullPointerException e) {
                 Log.d("ProfileReadingException", e.getLocalizedMessage());
             }
@@ -90,9 +97,7 @@ public class EditProfileActivity extends AppCompatActivity {
             binding.btnUpgradeNow.setOnClickListener(view -> {
                 startActivity(new Intent(this, UpgradePremiumActivity.class));
             });
-            binding.btnEditBasicInfo.setOnClickListener(v -> {
-startActivity(new Intent(this, EditBasicInfoActivity.class));
-            });
+
 
 
         });

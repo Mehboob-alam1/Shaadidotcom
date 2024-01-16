@@ -2,14 +2,27 @@ package com.mehboob.myshadi.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityEditBasicInfoBinding;
+import com.mehboob.myshadi.room.entities.UserMatches;
+import com.mehboob.myshadi.room.entities.UserProfileData;
+import com.mehboob.myshadi.utils.SessionManager;
 import com.mehboob.myshadi.utils.Utils;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
 
 public class EditBasicInfoActivity extends AppCompatActivity {
     private ActivityEditBasicInfoBinding binding;
@@ -22,16 +35,26 @@ public class EditBasicInfoActivity extends AppCompatActivity {
 
     private String[] workWith = {"Private Company", "Government / Public Sector", "Defense / Civil Services", "Business / Self Employed", "Not Working"};
     private String[] diet = {"Select", "Veg", "Non-Veg", "Occasionally Non-Veg", "Eggetarian", "Jain", "Vegan"};
+    private UserProfileData userProfile;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityEditBasicInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sessionManager = new SessionManager(this);
 
         binding.imgBack.setOnClickListener(v -> {
             onBackPressed();
         });
+
+        Type type = new TypeToken<UserProfileData>() {
+        }.getType();
+        userProfile = new Gson().fromJson(getIntent().getStringExtra("user"), type);
+
+
+        setSomeData(userProfile);
         setMaritalStatus();
         setHeightSpinner();
         setReligionSpinner();
@@ -95,9 +118,72 @@ public class EditBasicInfoActivity extends AppCompatActivity {
                 return;
             }
 
+            ProgressDialog dialog = new ProgressDialog(this);
+            dialog.setMessage("Please wait.....");
+            dialog.setCancelable(false);
+            dialog.show();
+
+            String age = binding.etAge.getText().toString();
+            String maritalStatus = binding.spinnerMaritalStatus.getSelectedItem().toString();
+            String height = binding.spinnerHeight.getSelectedItem().toString();
+            String religion = binding.spinnerReligion.getSelectedItem().toString();
+            String community = binding.spinnerCommunity.getSelectedItem().toString();
+            String subCommunity = binding.spinnerSubCommunity.getSelectedItem().toString();
+            String workWith = binding.spinnerworksWith.getSelectedItem().toString();
+            String workAs = binding.etWorkAs.getText().toString();
+            String diet = binding.spinnerDiet.getSelectedItem().toString();
+            String annualIncome = binding.etIncome.getText().toString();
+
+
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("userProfiles");
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("dob", age);
+            map.put("maritalStatus", maritalStatus);
+            map.put("height", height);
+            map.put("religion", religion);
+            map.put("community", community);
+            map.put("subCommunity", subCommunity);
+            map.put("worksWith", workWith);
+            map.put("workAs", workAs);
+            map.put("diet", diet);
+            map.put("income", annualIncome);
+
+            reference.child(sessionManager.fetchGender()).child(sessionManager.fetchUserId())
+                    .setValue(map)
+                    .addOnCompleteListener(task -> {
+
+                        if (task.isComplete() && task.isSuccessful()) {
+
+                            Utils.showSnackBar(this, "Profile data updated");
+
+                            dialog.dismiss();
+                            finish();
+                        } else {
+
+                            Utils.showSnackBar(this, "Something went");
+
+                            dialog.dismiss();
+                        }
+                    }).addOnFailureListener(e -> {
+                        Utils.showSnackBar(this, e.getLocalizedMessage());
+                    });
 
 
         });
+    }
+
+    private void setSomeData(UserProfileData userProfile) {
+
+
+        try {
+            binding.txtProfileCreatedBy.setText(userProfile.getProfileFor());
+            binding.txtCountry.setText(userProfile.getLivingIn());
+            binding.txtState.setText(userProfile.getStateName());
+            binding.txtCity.setText(userProfile.getCityName());
+        } catch (Exception e) {
+            Log.d("Exception", e.getLocalizedMessage());
+        }
     }
 
     private void setDietSpinner() {
