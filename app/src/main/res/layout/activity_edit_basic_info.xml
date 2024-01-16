@@ -467,7 +467,6 @@
                     android:layout_weight="1"
                     android:background="@drawable/edit_text_back"
                     android:hint="Work as "
-                    android:inputType="number"
                     android:padding="8dp"
                     android:textColor="@color/color_text"
                     android:textSize="10sp" />
@@ -527,7 +526,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@drawable/edit_text_back"
-                    android:hint="age"
+                    android:hint="Annual Income"
                     android:padding="8dp"
                     android:textColor="@color/color_text"
                     android:textSize="10sp" />
