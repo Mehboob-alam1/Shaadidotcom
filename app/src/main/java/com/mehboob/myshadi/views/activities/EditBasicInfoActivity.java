@@ -1,5 +1,6 @@
 package com.mehboob.myshadi.views.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -9,7 +10,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -23,6 +27,7 @@ import com.mehboob.myshadi.utils.Utils;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class EditBasicInfoActivity extends AppCompatActivity {
     private ActivityEditBasicInfoBinding binding;
@@ -135,9 +140,9 @@ public class EditBasicInfoActivity extends AppCompatActivity {
             String annualIncome = binding.etIncome.getText().toString();
 
 
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("userProfiles");
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("userProfiles").child(sessionManager.fetchGender()).child(sessionManager.fetchUserId());
 
-            HashMap<String, String> map = new HashMap<>();
+            HashMap<String, Object> map = new HashMap<>();
             map.put("dob", age);
             map.put("maritalStatus", maritalStatus);
             map.put("height", height);
@@ -149,23 +154,16 @@ public class EditBasicInfoActivity extends AppCompatActivity {
             map.put("diet", diet);
             map.put("income", annualIncome);
 
-            reference.child(sessionManager.fetchGender()).child(sessionManager.fetchUserId())
-                    .setValue(map)
-                    .addOnCompleteListener(task -> {
 
-                        if (task.isComplete() && task.isSuccessful()) {
-
-                            Utils.showSnackBar(this, "Profile data updated");
-
-                            dialog.dismiss();
-                            finish();
-                        } else {
-
-                            Utils.showSnackBar(this, "Something went");
-
-                            dialog.dismiss();
-                        }
-                    }).addOnFailureListener(e -> {
+            reference.updateChildren(map)
+                    .addOnSuccessListener(aVoid -> {
+                        // Handle successful update
+                        Utils.showSnackBar(this, "Profile update successfully");
+                        dialog.dismiss();
+                        finish();
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle failure
                         Utils.showSnackBar(this, e.getLocalizedMessage());
                     });
 
