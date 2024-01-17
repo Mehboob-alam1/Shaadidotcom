@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.mehboob.myshadi.views.activities.NoNetworkActivity;
@@ -19,19 +20,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (isNetworkConnected(context)) {
-            // Internet connection is available
-            // You can show a dialog here or trigger any action
-            // ...
 
-//            showSnackBar((Activity) context,"You are online");
-            Toast.makeText(context, "You are offline", Toast.LENGTH_SHORT).show();
         } else {
-            // Internet connection is lost
-
-            Toast.makeText(context, "offline", Toast.LENGTH_SHORT).show();
-            Intent noNetworkIntent = new Intent(context, NoNetworkActivity.class);
-            noNetworkIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(noNetworkIntent);
+            Log.d("NoInternet","Internet connection lost ");
         }
     }
 
