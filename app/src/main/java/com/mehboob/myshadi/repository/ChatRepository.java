@@ -50,12 +50,16 @@ public class ChatRepository {
 
         String senderRoomId = message.getSenderId() + "-" + message.getRecieverId();
         String recieverRoomId = message.getSenderId() + "-" + message.getRecieverId();
-        messagesRef.child(senderRoomId).child(message.getPushId())
+        messagesRef.child(senderRoomId)
+                .child("messages").child(message.getPushId())
+
                 .setValue(message).addOnCompleteListener(task -> {
                     if (task.isComplete() && task.isSuccessful()) {
 
                         sendNotification(connection, token);
-                        messagesRef.child(recieverRoomId).child(message.getPushId())
+                        messagesRef.child(recieverRoomId)   .child("messages").child(message.getPushId())
+
+
                                 .setValue(message);
                     } else {
 
@@ -129,6 +133,7 @@ public class ChatRepository {
 
         String roomId = senderId + "-" + recieverId;
         messagesRef.child(roomId)
+                .child("messages")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -149,6 +154,6 @@ public class ChatRepository {
 
                     }
                 });
-return chatMessages;
+        return chatMessages;
     }
 }

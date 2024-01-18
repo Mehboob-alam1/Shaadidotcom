@@ -78,9 +78,12 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void setChatRecyclerView() {
-        chatAdapter= new ChatAdapter(new ArrayList<>(),this);
+        chatAdapter = new ChatAdapter(new ArrayList<>(), this);
         binding.chatRecyclerView.setAdapter(chatAdapter);
         binding.chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
     }
 
     private void getUserToken(Connection connection) {
@@ -103,6 +106,7 @@ public class ChatActivity extends AppCompatActivity {
                             String timeStamp = String.valueOf(System.currentTimeMillis());
                             ChatMessages msg = new ChatMessages(connection.getConnectionFromId(), connection.getConnectionToId(),
                                     message, pushId, timeStamp);
+                            binding.etMessage.setText("");
 
                             chatViewModel.setMessage(msg, connection, token);
 
@@ -134,14 +138,15 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
-        if (sessionManager.fetchUserId() != null && connection.getConnectionToId() != null) {
             chatViewModel.getMessage(sessionManager.fetchUserId(), connection.getConnectionToId()).observe(this, chatMessages -> {
 
                 if (chatMessages != null) {
                     Log.d("Messages", chatMessages.toString());
+                    chatAdapter.setChatMessages(chatMessages);
+                    chatAdapter.notifyDataSetChanged();
                 }
             });
-        }
+
 
     }
 }
