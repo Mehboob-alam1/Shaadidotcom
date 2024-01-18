@@ -48,12 +48,15 @@ public class ChatRepository {
 
     public void setMessage(ChatMessages message, Connection connection, String token) {
 
-        String roomId = message.getSenderId() + "-" + message.getRecieverId();
-        messagesRef.child(roomId).child(message.getPushId())
+        String senderRoomId = message.getSenderId() + "-" + message.getRecieverId();
+        String recieverRoomId = message.getSenderId() + "-" + message.getRecieverId();
+        messagesRef.child(senderRoomId).child(message.getPushId())
                 .setValue(message).addOnCompleteListener(task -> {
                     if (task.isComplete() && task.isSuccessful()) {
 
                         sendNotification(connection, token);
+                        messagesRef.child(recieverRoomId).child(message.getPushId())
+                                .setValue(message);
                     } else {
 
                     }

@@ -3,6 +3,7 @@ package com.mehboob.myshadi.views.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mehboob.myshadi.R;
+import com.mehboob.myshadi.adapters.homeAdapters.ChatAdapter;
 import com.mehboob.myshadi.databinding.ActivityChatBinding;
 import com.mehboob.myshadi.model.ChatMessages;
 import com.mehboob.myshadi.model.Connection;
@@ -28,6 +30,7 @@ import com.mehboob.myshadi.viewmodel.ChatViewModel;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class ChatActivity extends AppCompatActivity {
@@ -38,6 +41,8 @@ public class ChatActivity extends AppCompatActivity {
     private ChatViewModel chatViewModel;
     private boolean isVerified;
     private String token;
+
+    private ChatAdapter chatAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,49 +69,18 @@ public class ChatActivity extends AppCompatActivity {
 
         fupViewModel.getProfile(sessionManager.fetchUserId());
 
-        binding.btnSendMessage.setActivated(false);
-        binding.btnSendMessage.setClickable(false);
-        if (isVerified && token!=null) {
 
-            binding.etMessage.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (s.length() != 0) {
-                        binding.btnSendMessage.setActivated(true);
-                        binding.btnSendMessage.setClickable(true);
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
-
-            binding.btnSendMessage.setOnClickListener(v -> {
-
-                if (binding.etMessage.getText().toString() != null) {
-
-                    String message = binding.etMessage.getText().toString();
-                    String pushId = UUID.randomUUID().toString();
-                    String timeStamp = String.valueOf(System.currentTimeMillis());
-                    ChatMessages msg = new ChatMessages(connection.getConnectionFromId(), connection.getConnectionToId(),
-                            message, pushId, timeStamp);
-
-                    chatViewModel.setMessage(msg, connection,token);
+        Log.d("TokenVerified", token + " " + isVerified);
 
 
-                }
-            });
+        setChatRecyclerView();
 
-        }
+    }
 
-
+    private void setChatRecyclerView() {
+        chatAdapter= new ChatAdapter(new ArrayList<>(),this);
+        binding.chatRecyclerView.setAdapter(chatAdapter);
+        binding.chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void getUserToken(Connection connection) {
@@ -120,12 +94,29 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     token = snapshot.child("token").getValue(String.class);
+                    binding.btnSendMessage.setOnClickListener(v -> {
+
+                        if (binding.etMessage.getText().toString() != null) {
+
+                            String message = binding.etMessage.getText().toString();
+                            String pushId = UUID.randomUUID().toString();
+                            String timeStamp = String.valueOf(System.currentTimeMillis());
+                            ChatMessages msg = new ChatMessages(connection.getConnectionFromId(), connection.getConnectionToId(),
+                                    message, pushId, timeStamp);
+
+                            chatViewModel.setMessage(msg, connection, token);
+
+
+                        }
+                    });
+                } else {
+                    Log.d("Token", "Something went wrong");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.d("Token", error.getMessage());
             }
         });
     }
@@ -143,13 +134,14 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
-        if (sessionManager.fetchUserId() !=null && connection.getConnectionToId() !=null) {
+        if (sessionManager.fetchUserId() != null && connection.getConnectionToId() != null) {
             chatViewModel.getMessage(sessionManager.fetchUserId(), connection.getConnectionToId()).observe(this, chatMessages -> {
 
-                if(chatMessages!=null){
-                    Log.d("Messages",chatMessages.toString());
+                if (chatMessages != null) {
+                    Log.d("Messages", chatMessages.toString());
                 }
             });
         }
+
     }
 }

@@ -17,6 +17,9 @@ public class ChatMessages {
         this.timeStamp = timeStamp;
     }
 
+    public ChatMessages() {
+    }
+
     public String getPushId() {
         return pushId;
     }

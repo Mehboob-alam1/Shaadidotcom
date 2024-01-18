@@ -83,6 +83,8 @@ public class MakeConnectionRepository {
                     }
 
                     connectedUserData.setValue(connections);
+                }else{
+                    connectedUserData.setValue(null);
                 }
             }
 
