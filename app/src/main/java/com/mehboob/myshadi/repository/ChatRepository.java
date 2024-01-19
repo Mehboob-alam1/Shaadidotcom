@@ -20,6 +20,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import okhttp3.Call;
@@ -49,7 +51,7 @@ public class ChatRepository {
     public void setMessage(ChatMessages message, Connection connection, String token) {
 
         String senderRoomId = message.getSenderId() + "-" + message.getRecieverId();
-        String recieverRoomId = message.getSenderId() + "-" + message.getRecieverId();
+        String recieverRoomId = message.getRecieverId() + "-" + message.getSenderId();
         messagesRef.child(senderRoomId)
                 .child("messages").child(message.getPushId())
 
@@ -57,7 +59,7 @@ public class ChatRepository {
                     if (task.isComplete() && task.isSuccessful()) {
 
                         sendNotification(connection, token);
-                        messagesRef.child(recieverRoomId)   .child("messages").child(message.getPushId())
+                        messagesRef.child(recieverRoomId).child("messages").child(message.getPushId())
 
 
                                 .setValue(message);
@@ -145,6 +147,9 @@ public class ChatRepository {
                                 chat.add(chatMessages);
 
                             }
+
+                            // Sort the chat list based on timeStamp
+                            Collections.sort(chat, Comparator.comparing(ChatMessages::getTimeStamp));
                             chatMessages.setValue(chat);
                         }
                     }

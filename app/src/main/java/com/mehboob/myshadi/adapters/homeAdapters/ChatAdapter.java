@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ItemRecieveBinding;
 import com.mehboob.myshadi.databinding.ItemSentBinding;
@@ -48,7 +49,15 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
 
     }
-
+    @Override
+    public int getItemViewType(int position) {
+        ChatMessages chat = chatMessages.get(position);
+        if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(chat.getSenderId())) {
+            return ITEM_SENT;
+        } else {
+            return ITEM_RECIEVED;
+        }
+    }
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
@@ -67,15 +76,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        ChatMessages chat = chatMessages.get(position);
-        if (sessionManager.fetchUserId().equals(chat.getSenderId())) {
-            return ITEM_SENT;
-        } else {
-            return ITEM_RECIEVED;
-        }
-    }
+
 
     @Override
     public int getItemCount() {
@@ -84,6 +85,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
 
     public void setChatMessages(List<ChatMessages> chatMessages) {
+        this.chatMessages.clear();
 
         chatMessages.addAll(chatMessages);
         notifyDataSetChanged();

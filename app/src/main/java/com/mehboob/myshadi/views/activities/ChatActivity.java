@@ -31,6 +31,7 @@ import com.mehboob.myshadi.viewmodel.FUPViewModel;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class ChatActivity extends AppCompatActivity {
@@ -52,6 +53,8 @@ public class ChatActivity extends AppCompatActivity {
         fupViewModel = new ViewModelProvider(this).get(FUPViewModel.class);
         chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
         sessionManager = new SessionManager(this);
+        setChatRecyclerView();
+
         Type type = new TypeToken<Connection>() {
         }.getType();
         connection = new Gson().fromJson(getIntent().getStringExtra("user"), type);
@@ -73,14 +76,16 @@ public class ChatActivity extends AppCompatActivity {
         Log.d("TokenVerified", token + " " + isVerified);
 
 
-        setChatRecyclerView();
 
     }
 
     private void setChatRecyclerView() {
-        chatAdapter = new ChatAdapter(new ArrayList<>(), this);
-        binding.chatRecyclerView.setAdapter(chatAdapter);
-        binding.chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        List<ChatMessages> list= new ArrayList<>();
+        list.add(new ChatMessages("","","Hello my name is khan","",""));
+        list.add(new ChatMessages("","","Hello my name is khan","",""));
+
+
 
 
 
@@ -111,6 +116,7 @@ public class ChatActivity extends AppCompatActivity {
                             chatViewModel.setMessage(msg, connection, token);
 
 
+
                         }
                     });
                 } else {
@@ -138,14 +144,17 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
-            chatViewModel.getMessage(sessionManager.fetchUserId(), connection.getConnectionToId()).observe(this, chatMessages -> {
+        chatViewModel.getMessage(sessionManager.fetchUserId(), connection.getConnectionToId()).observe(this, chatMessages -> {
 
-                if (chatMessages != null) {
-                    Log.d("Messages", chatMessages.toString());
-                    chatAdapter.setChatMessages(chatMessages);
-                    chatAdapter.notifyDataSetChanged();
-                }
-            });
+
+            Log.d("Messages", chatMessages.toString());
+            chatAdapter = new ChatAdapter(chatMessages, this);
+            binding.chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            binding.chatRecyclerView.setAdapter(chatAdapter);
+            binding.chatRecyclerView.smoothScrollToPosition(chatAdapter.getItemCount() - 1);
+
+
+        });
 
 
     }
