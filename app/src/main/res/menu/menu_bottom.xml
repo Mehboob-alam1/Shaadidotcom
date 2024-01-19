@@ -20,11 +20,7 @@ android:icon="@drawable/baseline_home_24"
         android:title="Inbox" />
 
 
-    <item
-        android:id="@+id/chatFragment"
-        android:iconTint="@color/white"
-        android:icon="@drawable/baseline_chat_bubble_24"
-        android:title="Chat" />
+
 
     <item
         android:id="@+id/premiumFragment"

@@ -1,49 +1,22 @@
 package com.mehboob.myshadi.views.dashboard;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.mehboob.myshadi.R;
 import com.mehboob.myshadi.databinding.ActivityDashBoardBinding;
-import com.mehboob.myshadi.model.profilemodel.UserProfile;
-import com.mehboob.myshadi.room.entities.UserProfileData;
 import com.mehboob.myshadi.utils.SessionManager;
-import com.mehboob.myshadi.utils.Utils;
 import com.mehboob.myshadi.viewmodel.FUPViewModel;
 import com.mehboob.myshadi.viewmodel.MatchMakingViewModel;
 import com.mehboob.myshadi.viewmodel.UserViewModel;
-import com.mehboob.myshadi.views.activities.ProfileDetailedActivity;
-import com.mehboob.myshadi.views.dashboard.frags.ChatFragment;
-import com.mehboob.myshadi.views.dashboard.frags.HomeFragment;
-import com.mehboob.myshadi.views.dashboard.frags.InboxFragment;
-import com.mehboob.myshadi.views.dashboard.frags.MatchesFragment;
-import com.mehboob.myshadi.views.dashboard.frags.PremiumFragment;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 public class DashBoardActivity extends AppCompatActivity {
     private ActivityDashBoardBinding binding;
