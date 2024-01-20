@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/homeFragment"
-android:icon="@drawable/baseline_home_24"
+        android:icon="@drawable/baseline_home_24"
         android:iconTint="@color/white"
         android:title="Home" />
 
     <item
-   android:id="@+id/matchesFragment"
+        android:id="@+id/matchesFragment"
         android:icon="@drawable/ic_matches"
         android:iconTint="@color/white"
         android:title="Matches" />
@@ -20,12 +20,10 @@ android:icon="@drawable/baseline_home_24"
         android:title="Inbox" />
 
 
-
-
     <item
         android:id="@+id/premiumFragment"
-        android:iconTint="@color/white"
         android:icon="@drawable/baseline_paid_24"
+        android:iconTint="@color/white"
         android:title="Premium" />
 
 </menu>

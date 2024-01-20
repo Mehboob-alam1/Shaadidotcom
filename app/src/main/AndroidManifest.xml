@@ -20,6 +20,12 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".views.activities.HelpSupportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activities.AccountSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.EditBasicInfoActivity"
             android:exported="false"
             android:label="@string/title_activity_edit_basic_info"

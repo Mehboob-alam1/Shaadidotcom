@@ -45,26 +45,31 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHol
         Glide.with(context)
                 .load(slider.getImageUrl())
                 .into(viewHolder.imageView);
+        if (!slider.getImageLink().equals("no link")){
 
-        viewHolder.itemView.setOnClickListener(v -> {
+
+            viewHolder.itemView.setOnClickListener(v -> {
 
 
-            // Toast.makeText(context, ""+slider.getImageUrl(), Toast.LENGTH_SHORT).show();
-            CustomTabsIntent.Builder customIntent = new CustomTabsIntent.Builder();
+                // Toast.makeText(context, ""+slider.getImageUrl(), Toast.LENGTH_SHORT).show();
+                CustomTabsIntent.Builder customIntent = new CustomTabsIntent.Builder();
 
-            // below line is setting toolbar color
-            // for our custom chrome tab.
-            customIntent.setToolbarColor(ContextCompat.getColor(context, R.color.black));
+                // below line is setting toolbar color
+                // for our custom chrome tab.
+                customIntent.setToolbarColor(ContextCompat.getColor(context, R.color.black));
 
-            // we are calling below method after
-            // setting our toolbar color.
+                // we are calling below method after
+                // setting our toolbar color.
 
-openCustomTab(context.getApplicationContext(),customIntent.build(),Uri.parse(slider.getImageLink()));
+                openCustomTab(context.getApplicationContext(),customIntent.build(),Uri.parse(slider.getImageLink()));
 
 //            Intent i = new Intent(Intent.ACTION_VIEW);
 //            i.setData(Uri.parse(slider.getImageLink()));
 //            context.startActivity(i);
-        });
+            });
+        }
+
+
 
     }
 

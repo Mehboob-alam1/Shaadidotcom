@@ -4,4 +4,5 @@
     <color name="color_text">#FFFFFF</color>
     <color name="color_text_grey">#A1A1A1</color>
     <color name="color_background">#333333</color>
+    <color name="color_button">#E11158</color>
 </resources>

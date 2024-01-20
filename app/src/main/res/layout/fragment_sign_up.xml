@@ -40,19 +40,21 @@
         android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:cardCornerRadius="24dp"
-           >
+            android:visibility="gone"
+            app:cardCornerRadius="24dp">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btnSignUpEmail"
                 android:layout_width="match_parent"
-                android:foreground="?attr/selectableItemBackground"
-
                 android:layout_height="40dp"
+
                 android:layout_margin="8dp"
+                android:foreground="?attr/selectableItemBackground"
 
                 >
 
@@ -87,15 +89,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:cardCornerRadius="24dp"
-            >
+            android:visibility="gone"
+            app:cardCornerRadius="24dp">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btnSignUpMobile"
-                android:layout_height="40dp"
                 android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:layout_margin="8dp"
-                android:foreground="?attr/selectableItemBackground"
-                >
+                android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/imageViewMobile"

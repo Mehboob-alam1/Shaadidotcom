@@ -9,12 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="com.mehboob.myshadi.views.dashboard.frags.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/chatFragment"
-        android:name="com.mehboob.myshadi.views.dashboard.frags.ChatFragment"
-        android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_premiumFragment"
+            app:destination="@id/premiumFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_matchesFragment"
+            app:destination="@id/matchesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/matchesFragment"
         android:name="com.mehboob.myshadi.views.dashboard.frags.MatchesFragment"

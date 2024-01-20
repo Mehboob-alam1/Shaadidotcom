@@ -77,4 +77,5 @@
     <string name="settings_options"><![CDATA[Settings & Options]]></string>
     <string name="help_support"><![CDATA[Help & Support]]></string>
     <string name="title_activity_edit_basic_info">EditBasicInfoActivity</string>
+    <string name="help_text"><![CDATA[You can now contact us on whatsapp between 10am-7pm \n(UTC +5). For instant support,we recommend that you to connect with us on chat & we will be there to assist you]]></string>
 </resources>
