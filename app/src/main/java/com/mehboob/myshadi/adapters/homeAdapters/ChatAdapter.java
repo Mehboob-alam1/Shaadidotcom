@@ -52,7 +52,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         ChatMessages chat = chatMessages.get(position);
-        if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(chat.getSenderId())) {
+        if (sessionManager.fetchUserId().equals(chat.getSenderId())) {
             return ITEM_SENT;
         } else {
             return ITEM_RECIEVED;
