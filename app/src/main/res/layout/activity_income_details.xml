@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_background"
     tools:context=".views.activities.IncomeDetailsActivity">
 
     <com.farimarwat.simpleprogress.ProgressBar
@@ -52,7 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/roboto_medium"
+            android:fontFamily="@font/poppins_regular"
+
             android:text="You are almost done" />
     </LinearLayout>
 
@@ -79,7 +81,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="Income"
                 android:textColor="@color/color_text"
                 android:textSize="20sp" />
@@ -92,6 +94,8 @@
                 android:background="@drawable/edit_text_back">
 
                 <EditText
+                    android:fontFamily="@font/poppins_regular"
+
                     android:id="@+id/etIncome"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -115,7 +119,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="Work Details"
                 android:textColor="@color/color_text"
                 android:textSize="20sp" />
@@ -132,6 +136,7 @@
                     android:id="@+id/spinnerWorkWith"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:fontFamily="@font/poppins_regular"
 
 
                     android:padding="8dp" />
@@ -145,6 +150,8 @@
                 android:background="@drawable/edit_text_back">
 
                 <EditText
+                    android:fontFamily="@font/poppins_regular"
+
                     android:id="@+id/etWorksAs"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -160,16 +167,17 @@
 
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnContinue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+
         android:layout_marginEnd="16dp"
         android:background="@drawable/btn_back_clicked"
         android:enabled="true"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Continue"
         android:textAllCaps="false"
         android:textColor="@color/white"

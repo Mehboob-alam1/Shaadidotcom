@@ -64,7 +64,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Religion"
                 android:textColor="@color/color_text"
                 android:textSize="20sp" />
@@ -76,6 +76,8 @@
                 android:background="@drawable/edit_text_back">
 
                 <Spinner
+                    android:fontFamily="@font/poppins_medium"
+
                     android:id="@+id/spinnerReligion"
                     android:layout_width="match_parent"
                     android:layout_height="60dp" />
@@ -95,7 +97,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Community"
                 android:textColor="@color/color_text"
                 android:textSize="20sp" />
@@ -104,6 +106,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+
                 android:layout_marginTop="16dp"
                 android:background="@drawable/edit_text_back">
 
@@ -129,7 +133,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Living Area"
                 android:textColor="@color/color_text"
                 android:textSize="20sp" />
@@ -149,6 +153,8 @@
 <!--                    />-->
 
                 <TextView
+                    android:fontFamily="@font/poppins_medium"
+
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_vertical"
@@ -165,7 +171,7 @@
 
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnContinue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -174,7 +180,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/btn_back_clicked"
         android:enabled="true"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Continue"
         android:textAllCaps="false"
         android:textColor="@color/white"

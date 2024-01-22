@@ -22,7 +22,7 @@
         android:id="@+id/progressBar2"
 android:text="NO NETWORK"
         android:textSize="22sp"
-        android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/poppins_bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"

@@ -15,6 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:tabIconTint="@color/red_100"
         app:tabMode="scrollable"
+        android:fontFamily="@font/poppins_light"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,7 +29,8 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-android:icon="@drawable/baseline_location_on_24"
+
+            android:icon="@drawable/baseline_location_on_24"
 
             android:text="Near me"/>
         <com.google.android.material.tabs.TabItem

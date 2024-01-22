@@ -93,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Mehboob Alam"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
@@ -107,6 +107,7 @@
                     android:drawableStart="@drawable/baseline_supervisor_account_24"
                     android:gravity="center_vertical"
                     android:padding="4dp"
+                    android:fontFamily="@font/poppins_light"
                     android:text="You &amp; her"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
@@ -127,6 +128,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
                     android:text="21 yrs,5'4"
+
                     android:textColor="@color/white" />
 
                 <TextView
@@ -142,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="Software Engineer"
                     android:textColor="@color/white" />
 
@@ -160,7 +162,7 @@
                     android:id="@+id/txtCommunitySubCommunityS"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="Urdu,Pakistan"
                     android:textColor="@color/white" />
 
@@ -177,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="Gilgit,Gilgit Baltistan"
                     android:textColor="@color/white" />
 

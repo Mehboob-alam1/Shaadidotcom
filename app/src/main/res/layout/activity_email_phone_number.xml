@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/color_background"
     android:layout_height="match_parent"
     tools:context=".views.activities.EmailPhoneNumberActivity">
     <com.farimarwat.simpleprogress.ProgressBar
@@ -46,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/roboto"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/email_phone_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +69,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/poppins_semibold"
             android:text="Email ID"
             android:textColor="@color/color_text"            android:textSize="20sp" />
 
@@ -79,6 +80,8 @@
             android:id="@+id/etEmail"
             android:background="@drawable/edit_text_back"
             android:hint="Email"
+            android:fontFamily="@font/poppins_regular"
+
             android:inputType="textEmailAddress"
             android:padding="3dp" />
 
@@ -86,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:fontFamily="@font/roboto_bold"
+            android:fontFamily="@font/poppins_semibold"
             android:text="Phone Number"
             android:textColor="@color/color_text"            android:textSize="20sp" />
 
@@ -97,6 +100,8 @@
             android:layout_marginTop="16dp">
 
             <Spinner
+                android:fontFamily="@font/poppins_regular"
+
                 android:id="@+id/spinnerCountryCode"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
@@ -105,6 +110,8 @@
                 />
 
             <EditText
+                android:fontFamily="@font/poppins_regular"
+
                 android:id="@+id/etPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -129,7 +136,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/btn_back_unclicked"
         android:enabled="true"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Submit"
         android:textAllCaps="false"
         android:textColor="@color/color_text"

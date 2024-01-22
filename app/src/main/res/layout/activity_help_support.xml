@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Write to Us"
                 android:textColor="@color/color_text" />
 
@@ -56,12 +56,15 @@
 
 
                 <TextView
+                    android:fontFamily="@font/poppins_semibold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Type of issue"
                     android:textColor="@color/color_text_grey" />
 
                 <EditText
+                    android:fontFamily="@font/poppins_regular"
+
                     android:id="@+id/etTypeOfIssue"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -72,6 +75,7 @@
                     android:padding="8dp" />
 
                 <TextView
+                    android:fontFamily="@font/poppins_semibold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -80,6 +84,8 @@
 
                 <EditText
                     android:id="@+id/etSubjet"
+                    android:fontFamily="@font/poppins_regular"
+
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
@@ -88,6 +94,7 @@
                     android:padding="8dp" />
 
                 <TextView
+                    android:fontFamily="@font/poppins_semibold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -95,6 +102,8 @@
                     android:textColor="@color/color_text_grey" />
 
                 <EditText
+                    android:fontFamily="@font/poppins_regular"
+
                     android:id="@+id/etDescription"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
@@ -114,7 +123,8 @@
                 android:background="@color/color_text_grey" />
 
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
+                android:fontFamily="@font/poppins_semibold"
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -148,12 +158,14 @@
                 android:letterSpacing="0.1"
                 android:textAlignment="center"
                 android:text="Pakistan :   + 92-3554742407"
-                android:fontFamily="@font/roboto_medium"
+                android:fontFamily="@font/poppins_bold"
                 android:textColor="@color/color_text"
 
                 android:padding="8dp"/>
             <TextView
-                android:lineSpacingMultiplier="1.5"
+                android:fontFamily="@font/poppins_regular"
+
+                android:lineSpacingMultiplier="0.8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/help_text"/>

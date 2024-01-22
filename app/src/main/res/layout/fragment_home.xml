@@ -103,7 +103,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/poppins_bold"
                             android:id="@+id/txtName"
                             android:text="Mehboob Alam"
                             android:textColor="@color/color_text" />
@@ -124,7 +124,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_light"
+                            android:fontFamily="@font/poppins_light"
                             android:text="reg no"
                             android:id="@+id/txtRegNo"
                             android:textColor="@color/color_text" />
@@ -139,6 +139,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Edit profile"
+                            android:fontFamily="@font/poppins_medium"
                             android:id="@+id/btnEditProfile"
                             android:textColor="@color/color_text" />
                     </LinearLayout>
@@ -150,14 +151,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/poppins_regular"
                             android:text="Account -"
                             android:textColor="@color/color_text" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/poppins_regular"
                             android:text="Free"
                             android:id="@+id/txtAccountType"
                             android:textColor="@color/color_text" />
@@ -183,7 +184,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="Upgrade Now"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
@@ -236,7 +237,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Add about yourself"
                     android:textColor="@color/color_text" />
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -266,7 +267,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_weight="3"
                         android:textColor="@color/color_text"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Get noticed by adding your bio"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView3"
@@ -356,7 +357,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="New Matches"
                     android:textColor="@color/color_text" />
 
@@ -367,7 +368,7 @@
                     android:text="(0)"
                     android:visibility="visible"
                     android:id="@+id/txtNewMatchesCount"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/color_text"/>
             </LinearLayout>
 
@@ -376,7 +377,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:text="Members who joined recently" />
 
 
@@ -384,7 +385,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/recyclerNewMatches"
-                    tools:listitem="@layout/matches_sample"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp" />
 
@@ -401,6 +401,7 @@
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/btnSellAllNewMatch"
                     android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/poppins_medium"
                     android:text="See All" />
 
 
@@ -411,7 +412,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/poppins_bold"
                 android:text="@string/settings_options"
                 android:textColor="@color/color_text" />
 
@@ -441,7 +442,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_weight="3"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="Partner Preferences" />
 
                     <ImageView
@@ -476,7 +477,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_weight="3"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="Account Settings" />
 
                     <ImageView
@@ -511,7 +512,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_weight="3"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="@string/help_support" />
 
                     <ImageView
@@ -546,7 +547,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_weight="3"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="Rate the App" />
 
                     <ImageView

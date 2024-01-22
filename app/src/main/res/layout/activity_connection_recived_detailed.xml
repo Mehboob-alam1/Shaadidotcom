@@ -112,7 +112,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="Mehboob Alam"
                             android:textColor="@color/color_text"
                             android:textSize="16sp" />
@@ -126,6 +126,7 @@
                             android:drawableStart="@drawable/baseline_supervisor_account_24"
                             android:gravity="center_vertical"
                             android:padding="4dp"
+                            android:fontFamily="@font/poppins_light"
                             android:text="You &amp; her"
                             android:textColor="@color/white"
                             android:textSize="10sp" />
@@ -144,7 +145,7 @@
                             android:id="@+id/txtProfileAgeHeightM"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="21 yrs,5'4"
                             android:textColor="@color/color_text" />
 
@@ -161,7 +162,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="Software Engineer"
                             android:textColor="@color/color_text" />
 
@@ -180,7 +181,7 @@
                             android:id="@+id/txtCommunitySubCommunityM"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="Urdu,Pakistan"
                             />
 
@@ -197,7 +198,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="Gilgit,Gilgit Baltistan"
                             android:textColor="@color/color_text" />
 
@@ -235,7 +236,7 @@
                         android:id="@+id/txtAboutPerson"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_bold"
+                        android:fontFamily="@font/poppins_bold"
                         android:padding="3dp"
                         android:text="About Mehboob Alam"
 
@@ -246,7 +247,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_medium"
                         android:lineSpacingExtra="5dp"
                         android:lineSpacingMultiplier="1"
                         android:padding="3dp"
@@ -277,7 +278,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_bold"
+                        android:fontFamily="@font/poppins_bold"
                         android:padding="3dp"
                         android:text="Basic Details"
                         android:textColor="@color/color_text"                        android:textSize="16sp" />
@@ -294,7 +295,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_green_back"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/poppins_medium"
                             android:padding="8dp"
                             android:text="Created for self" />
 
@@ -305,7 +306,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:background="@drawable/bg_green_back"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/poppins_medium"
                             android:padding="8dp"
                             android:text="ID: 345645652432" />
                     </LinearLayout>
@@ -322,7 +323,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_green_back"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/poppins_medium"
+
                             android:padding="8dp"
                             android:text="21 yrs old " />
 
@@ -333,7 +335,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:background="@drawable/bg_green_back"
-                            android:fontFamily="@font/roboto"
+
+                            android:fontFamily="@font/poppins_medium"
                             android:padding="8dp"
                             android:text="Height -5'9" />
 
@@ -363,12 +366,15 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:text="Birth Date" />
 
                             <TextView
                                 android:id="@+id/txtBirthDate"
                                 android:layout_width="wrap_content"
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:layout_height="wrap_content"
                                 android:drawableEnd="@drawable/baseline_lock_24"
                                 android:gravity="center_vertical"
@@ -401,7 +407,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:text="Marital Status" />
 
                             <TextView
@@ -410,6 +417,8 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="Never Married"
+                                android:fontFamily="@font/poppins_medium"
+
                                 />
                         </LinearLayout>
 
@@ -439,10 +448,13 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:text="Lives In" />
 
                             <TextView
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:id="@+id/txtLivesCityStateCountry"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -476,10 +488,13 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:text="Religion &amp; Mother Tongue" />
 
                             <TextView
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:id="@+id/txtReligionCommunity"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -551,10 +566,13 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:text="Diet" />
 
                             <TextView
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:id="@+id/txtDiet"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -578,7 +596,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="8dp"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="To unlock Birth date" />
 
                     <TextView
@@ -588,7 +606,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="16dp"
                         android:background="@drawable/bg_green_back"
-                        android:fontFamily="@font/roboto_bold"
+                        android:fontFamily="@font/poppins_semibold"
                         android:padding="8dp"
                         android:text="Go Premium Now"
                         android:textColor="@color/green_A700" />
@@ -619,7 +637,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:fontFamily="@font/roboto_bold"
+                        android:fontFamily="@font/poppins_bold"
                         android:padding="3dp"
                         android:text="Contact Details"
                         android:textColor="@color/color_text"                        android:textSize="16sp"
@@ -671,10 +689,13 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/roboto"
+                                    android:fontFamily="@font/poppins_medium"
+
                                     android:text="Contact No." />
 
                                 <TextView
+                                    android:fontFamily="@font/poppins_medium"
+
                                     android:id="@+id/txtContact"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -710,10 +731,13 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/roboto"
+                                    android:fontFamily="@font/poppins_medium"
+
                                     android:text="Email ID" />
 
                                 <TextView
+                                    android:fontFamily="@font/poppins_medium"
+
                                     android:id="@+id/txtEmail"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -738,7 +762,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="8dp"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/poppins_medium"
+
                             android:text="To unlock Contact No. &amp; Email ID" />
 
                         <TextView
@@ -748,7 +773,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="16dp"
                             android:background="@drawable/bg_green_back"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/poppins_semibold"
                             android:padding="8dp"
                             android:text="Go Premium Now"
                             android:textColor="@color/green_A700" />
@@ -782,7 +807,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:fontFamily="@font/roboto_bold"
+                        android:fontFamily="@font/poppins_bold"
                         android:padding="3dp"
                         android:text="Career &amp; Education"
                         android:textColor="@color/color_text"                        android:textSize="16sp"
@@ -811,12 +836,16 @@
                             android:padding="8dp">
 
                             <TextView
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:text="Profession" />
 
                             <TextView
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:id="@+id/txtWorkAsWorkandWith"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -853,10 +882,13 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:text="Income" />
 
                             <TextView
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:id="@+id/txtIncome"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -892,10 +924,13 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto"
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:text="College Name" />
 
                             <TextView
+                                android:fontFamily="@font/poppins_medium"
+
                                 android:id="@+id/txtCollegeName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -921,7 +956,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="8dp"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_medium"
+
                         android:text="To unlock Profession. &amp; College name" />
 
                     <TextView
@@ -931,7 +967,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="16dp"
                         android:background="@drawable/bg_green_back"
-                        android:fontFamily="@font/roboto_bold"
+                        android:fontFamily="@font/poppins_semibold"
                         android:padding="8dp"
                         android:text="Go Premium Now"
                         android:textColor="@color/green_A700" />
@@ -981,7 +1017,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="You and Her"
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -1076,7 +1112,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/poppins_medium"
                 android:text=""
                 android:textColor="@color/color_text"                android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -1109,7 +1145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_medium"
                     android:text="Accept Connection"
                     android:textColor="@color/color_text"                    android:textSize="12sp" />
 

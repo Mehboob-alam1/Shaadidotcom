@@ -14,6 +14,7 @@
         android:padding="8dp"
         android:textColor="@color/black"
         android:textSize="12sp"
+        android:fontFamily="@font/poppins_medium"
         android:background="@drawable/recieve_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

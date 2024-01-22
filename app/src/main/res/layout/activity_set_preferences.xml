@@ -27,7 +27,7 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/poppins_bold"
         android:text="Set you preferences"
         android:textColor="@color/color_text"
         app:layout_constraintBottom_toBottomOf="@+id/imgBack"
@@ -64,43 +64,6 @@
             android:orientation="vertical">
 
 
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="vertical"
-                android:padding="2dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-
-                    android:text="@string/age_should_be_in_between"
-                    android:textColor="@color/color_text" />
-
-<!--                <com.google.android.material.slider.RangeSlider-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:id="@+id/ageRangeSlider"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:valueFrom="21"-->
-<!--                    android:valueTo="55"-->
-<!--                    android:stepSize="1"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:values="@array/arrayRangeAge"-->
-<!--                    tools:ignore="SpeakableTextPresentCheck" />-->
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/grey" />
-
 
 
             <View
@@ -122,7 +85,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="@string/city_should_be"
                     android:textColor="@color/color_text" />
 
@@ -133,6 +96,8 @@
                     android:background="@drawable/edit_text_back">
 
                     <EditText
+                        android:fontFamily="@font/poppins_medium"
+
                         android:id="@+id/spinnerCity"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
@@ -164,7 +129,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="@string/religion_should_be"
                     android:textColor="@color/color_text" />
 
@@ -177,6 +142,8 @@
                     <Spinner
                         android:id="@+id/spinnerReligion"
                         android:layout_width="match_parent"
+                        android:fontFamily="@font/poppins_medium"
+
                         android:layout_height="60dp" />
 
                 </LinearLayout>
@@ -203,7 +170,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="@string/community_should_be"
                     android:textColor="@color/color_text" />
 
@@ -214,6 +181,8 @@
                     android:background="@drawable/edit_text_back">
 
                     <Spinner
+                        android:fontFamily="@font/poppins_medium"
+
                         android:id="@+id/spinnerComunity"
                         android:layout_width="match_parent"
                         android:layout_height="60dp" />
@@ -242,7 +211,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="@string/sub_community_should_be"
                     android:textColor="@color/color_text" />
 
@@ -253,6 +222,8 @@
                     android:background="@drawable/edit_text_back">
 
                     <Spinner
+                        android:fontFamily="@font/poppins_medium"
+
                         android:id="@+id/spinnerSubCommunity"
                         android:layout_width="match_parent"
                         android:layout_height="60dp" />
@@ -281,7 +252,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="@string/marital_status_should_be"
                     android:textColor="@color/color_text" />
 
@@ -292,6 +263,8 @@
                     android:background="@drawable/edit_text_back">
 
                     <Spinner
+                        android:fontFamily="@font/poppins_medium"
+
                         android:id="@+id/spinnerMaritalStatus"
                         android:layout_width="match_parent"
                         android:layout_height="60dp" />
@@ -302,7 +275,7 @@
             </LinearLayout>
 
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnContinue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -312,7 +285,7 @@
                 android:layout_marginBottom="24dp"
                 android:background="@drawable/btn_back_clicked"
                 android:enabled="true"
-                android:fontFamily="@font/roboto_medium"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="Continue"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

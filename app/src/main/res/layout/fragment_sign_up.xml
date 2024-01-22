@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/roboto_light"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/app_name"
         android:textColor="@color/color_text"
         android:textSize="32sp"
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/poppins_regular"
         android:textAlignment="center"
         android:text="@string/new_to_shaadi_com"
         android:textColor="@color/color_text"
@@ -154,7 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="@string/sign_up_with_google"
                     android:textAlignment="center"
                     android:textColor="@color/color_text"
@@ -176,9 +176,10 @@
 
 
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
+                android:fontFamily="@font/poppins_regular"
                 android:text="@string/already_have_an_account"
                 android:textColor="@color/color_text" />
 
@@ -190,7 +191,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/white_round_border"
-                android:fontFamily="@font/roboto_medium"
+                android:fontFamily="@font/poppins_medium"
                 android:padding="8dp"
                 android:text="Login"
                 android:textAlignment="center"

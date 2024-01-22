@@ -7,22 +7,25 @@
     android:background="@color/color_background"
     tools:context=".views.activities.AccountSettingActivity">
 
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:id="@+id/btnLogout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        android:text="Logout"
-        android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/color_text"
-        android:textSize="22sp"/>
+        <TextView
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
 
-</androidx.cardview.widget.CardView>
+            android:padding="16dp"
+            android:text="Logout"
+            android:textColor="@color/color_text"
+            android:textSize="22sp" />
+
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

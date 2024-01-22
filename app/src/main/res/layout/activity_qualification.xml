@@ -66,7 +66,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Highest qualifications"
                 android:textColor="@color/color_text"
                 android:textSize="20sp" />
@@ -79,10 +79,11 @@
                 android:background="@drawable/edit_text_back">
 
                 <Spinner
+                    android:fontFamily="@font/poppins_medium"
+
                     android:id="@+id/spinnerHighestQualification"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:fontFamily="@font/roboto_medium"
                     android:gravity="center_vertical"
                     android:padding="8dp"
                     android:textColor="@color/black" />
@@ -104,13 +105,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/poppins_bold"
                 android:text="College"
                 android:textColor="@color/color_text"
                 android:textSize="20sp" />
 
 
           <EditText
+              android:fontFamily="@font/poppins_medium"
+
               android:layout_width="match_parent"
               android:layout_height="60dp"
               android:layout_marginTop="16dp"
@@ -128,7 +131,7 @@
 
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnContinue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -137,7 +140,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/btn_back_clicked"
         android:enabled="true"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Continue"
         android:textAllCaps="false"
         android:textColor="@color/white"

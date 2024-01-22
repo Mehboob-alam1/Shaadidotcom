@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-
+android:fontFamily="@font/poppins_semibold"
                     android:text="@string/_1_month_title"
                     android:textColor="@color/color_text"
                     android:textSize="22sp"
@@ -117,6 +117,8 @@
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/remove_ads_one_month_checkbox"
                     android:text="@string/total_price_one_year"
+                    android:fontFamily="@font/poppins_regular"
+
                     android:textColor="@color/color_text_grey"
                     android:textSize="14sp" />
 
@@ -160,13 +162,15 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-
+android:fontFamily="@font/poppins_semibold"
                     android:text="@string/_6_month_title"
                     android:textColor="@color/color_text"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:fontFamily="@font/poppins_light"
+
                     android:id="@+id/six_month_payment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -216,13 +220,15 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-
+android:fontFamily="@font/poppins_semibold"
                     android:text="@string/_1_year_title"
                     android:textColor="@color/color_text"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:fontFamily="@font/poppins_light"
+
                     android:id="@+id/one_year_payment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -233,6 +239,7 @@
                     android:textSize="14sp" />
 
                 <ImageView
+
                     android:id="@+id/remove_ads_one_year_checkbox"
                     android:layout_width="24dp"
                     android:layout_height="24dp"

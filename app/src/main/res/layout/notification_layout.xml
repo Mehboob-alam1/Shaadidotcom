@@ -40,7 +40,7 @@ android:padding="8dp"
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Mehboob Alam"
                     android:id="@+id/txtUserNameNotif"
                     android:textColor="@color/color_text" />
@@ -48,7 +48,7 @@ android:padding="8dp"
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_medium"
                     android:id="@+id/txtUserMessageNotif"
                     android:text="Mehboob Alam sent you a connection request" />
             </LinearLayout>
@@ -58,7 +58,7 @@ android:padding="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:fontFamily="@font/roboto"
+            android:fontFamily="@font/poppins_regular"
             android:text="1 day ago"
             android:id="@+id/txtTimeNotif"
             app:layout_constraintEnd_toEndOf="parent"

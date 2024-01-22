@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="24sp"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/poppins_bold"
                 android:text="My Profile"
                 android:textColor="@color/color_text"
                 android:textSize="18sp"
@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Basic Info"
         android:textColor="@color/color_text"
         android:textSize="18sp"
@@ -89,6 +89,8 @@
             android:src="@drawable/baseline_info_24" />
 
         <TextView
+            android:fontFamily="@font/poppins_light"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -130,6 +132,8 @@
                 android:padding="8dp">
 
                 <TextView
+                    android:fontFamily="@font/poppins_regular"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -141,7 +145,8 @@
                     android:layout_height="wrap_content"
 
                     android:layout_weight="1"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_regular"
+
                     android:text="Self"
                     android:textColor="@color/color_text"
                     android:textStyle="bold" />
@@ -159,11 +164,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="Age" />
 
                 <EditText
+                    android:fontFamily="@font/poppins_regular"
+
                     android:id="@+id/etAge"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -189,6 +197,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="Marital status" />
@@ -200,7 +209,7 @@
 
                     android:layout_weight="1"
 
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:gravity="center_vertical"
                     android:padding="0dp"
                     android:textColor="@color/black"
@@ -220,6 +229,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="Height" />
@@ -231,7 +241,7 @@
 
                     android:layout_weight="1"
 
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:gravity="center_vertical"
                     android:padding="0dp"
                     android:textColor="@color/black"
@@ -251,6 +261,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="Relegion" />
@@ -262,7 +273,7 @@
 
                     android:layout_weight="1"
 
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:gravity="center_vertical"
                     android:padding="0dp"
                     android:textColor="@color/black"
@@ -282,6 +293,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="Community" />
@@ -292,8 +304,8 @@
                     android:layout_height="30dp"
 
                     android:layout_weight="1"
+                    android:fontFamily="@font/poppins_regular"
 
-                    android:fontFamily="@font/roboto_medium"
                     android:gravity="center_vertical"
                     android:padding="0dp"
                     android:textColor="@color/black"
@@ -313,6 +325,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="Sub Community" />
@@ -324,7 +337,7 @@
 
                     android:layout_weight="1"
 
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:gravity="center_vertical"
                     android:padding="0dp"
                     android:textColor="@color/black"
@@ -344,6 +357,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="Country" />
@@ -354,7 +368,7 @@
                     android:layout_height="wrap_content"
 
                     android:layout_weight="1"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_regular"
                     android:text="Pakistan"
                     android:textColor="@color/color_text"
                     android:textStyle="bold" />
@@ -371,6 +385,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="State" />
@@ -381,7 +396,7 @@
                     android:layout_height="wrap_content"
 
                     android:layout_weight="1"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_regular"
                     android:text="Gilgit Baltistan"
                     android:textColor="@color/color_text"
                     android:textStyle="bold" />
@@ -398,6 +413,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="City" />
@@ -408,7 +424,7 @@
                     android:layout_height="wrap_content"
 
                     android:layout_weight="1"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/poppins_regular"
                     android:text="Gilgit"
                     android:textColor="@color/color_text"
                     android:textStyle="bold" />
@@ -425,6 +441,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="Works with" />
@@ -436,7 +453,7 @@
 
                     android:layout_weight="1"
 
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:gravity="center_vertical"
                     android:padding="0dp"
                     android:textColor="@color/black"
@@ -456,10 +473,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="Works As" />
                 <EditText
+                    android:fontFamily="@font/poppins_regular"
+
                     android:id="@+id/etWorkAs"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -484,6 +504,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="Diet" />
@@ -495,7 +516,7 @@
 
                     android:layout_weight="1"
 
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:gravity="center_vertical"
                     android:padding="0dp"
                     android:textColor="@color/black"
@@ -515,11 +536,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
 
                     android:layout_weight="1"
                     android:text="Annual Income" />
 
                 <EditText
+                    android:fontFamily="@font/poppins_regular"
+
                     android:id="@+id/etIncome"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -534,13 +558,15 @@
             </LinearLayout>
 
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnUpdateBasicInfo"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/btn_back_clicked"
                 android:text="Update"
+                android:fontFamily="@font/poppins_semibold"
+
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
                 android:textAllCaps="false"
