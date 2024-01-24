@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Shaadi.com</string>
+    <string name="app_name">Shadi Karo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="already_have_an_account">Already have an account ?</string>
     <string name="sign_up_with_google">Sign Up with Google</string>
     <string name="sign_up_with_mobile">Sign Up with Mobile</string>
-    <string name="new_to_shaadi_com">New to Shaadi.com ?</string>
+    <string name="new_to_shaadi_com">New to Shadi Karo ?</string>
     <string name="welcome_back">Welcome back</string>
     <string name="login_to_your_account">Login to your account</string>
     <string name="continue_with_google">Continue with Google</string>
